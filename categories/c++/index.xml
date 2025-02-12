@@ -13,8 +13,7 @@ alt="20211027154904"
 >&lt;/p>
 &lt;h2 id="配置-libtorch-依赖">配置 LibTorch 依赖
 &lt;/h2>&lt;blockquote>
-&lt;p>本文中 LibTorch 解压后的存放目录为 &lt;code>D:\Software\libtorch-lts&lt;/code>，后续配置过程中，读者请按照自己实际情况进行相关设置。&lt;/p>
-&lt;/blockquote>
+&lt;p>本文中 LibTorch 解压后的存放目录为 &lt;code>D:\Software\libtorch-lts&lt;/code>，后续配置过程中，读者请按照自己实际情况进行相关设置。&lt;/p>&lt;/blockquote>
 &lt;p>在 Visual Studio 中，点击 &lt;code>项目 -&amp;gt; libtorch-toturial 项目属性&lt;/code>，在左侧导航栏中找到 &lt;code>VC++ 目录&lt;/code> 选项。在右侧的 &lt;code>包含目录&lt;/code> 选项中将 LibTorch include 目录添加进去，详细如下。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">

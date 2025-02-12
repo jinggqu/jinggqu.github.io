@@ -13,8 +13,7 @@
 abcaacc&lt;br>
 a*c&lt;br>
 输出&lt;br>
-3&lt;/p>
-&lt;/blockquote>
+3&lt;/p>&lt;/blockquote>
 &lt;p>样例 1 解释&lt;br>
 可以对 i=0,3,4 这三个位置的子串 abc、aac、acc 匹配上 a*c，即&lt;br>
 abcaacc&lt;br>
@@ -94,8 +93,7 @@ abcaacc&lt;/p>
 5 3&lt;br>
 2 3 4&lt;br>
 输出&lt;br>
-4 3 2 1 5&lt;/p>
-&lt;/blockquote>
+4 3 2 1 5&lt;/p>&lt;/blockquote>
 &lt;p>样例 1 解释&lt;br>
 第一次微调完，链子为 2 1 3 4 5&lt;br>
 第二次微调完，链子为 3 2 1 4 5&lt;br>
@@ -183,8 +181,7 @@ aaaaaa&lt;br>
 aaaa&lt;br>
 aa
 输出&lt;br>
-2&lt;/p>
-&lt;/blockquote>
+2&lt;/p>&lt;/blockquote>
 &lt;p>样例 1 解释&lt;br>
 有两种方案，第一种是 aaaa|aa，第二种是 aa|aaaa，代表一次裁剪。&lt;/p>
 &lt;h2 id="思路与代码-2">思路与代码
@@ -297,8 +294,7 @@ aa
 1 2 3&lt;br>
 7 5 3&lt;br>
 输出&lt;br>
-10&lt;/p>
-&lt;/blockquote>
+10&lt;/p>&lt;/blockquote>
 &lt;p>样例 1 解释&lt;br>
 可以同时启动第一个机器人和第二个机器人，耗电量为 1+2=3，这样花费时间为 max(7, 5&lt;em>2)=10&lt;br>
 也可以同时启动第一个机器人和第三个机器人，耗电量为 1+3=4，这样花费时间为 max(7&lt;/em>2, 3)=14&lt;br>
@@ -310,8 +306,7 @@ aa
 6 2 3&lt;br>
 7 5 3&lt;br>
 输出&lt;br>
--1&lt;/p>
-&lt;/blockquote>
+-1&lt;/p>&lt;/blockquote>
 &lt;p>样例 2 解释
 因为必须要启动第一个机器人，耗电量至少为 6，但是持有电量只有 5，因此无法收完所有衣服，输出 -1&lt;/p>
 &lt;h2 id="思路与代码-3">思路与代码
@@ -340,8 +335,7 @@ aa
 1 50&lt;br>
 0 1 2 0 1 0&lt;br>
 输出&lt;br>
-102&lt;/p>
-&lt;/blockquote>
+102&lt;/p>&lt;/blockquote>
 &lt;p>样例 1 解释&lt;br>
 一开始没有小玩具，遇到一只猫猫只能抚摸，花费了 100 的时间。&lt;br>
 接下来获得了小玩具 1 和 2，然后遇到一只猫猫，用了小玩具 1，只花费了 1 的时间。&lt;br>
@@ -425,8 +419,7 @@ aa
 abcd&lt;br>
 efgh&lt;br>
 输出&lt;br>
-aebfcgdh&lt;/p>
-&lt;/blockquote>
+aebfcgdh&lt;/p>&lt;/blockquote>
 &lt;h2 id="思路与代码">思路与代码
 &lt;/h2>&lt;p>语法题，直接交替插入两个字符串的字符即可。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -486,8 +479,7 @@ aebfcgdh&lt;/p>
 2 3
 2 1 2&lt;br>
 输出&lt;br>
-1 2&lt;/p>
-&lt;/blockquote>
+1 2&lt;/p>&lt;/blockquote>
 &lt;p>样例 1 解释&lt;br>
 与 (2, 1) 的哈曼顿距离为 2 的位置有三个，分别是 (1, 2), (2, 3), (3, 2)&lt;br>
 与 (2, 2) 的哈曼顿距离为 1 的位置有四个，分别是 (1, 2), (2, 1), (2, 3), (3, 2)&lt;br>
@@ -603,8 +595,7 @@ aebfcgdh&lt;/p>
 89 38&lt;br>
 445 754 &lt;br>
 输出&lt;br>
-1150.05&lt;/p>
-&lt;/blockquote>
+1150.05&lt;/p>&lt;/blockquote>
 &lt;p>样例 1 解释&lt;br>
 如果都不复习，小美总分的期望为 89% * 445 + 38% * 754 = 682.57&lt;br>
 如果复习第一道题，小美总分的期望为 100% * 445 + 38% * 754 = 731.52&lt;br>
@@ -716,8 +707,7 @@ aebfcgdh&lt;/p>
 -9821&lt;br>
 7742&lt;br>
 输出&lt;br>
-17563&lt;/p>
-&lt;/blockquote>
+17563&lt;/p>&lt;/blockquote>
 &lt;p>样例 1 解释&lt;br>
 可以选择两次第二种操作，消除数列 A 的第一个数和数列 B 的第一个数，需要花费 9821+7742=17563 的时间&lt;br>
 也可以选择一次第一种操作，将数列 A 的第一个数改成数列 B 的第一个数，也是需要花费 9821+7742=17563 的时间&lt;br>
@@ -820,8 +810,7 @@ aebfcgdh&lt;/p>
 5&lt;br>
 4&lt;br>
 输出&lt;br>
--1&lt;/p>
-&lt;/blockquote>
+-1&lt;/p>&lt;/blockquote>
 &lt;p>样例 1 解释&lt;br>
 需要 5 单位重量，只有 4 单位重量的材料，压不住，输出-1。&lt;/p>
 &lt;p>测试样例 2&lt;/p>
@@ -831,8 +820,7 @@ aebfcgdh&lt;/p>
 4 1 3&lt;br>
 4 2 1&lt;br>
 输出&lt;br>
-9&lt;/p>
-&lt;/blockquote>
+9&lt;/p>&lt;/blockquote>
 &lt;p>样例 2 解释&lt;br>
 第一个地方需要重量为 4 的，第二个地方可以用重量为 1 的，第三个地方只能选择重量为 4 的才能压住。所以总重量需求为 9。可以证明没有更优方案。&lt;/p>
 &lt;h2 id="思路与代码-4">思路与代码
@@ -954,16 +942,14 @@ aebfcgdh&lt;/p>
 6 5&lt;br>
 5 6 7 8 9 10&lt;br>
 输出&lt;br>
-3&lt;/p>
-&lt;/blockquote>
+3&lt;/p>&lt;/blockquote>
 &lt;p>测试样例 2&lt;/p>
 &lt;blockquote>
 &lt;p>输入&lt;br>
 6 5&lt;br>
 100 101 102 103 104 105&lt;br>
 输出&lt;br>
-0&lt;/p>
-&lt;/blockquote>
+0&lt;/p>&lt;/blockquote>
 &lt;h2 id="思路与代码">思路与代码
 &lt;/h2>&lt;p>贪心算法。先排序，然后看看每一次送达时间是否能在截止时间前。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -1019,8 +1005,7 @@ aebfcgdh&lt;/p>
 &amp;ldquo;SDWAS&amp;rdquo;&lt;br>
 输出&lt;br>
 &amp;ldquo;Yes&amp;rdquo;&lt;br>
-3&lt;/p>
-&lt;/blockquote>
+3&lt;/p>&lt;/blockquote>
 &lt;p>测试样例 2&lt;/p>
 &lt;blockquote>
 &lt;p>输入&lt;br>
@@ -1028,8 +1013,7 @@ aebfcgdh&lt;/p>
 &amp;ldquo;SWSWS&amp;rdquo;&lt;br>
 输出&lt;br>
 &amp;ldquo;No&amp;rdquo;&lt;br>
-2&lt;/p>
-&lt;/blockquote>
+2&lt;/p>&lt;/blockquote>
 &lt;h2 id="思路与代码-1">思路与代码
 &lt;/h2>&lt;p>暴力解法即可。无须考虑边界问题，因为题目已经保证机器人不会越界。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -1116,8 +1100,7 @@ aebfcgdh&lt;/p>
 4&lt;br>
 1 2 3 4&lt;br>
 输出&lt;br>
-4 2 1 3&lt;/p>
-&lt;/blockquote>
+4 2 1 3&lt;/p>&lt;/blockquote>
 &lt;p>样例 1 解释&lt;br>
 初始牌堆为：4 2 1 3&lt;/p>
 &lt;ol>
@@ -1198,8 +1181,7 @@ aebfcgdh&lt;/p>
 4&lt;br>
 4 2 2 2&lt;br>
 输出&lt;br>
-3&lt;/p>
-&lt;/blockquote>
+3&lt;/p>&lt;/blockquote>
 &lt;h2 id="思路与代码-3">思路与代码
 &lt;/h2>&lt;p>直接暴力解即可，注意数据范围（使用 long 而不是 int）。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -1273,8 +1255,7 @@ aebfcgdh&lt;/p>
 3&lt;br>
 5 7 8&lt;br>
 输出&lt;br>
-13&lt;/p>
-&lt;/blockquote>
+13&lt;/p>&lt;/blockquote>
 &lt;p>样例解释 1&lt;br>
 该样例中，二叉树上有三个节点，根节点为 1 号节点，其左儿子为 2 号节点，右儿子为 3 号节点，所能获取的最大金钱为 13，为从 1 号节点走到 3 号节点，共获得 5 + 8 = 13 的金钱。&lt;/p>
 &lt;p>测试样例 2&lt;/p>
@@ -1283,8 +1264,7 @@ aebfcgdh&lt;/p>
 5&lt;br>
 863 163 396 428 90&lt;br>
 输出&lt;br>
-1454&lt;/p>
-&lt;/blockquote>
+1454&lt;/p>&lt;/blockquote>
 &lt;h2 id="思路与代码-4">思路与代码
 &lt;/h2>&lt;p>与 &lt;a class="link" href="https://leetcode.cn/problems/binary-tree-maximum-path-sum/" target="_blank" rel="noopener"
 >leetcode 124&lt;/a> 类似，采用递归的思路，针对根节点 root，分别求得其左右子树中的路径之和较大者，再加上当前根节点 root 节点值（形成一个单臂，即根节点 + 左子节点，或根节点 + 右子节点），最后返回到上一层递归即可。&lt;/p>

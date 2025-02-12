@@ -293,8 +293,7 @@ alt="20210122154135"
 &lt;h1 id="代码实现">代码实现
 &lt;/h1>&lt;blockquote>
 &lt;p>代码环境配置，请参考 &lt;a class="link" href="https://jinggqu.github.io/posts/gan-for-hand-written-digits/" target="_blank" rel="noopener"
->GAN 网络之手写数字生成&lt;/a> 第一小节——环境搭建。&lt;/p>
-&lt;/blockquote>
+>GAN 网络之手写数字生成&lt;/a> 第一小节——环境搭建。&lt;/p>&lt;/blockquote>
 &lt;p>自编码器只是一种思想，在具体实现中，编码器和解码器可以由多种深度学习模型构成，例如全连接层、卷积层和 LSTM 等，以下使用 Keras 来实现栈式自编码器。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
