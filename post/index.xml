@@ -246,13 +246,13 @@
 &lt;p>香港 -&amp;gt; 台北 -&amp;gt; 台中 -&amp;gt; 台南 -&amp;gt; 高雄 -&amp;gt; 香港&lt;/p>&lt;/blockquote>
 &lt;h2 id="台北">台北
 &lt;/h2>&lt;p>从机场入境后，可以直接搭乘台北捷运前往市区，建议选择快线（紫色线），快速便捷，尽管票价比普通线路（蓝线）稍贵。&lt;/p>
-&lt;h2 id="住宿">住宿：
-&lt;/h2>&lt;ul>
+&lt;h3 id="住宿">住宿：
+&lt;/h3>&lt;ul>
 &lt;li>&lt;strong>台北三德大饭店&lt;/strong>，双床房每人每晚约 HK$400（包含早餐），距离民权西路捷运站很近，交通非常便利。在线预订（无利益相关，下同）：&lt;a class="link" href="https://hk.trip.com/hotels/detail/?hotelId=701791" target="_blank" rel="noopener"
 >台北三德大饭店&lt;/a>。&lt;/li>
 &lt;/ul>
-&lt;h2 id="景点">景点：
-&lt;/h2>&lt;ul>
+&lt;h3 id="景点">景点：
+&lt;/h3>&lt;ul>
 &lt;li>&lt;strong>台北 101&lt;/strong>：可以乘高速电梯到达顶层（30 秒上升 80+ 层），欣赏台北 360 度的美丽夜景，门票 NT$540（学生有优惠，记得携带学生证），支持 Google Pay。台北 101 营业到 21:00。&lt;/li>
 &lt;li>&lt;strong>国立台湾大学&lt;/strong>：需从台北 101 附近乘公交车前往。公交车招手即停，上车下车均需刷卡，下车要提前按铃。&lt;/li>
 &lt;li>&lt;strong>台北故宫博物院&lt;/strong>：参观完整且快速地逛完需要大半天的时间，门票 NT$350。这里有丰富的文物，建议安排充足的时间。台北故宫位置偏远，但有餐厅且风景优美，如在故宫用餐建议坐在窗边位置，可以适用信用卡或 Google Pay 等电子支付方式。故宫内设有纪念品商店，包含经典画作复刻版、经典文物冰箱贴等，可电子支付。&lt;/li>
@@ -262,8 +262,8 @@
 &lt;/ul>
 &lt;h2 id="台中">台中
 &lt;/h2>&lt;p>由台北市乘坐高铁即可前往台中，票价 NT$700 每人，行程共约一个小时。台中高铁站在台中市区西南角，前往酒店时可搭乘捷运（运营时间为06:00-24:00）或在高铁站负一层乘坐出租车。&lt;/p>
-&lt;h2 id="住宿-1">住宿：
-&lt;/h2>&lt;ul>
+&lt;h3 id="住宿-1">住宿：
+&lt;/h3>&lt;ul>
 &lt;li>&lt;strong>台中东旅&lt;/strong>，双床房每人每晚约 NT$220（包含早餐），距离台铁台中站很近，方便出行。在线预订：&lt;a class="link" href="https://hk.trip.com/hotels/detail/?hotelId=66443711" target="_blank" rel="noopener"
 >台中东旅&lt;/a>。&lt;/li>
 &lt;li>&lt;strong>浮云客栈&lt;/strong>，双床房每人每晚约 NT$240（无早餐），靠近逢甲大学，南侧逢甲夜市有大量食肆。在线预订：&lt;a class="link" href="https://hk.trip.com/hotels/detail/?hotelId=48474080" target="_blank" rel="noopener"
@@ -271,27 +271,51 @@
 &lt;li>合欢山景区内亦提供住宿服务，详情参见 &lt;a class="link" href="https://recreation.forest.gov.tw/Apply/TPSR" target="_blank" rel="noopener"
 >园区线上订房系统&lt;/a>。&lt;/li>
 &lt;/ul>
-&lt;h2 id="景点-1">景点：
-&lt;/h2>&lt;ul>
+&lt;h3 id="景点-1">景点：
+&lt;/h3>&lt;ul>
 &lt;li>&lt;strong>合欢山&lt;/strong>：&lt;a class="link" href="https://recreation.forest.gov.tw/Forest/RA?typ_id=0300004" target="_blank" rel="noopener"
 >合欢山国家森林游乐区&lt;/a> 东峰海拔约为 3421 米。乘车抵达合欢山游客服务中心，可经松雪楼由步道前往山顶，总长约 1000 米，爬升约 300 米。山顶气温较低（约 10 摄氏度），风大且紫外线强，建议备防风衣物与防晒霜。山顶有机会看到「金翼白眉」鸟类。全程包车费用 NT$5000（往返市区与合欢山景区），单程耗时约 2 小时 30 分钟。可能会有轻微的高原反应。&lt;/li>
 &lt;li>&lt;strong>清静农场&lt;/strong>：在这里可以与小羊亲密接触，购买羊饲料和小羊互动，黄昏时分非常美丽。&lt;/li>
 &lt;/ul>
+&lt;p>&lt;img src="https://images.unsplash.com/photo-1733646465352-646c0f5cc1c7"
+loading="lazy"
+alt="合欢山顶鸟瞰"
+>
+&lt;img src="https://images.unsplash.com/photo-1733646465290-bda4d0703066"
+loading="lazy"
+alt="金翼白眉"
+>
+&lt;img src="https://images.unsplash.com/photo-1733646465269-6c6e723dbe7c"
+loading="lazy"
+alt="金翼白眉"
+>
+&lt;img src="https://images.unsplash.com/photo-1733646363558-279268cbf92b"
+loading="lazy"
+alt="清静农场鸟瞰"
+>
+&lt;img src="https://images.unsplash.com/photo-1733646417076-dfeeee78a72b"
+loading="lazy"
+alt="清静农场小羊"
+>&lt;/p>
 &lt;h2 id="台南">台南
 &lt;/h2>&lt;p>从台中乘坐台铁前往台南，车程约 1 小时 30 分钟，台铁台南站距下述下榻酒店仅 10 分钟步行路程。&lt;/p>
-&lt;h2 id="住宿-2">住宿：
-&lt;/h2>&lt;ul>
+&lt;h3 id="住宿-2">住宿：
+&lt;/h3>&lt;ul>
 &lt;li>&lt;strong>台南三道门建筑文创旅店&lt;/strong>，双床房每人每晚约 NT$260（不含早餐）。在线预订：&lt;a class="link" href="https://hk.trip.com/hotels/detail/?hotelId=4396159" target="_blank" rel="noopener"
 >台南三道门建筑文创旅店&lt;/a>。&lt;/li>
 &lt;/ul>
-&lt;h2 id="景点-2">景点：
-&lt;/h2>&lt;ul>
+&lt;h3 id="景点-2">景点：
+&lt;/h3>&lt;ul>
 &lt;li>&lt;strong>台湾文学馆&lt;/strong>：市区散步时，可朝「汤德章纪念公园」方向前进，此处为台南市的交通动脉，七条交通要道汇聚于此。台湾文学馆亦在此地。这里是台南市的重要文化地标，可以了解台湾的文学历史。&lt;/li>
 &lt;li>&lt;strong>四草绿色隧道&lt;/strong>：需要乘车前往，游览总时间约 30 分钟，票价 NT$200。绿意盎然的环境非常适合放松。&lt;/li>
 &lt;li>&lt;strong>安平港渔港北堤灯塔&lt;/strong>：绿色隧道游览结束后，需提早在日落前抵达安平港渔港北堤灯塔（请注意当天日落时间）。北堤附近有大片沙滩，日落方向即为大陆福建省广东省。&lt;/li>
 &lt;/ul>
-&lt;h2 id="食肆">食肆
-&lt;/h2>&lt;ul>
+&lt;p>&lt;img src="https://images.unsplash.com/photo-1733646177238-2952e6da82dd"
+loading="lazy"
+alt="安平渔港晚霞"
+>&lt;/p>
+&lt;h3 id="食肆">食肆
+&lt;/h3>&lt;ul>
 &lt;li>&lt;a class="link" href="https://maps.app.goo.gl/6A1MpXKpjC5V4SdJ9" target="_blank" rel="noopener"
 >安平豆花&lt;/a>（满分推荐）。&lt;/li>
 &lt;li>&lt;a class="link" href="https://maps.app.goo.gl/8pxUsKQUN19wJDr8A" target="_blank" rel="noopener"
@@ -299,8 +323,8 @@
 &lt;/ul>
 &lt;h2 id="高雄">高雄
 &lt;/h2>&lt;p>从酒店出发步行到台铁台南站，继续乘坐台铁前往高雄，车程约 40 分钟。在高雄站内有行李寄存柜，详情可在小红书搜索查看。&lt;/p>
-&lt;h2 id="景点-3">景点：
-&lt;/h2>&lt;ul>
+&lt;h3 id="景点-3">景点：
+&lt;/h3>&lt;ul>
 &lt;li>&lt;strong>驳二艺术特区&lt;/strong>：驳二艺术特区将码头仓库群改造艺术园区，设有商铺、食肆、书店（诚品书店，值得一去）等，亦可观赏到多个艺术装置、运行中的有轨电车以及废旧机车等。详情请参考 &lt;a class="link" href="https://pier2.org/" target="_blank" rel="noopener"
 >驳二艺术特区官方网站&lt;/a>。&lt;/li>
 &lt;li>&lt;strong>旗津岛&lt;/strong>：从高雄新滨码头出发，搭乘轮渡前往旗津岛。由于旗津岛属狭长布局，因此建议上岸后在旗津码头租借四轮车，方便后续游览。旗津岛高雄灯塔在旗津码头西侧，且需要步行上山（约15分钟）。灯塔处可俯瞰旗津岛老街的彩色房子。 骑四轮车沿着旗津三路即可到达彩虹教堂，教堂外设有两个艺术装置，可拍照打卡。由于旗津岛属狭长布局，可多留一些时间慢慢驾车游览。&lt;/li>
