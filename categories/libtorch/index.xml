@@ -8,9 +8,15 @@
 &lt;h2 id="环境配置">环境配置
 &lt;/h2>&lt;h3 id="创建项目">创建项目
 &lt;/h3>&lt;p>首先，在 Visual Studio 中创建一个名为 libtorch-toturial 的控制台项目。创建完成后，将项目设置为 &lt;code>Release&lt;/code> 模式，&lt;code>x64&lt;/code> 平台，如下图。&lt;/p>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/jinggqu/blog_images@main/20211027154904.png"
+&lt;p>&lt;img src="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027154904.png"
+width="758"
+height="406"
+srcset="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027154904_hu_3ec4d990c1662cb8.png 480w, https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027154904_hu_99142ce11563fdcf.png 1024w"
 loading="lazy"
-alt="20211027154904"
+alt="Visual Studio 项目配置为 Release 和 x64 平台"
+class="gallery-image"
+data-flex-grow="186"
+data-flex-basis="448px"
 >&lt;/p>
 &lt;h3 id="配置-libtorch-依赖">配置 LibTorch 依赖
 &lt;/h3>&lt;blockquote>
@@ -36,9 +42,15 @@ alt="20211027154904"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>配置结果如下图，注意检查窗口顶栏 &lt;code>配置&lt;/code> 是否为 &lt;code>Release&lt;/code>，&lt;code>平台&lt;/code> 是否为 &lt;code>x64&lt;/code>。&lt;/p>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/jinggqu/blog_images@main/20211027160310.png"
+&lt;p>&lt;img src="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027160310.png"
+width="1275"
+height="715"
+srcset="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027160310_hu_dfaed68990ea7a7b.png 480w, https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027160310_hu_64cc80aa4aea8241.png 1024w"
 loading="lazy"
-alt="20211027160310"
+alt="项目属性中 LibTorch 库配置示例"
+class="gallery-image"
+data-flex-grow="178"
+data-flex-basis="427px"
 >&lt;/p>
 &lt;p>然后找到 &lt;code>链接器 -&amp;gt; 输入 -&amp;gt; 附加依赖项&lt;/code> 选项，在其中填入 LibTorch lib 路径下（即 &lt;code>D:\Software\libtorch-lts\lib&lt;/code>）所有 &lt;code>*.lib&lt;/code> 文件的文件名，详细如下。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -88,9 +100,15 @@ alt="20211027160310"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>最后，将 &lt;code>D:\Software\libtorch-lts\lib&lt;/code> 路径下所有的 &lt;code>*.dll&lt;/code> 文件拷贝至 &lt;code>项目路径 -&amp;gt; x64 -&amp;gt; Release&lt;/code> 路径下，如下图。&lt;/p>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/jinggqu/blog_images@main/20211027163802.png"
+&lt;p>&lt;img src="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027163802.png"
+width="839"
+height="615"
+srcset="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027163802_hu_79c16d69b838cf19.png 480w, https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027163802_hu_1b2025f2259168d7.png 1024w"
 loading="lazy"
-alt="20211027163802"
+alt="项目目录下复制的 LibTorch DLL 文件"
+class="gallery-image"
+data-flex-grow="136"
+data-flex-basis="327px"
 >&lt;/p>
 &lt;h3 id="示例程序">示例程序
 &lt;/h3>&lt;p>至此，开发环境搭建就已经完成了。我们可以通过运行以下示例程序，来检验上述配置是否正确。若输出如图中所示，则配置无误。&lt;/p>
@@ -114,9 +132,15 @@ alt="20211027163802"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/jinggqu/blog_images@main/20211027170451.png"
+&lt;/div>&lt;p>&lt;img src="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027170451.png"
+width="313"
+height="309"
+srcset="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027170451_hu_7f77f34b127721d4.png 480w, https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027170451_hu_95e27cdbf24c2af3.png 1024w"
 loading="lazy"
-alt="20211027170451"
+alt="测试程序生成的随机张量输出"
+class="gallery-image"
+data-flex-grow="101"
+data-flex-basis="243px"
 >&lt;/p>
 &lt;h2 id="手写数字识别">手写数字识别
 &lt;/h2>&lt;h3 id="数据准备">数据准备
@@ -151,9 +175,15 @@ alt="20211027170451"
 >LibTorch 官方示例&lt;/a> 中找到，请将其拷贝到项目的 &lt;code>libtorch-toturial.cpp&lt;/code> 中。&lt;/p>
 &lt;h3 id="结果">结果
 &lt;/h3>&lt;p>与 PyTorch 类似，LibTorch 创建深度学习应用同样包含与其相似的步骤：定义网络、初始化网络、加载数据集、训练、验证及保存模型等，详细代码可以参照上述官方示例，此处不再赘述。训练 10 个 epoch 之后，识别准确率已经达到了 98.4%.&lt;/p>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/jinggqu/blog_images@main/20211028114206.png"
+&lt;p>&lt;img src="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211028114206.png"
+width="945"
+height="639"
+srcset="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211028114206_hu_d83969fa7d2ccb41.png 480w, https://jinggqu.github.io/posts/libtorch-toturial/assets/20211028114206_hu_b987fd06577411b9.png 1024w"
 loading="lazy"
-alt="20211028114206"
+alt="MNIST 手写数字识别训练结果"
+class="gallery-image"
+data-flex-grow="147"
+data-flex-basis="354px"
 >&lt;/p>
 &lt;h2 id="自定义数据集">自定义数据集
 &lt;/h2>&lt;p>在本节中，我们将介绍如何将已有的数据集读取到神经网络中，生成 PyTorch 张量。在这之前，需要先介绍 NumCpp 工具，它可以大幅提升数据处理的效率。&lt;/p>

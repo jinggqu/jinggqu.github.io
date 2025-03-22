@@ -48,13 +48,25 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>上述配置请根据 Anaconda 实际安装路径进行调整，配置完成的效果如下图所示。&lt;/p>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/jinggqu/blog_images@main/20201208152533.png"
+&lt;p>&lt;img src="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152533.png"
+width="1058"
+height="1086"
+srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152533_hu_caa7c798a1e5a506.png 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152533_hu_cbf0a1a28bc43856.png 1024w"
 loading="lazy"
-alt="20201208152533"
+alt="Anaconda 环境变量配置界面"
+class="gallery-image"
+data-flex-grow="97"
+data-flex-basis="233px"
 >&lt;/p>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/jinggqu/blog_images@main/20201208152633.png"
+&lt;p>&lt;img src="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152633.png"
+width="902"
+height="928"
+srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152633_hu_73bd320e2680643f.png 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152633_hu_656bccd141c0d58.png 1024w"
 loading="lazy"
-alt="20201208152633"
+alt="Anaconda 环境变量配置路径"
+class="gallery-image"
+data-flex-grow="97"
+data-flex-basis="233px"
 >&lt;/p>
 &lt;p>完成后打开 cmd 输入下列命令，如果输出内容与下列内容类似，则表示配置正确，可继续后面的步骤。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -255,9 +267,15 @@ simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
 &lt;/h2>&lt;h3 id="使用-pycharm-创建项目">使用 PyCharm 创建项目
 &lt;/h3>&lt;p>在创建项目时，需要将虚拟环境（图中 Location 项）配置为前文中创建的虚拟环境所在目录，然后点击创建项目。&lt;/p>
 &lt;p>&lt;em>由于此前作者已经创建过项目，故创建窗口下方会提示虚拟环境目录不为空，忽略即可。&lt;/em>&lt;/p>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/jinggqu/blog_images@main/20201208194401.png"
+&lt;p>&lt;img src="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208194401.png"
+width="1401"
+height="856"
+srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208194401_hu_a4bceade4c4dbdd1.png 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208194401_hu_521cef7fe2e29480.png 1024w"
 loading="lazy"
-alt="20201208194401"
+alt="PyCharm 创建项目配置界面"
+class="gallery-image"
+data-flex-grow="163"
+data-flex-basis="392px"
 >&lt;/p>
 &lt;h3 id="运行项目">运行项目
 &lt;/h3>&lt;p>将以下代码置于项目 &lt;code>main.py&lt;/code> 中，运行。&lt;/p>
@@ -532,9 +550,15 @@ alt="20201208194401"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>运行时的截图如下，可以看到已经生成了多张手写数字的图片。&lt;/p>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/jinggqu/blog_images@main/20201208201913.png"
+&lt;p>&lt;img src="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208201913.png"
+width="3839"
+height="2089"
+srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208201913_hu_c30cb894ab72e6fb.png 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208201913_hu_4b6db001ab67636e.png 1024w"
 loading="lazy"
-alt="20201208201913"
+alt="GAN 生成的手写数字示例"
+class="gallery-image"
+data-flex-grow="183"
+data-flex-basis="441px"
 >&lt;/p>
 &lt;p>至此，GAN 网络手写数字生成环境搭建已经完成，后续将进行更加深入的学习。&lt;/p>
 &lt;h2 id="备注">备注

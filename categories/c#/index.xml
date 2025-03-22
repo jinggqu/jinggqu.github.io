@@ -6,14 +6,26 @@
 &lt;p>本文将介绍如何使用 C#、WPF 与 ONNX 模型实现一个简单的手写数字识别项目。整个流程跑通后，即可应用更加复杂的深度学习模型。&lt;/p>
 &lt;h2 id="wpf-界面开发">WPF 界面开发
 &lt;/h2>&lt;p>项目的用户界面相对简单，主要包含一个 InkCanvas（Name 设置为 inkCanvas） 用于用户绘制数字，一个识别按钮与一个清除 Canvas 内容的按钮。软件用户界面如下图所示。&lt;/p>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/jinggqu/blog_images@main/20230818102257.png"
+&lt;p>&lt;img src="https://jinggqu.github.io/posts/handwritten-digits-recognition-using-csharp-wpf-onnx/assets/20230818102257.png"
+width="914"
+height="710"
+srcset="https://jinggqu.github.io/posts/handwritten-digits-recognition-using-csharp-wpf-onnx/assets/20230818102257_hu_479ba25b317af53e.png 480w, https://jinggqu.github.io/posts/handwritten-digits-recognition-using-csharp-wpf-onnx/assets/20230818102257_hu_9e2803ebb489c77d.png 1024w"
 loading="lazy"
-alt="软件用户界面"
+alt="WPF 手写数字识别应用界面"
+class="gallery-image"
+data-flex-grow="128"
+data-flex-basis="308px"
 >&lt;/p>
 &lt;p>项目最终效果图如下图所示。&lt;/p>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/jinggqu/blog_images@main/20230818110324.png"
+&lt;p>&lt;img src="https://jinggqu.github.io/posts/handwritten-digits-recognition-using-csharp-wpf-onnx/assets/20230818110324.png"
+width="1178"
+height="949"
+srcset="https://jinggqu.github.io/posts/handwritten-digits-recognition-using-csharp-wpf-onnx/assets/20230818110324_hu_4b90e9e09c2d9627.png 480w, https://jinggqu.github.io/posts/handwritten-digits-recognition-using-csharp-wpf-onnx/assets/20230818110324_hu_7757bd108e9e9bf3.png 1024w"
 loading="lazy"
-alt="项目最终效果图"
+alt="手写数字识别应用运行效果"
+class="gallery-image"
+data-flex-grow="124"
+data-flex-basis="297px"
 >&lt;/p>
 &lt;p>WPF 界面采用 xaml 文件进行定义，项目界面源代码详见 GitHub 仓库。&lt;/p>
 &lt;h2 id="onnx">ONNX
@@ -27,9 +39,15 @@ alt="项目最终效果图"
 &lt;h3 id="查看模型结构">查看模型结构
 &lt;/h3>&lt;p>下载 ONNX 模型后，我们还需要找到模型中的输入变量名与输出变量名。因此使用 &lt;a class="link" href="https://github.com/lutzroeder/netron" target="_blank" rel="noopener"
 >Netron&lt;/a> 来检视模型。Netron 打开 ONNX 模型后的效果如下图所示。&lt;/p>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/jinggqu/blog_images@main/20230818135201.png"
+&lt;p>&lt;img src="https://jinggqu.github.io/posts/handwritten-digits-recognition-using-csharp-wpf-onnx/assets/20230818135201.png"
+width="1373"
+height="1200"
+srcset="https://jinggqu.github.io/posts/handwritten-digits-recognition-using-csharp-wpf-onnx/assets/20230818135201_hu_51c6dc69ee6033f.png 480w, https://jinggqu.github.io/posts/handwritten-digits-recognition-using-csharp-wpf-onnx/assets/20230818135201_hu_87a012df4eea9ff8.png 1024w"
 loading="lazy"
-alt="手写数字识别 ONNX 模型结构"
+alt="MNIST 手写数字识别 ONNX 模型结构图"
+class="gallery-image"
+data-flex-grow="114"
+data-flex-basis="274px"
 >&lt;/p>
 &lt;p>从图中右侧可以看到，模型输入变量名为 &lt;code>Input3&lt;/code>，数据类型为 float 数组，尺寸为 1×1×28×28。输出变量名为 &lt;code>Plus214_Output_0&lt;/code>，数据类型为 float 数组，尺寸为 1×10，即为十分类中的每个类别概率值。&lt;/p>
 &lt;h2 id="整合模型">整合模型
@@ -261,9 +279,15 @@ alt="手写数字识别 ONNX 模型结构"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>变换后得到的灰度图如下图所示（28×28，图片显示效果较小）。&lt;/p>
-&lt;p>&lt;img src="https://cdn.jsdelivr.net/gh/jinggqu/blog_images@main/20230818143813.png"
+&lt;p>&lt;img src="https://jinggqu.github.io/posts/handwritten-digits-recognition-using-csharp-wpf-onnx/assets/20230818143813.png"
+width="28"
+height="28"
+srcset="https://jinggqu.github.io/posts/handwritten-digits-recognition-using-csharp-wpf-onnx/assets/20230818143813_hu_f466d90922310eed.png 480w, https://jinggqu.github.io/posts/handwritten-digits-recognition-using-csharp-wpf-onnx/assets/20230818143813_hu_506d6201b4130578.png 1024w"
 loading="lazy"
-alt="灰度图"
+alt="28×28 像素的手写数字灰度图"
+class="gallery-image"
+data-flex-grow="100"
+data-flex-basis="240px"
 >&lt;/p>
 &lt;h4 id="将图像转为一维数组">将图像转为一维数组
 &lt;/h4>&lt;p>根据上述分析，输入数据为一维 float 数组，因此还需要将灰度图转换为一维数组。&lt;/p>
