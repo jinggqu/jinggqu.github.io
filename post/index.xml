@@ -10,22 +10,39 @@
 >Tokyo Subway Ticket 官方介绍&lt;/a> 了解更多信息。&lt;/p>
 &lt;p>东京地铁的换乘系统较为复杂，建议严格按照 Google Maps 的指引进行换乘。Google Maps 会显示出最优的换乘路线和时间，避免走冤枉路。东京地铁线路图可以参见官方 &lt;a class="link" href="https://www.tokyometro.jp/cn/subwaymap/index.html" target="_blank" rel="noopener"
 >运行线路图&lt;/a>。&lt;/p>
-&lt;p>&lt;strong>可使用三日通乘车的路线仅包含上述运行图中的单字母路线（线路标识通常为空心圆形加字母，如：Ⓐ 浅草线、Ⓖ 银座线、Ⓜ 丸之内线等）&lt;/strong>，而不包含 JR 线路（通常为双字母线路，如 JK 京滨东北线、JY 山手线）及私营线路（线路标识通常为圆形，如：R 临海线）。&lt;/p>
-&lt;p>若使用三日通卡乘坐了地铁 + JR 线路或私营线路，需在出站时补交差价。游客需要前往人工服务台请求精算服务，工作人员会根据乘车记录计算出差价并收取现金，同时提供精算券，使用精算券即可出闸。若使用 Suica 乘车，在出站时闸机会自动计算地铁 + JR 线路的总费用，一次性扣除。&lt;/p>
+&lt;p>&lt;strong>可使用三日通乘车的路线仅包含上述运行图中的单字母路线（线路标识通常为空心圆形或圆角矩形加字母，如：Ⓐ 浅草线、Ⓖ 银座线、Ⓜ 丸之内线等）&lt;/strong>，而不包含 JR 线路（通常为双字母线路，如 JK 京滨东北线、JY 山手线）及私营线路（线路标识通常为圆形，如：R 临海线）。&lt;/p>
+&lt;p>&lt;img src="https://jinggqu.github.io/posts/trip-to-tokyo/assets/metro_lines.png"
+width="1300"
+height="1351"
+srcset="https://jinggqu.github.io/posts/trip-to-tokyo/assets/metro_lines_hu_1cee9f9d14bff1d4.png 480w, https://jinggqu.github.io/posts/trip-to-tokyo/assets/metro_lines_hu_daadd91ef547598d.png 1024w"
+loading="lazy"
+alt="地铁线路标识"
+class="gallery-image"
+data-flex-grow="96"
+data-flex-basis="230px"
+>&lt;/p>
 &lt;p>由于东京地铁皆由字母+站点数字编号标识，因此在辨识方向时，仅需查看站点数字编号的变化趋势即可。例如：从东京站前往新宿站，仅需乘坐 Ⓜ 丸之内线从第 17 站到第 8 站。地铁站内辨别列车方向时，亦可通过站点数字编号来判断列车行驶方向。详见下图站点名左侧蓝色方框部分。&lt;/p>
 &lt;p>&lt;img src="https://jinggqu.github.io/posts/trip-to-tokyo/assets/metro.jpg"
 width="1200"
 height="2670"
 srcset="https://jinggqu.github.io/posts/trip-to-tokyo/assets/metro_hu_3193fd5d20436654.jpg 480w, https://jinggqu.github.io/posts/trip-to-tokyo/assets/metro_hu_a3606d50c069646c.jpg 1024w"
 loading="lazy"
-alt="东京地铁站点编号标记列车行驶方向"
+alt="站点编号标记列车行驶方向"
 class="gallery-image"
 data-flex-grow="44"
 data-flex-basis="107px"
 >&lt;/p>
+&lt;p>若使用三日通卡乘坐了地铁 + JR 线路或私营线路，需在出站时补交差价。游客需要前往人工服务台请求精算服务，工作人员会根据乘车记录计算出差价并收取现金，同时提供精算券，使用精算券即可出闸。若使用 Suica 乘车，在出站时闸机会自动计算地铁 + JR 线路的总费用，一次性扣除。&lt;/p>
+&lt;p>JR 线路不同类型列车及相关票面信息可见于 &lt;a class="link" href="https://www.jreast.co.jp/multi/zh-CHS/ticket/guide.html" target="_blank" rel="noopener"
+>JR 东日本官网&lt;/a>。&lt;/p>
 &lt;h3 id="电话卡">电话卡
 &lt;/h3>&lt;p>中国大陆及港澳地区的游客，可直接购买中国移动香港提供的 CMLink 电话卡套餐，有多种套餐可供选择，同时还提供 eSIM 及旧卡套餐续订服务，非常便捷。详情可访问 &lt;a class="link" href="https://global.cmlink.com/zh-cn/plan-detail?PlanID=D2206291736017128099" target="_blank" rel="noopener"
 >CMLink 套餐介绍页面&lt;/a> 了解更多信息。&lt;/p>
+&lt;h3 id="语音翻译">语音翻译
+&lt;/h3>&lt;p>建议安装由日本 NICT 推出的 &lt;a class="link" href="https://voicetra.nict.go.jp/zh/index.html" target="_blank" rel="noopener"
+>VoiceTra 沃译通&lt;/a> 语音翻译软件，支持多种语言互译。该软件可在 &lt;a class="link" href="https://play.google.com/store/apps/details?id=jp.go.nict.voicetra&amp;amp;hl=zh-CN" target="_blank" rel="noopener"
+>Google Play&lt;/a> 和 &lt;a class="link" href="https://apps.apple.com/cn/app/voicetra/id581137577" target="_blank" rel="noopener"
+>App Store&lt;/a> 中下载。&lt;/p>
 &lt;h3 id="住宿">住宿
 &lt;/h3>&lt;p>此次住宿选择了位于银座附近的酒店，靠近日比谷线筑地站（Ⓗ-11）与有乐町线新富町站（Ⓨ-20）。每人每晚约合 HKD 540，性价比极高。详见 &lt;a class="link" href="https://hk.trip.com/hotels/detail/?hotelId=688281" target="_blank" rel="noopener"
 >東京銀座首都酒店茜館&lt;/a>。&lt;/p>
@@ -90,7 +107,7 @@ width="5568"
 height="3712"
 srcset="https://jinggqu.github.io/posts/trip-to-tokyo/assets/DSC_7345_hu_b6d7f3cde5c677a6.jpg 480w, https://jinggqu.github.io/posts/trip-to-tokyo/assets/DSC_7345_hu_336fc1fb43b95250.jpg 1024w"
 loading="lazy"
-alt="赏花人群"
+alt="赏樱人群"
 class="gallery-image"
 data-flex-grow="150"
 data-flex-basis="360px"
@@ -168,7 +185,7 @@ width="5568"
 height="3712"
 srcset="https://jinggqu.github.io/posts/trip-to-tokyo/assets/DSC_7498_hu_829fd65ad420f5fa.jpg 480w, https://jinggqu.github.io/posts/trip-to-tokyo/assets/DSC_7498_hu_a8385c37c3e405c0.jpg 1024w"
 loading="lazy"
-alt="络绎不绝的赏花人群"
+alt="络绎不绝的赏樱人群"
 class="gallery-image"
 data-flex-grow="150"
 data-flex-basis="360px"
