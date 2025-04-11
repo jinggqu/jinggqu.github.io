@@ -10,7 +10,7 @@
 >Tokyo Subway Ticket 官方介绍&lt;/a> 了解更多信息。&lt;/p>
 &lt;p>东京地铁的换乘系统较为复杂，建议严格按照 Google Maps 的指引进行换乘。Google Maps 会显示出最优的换乘路线和时间，避免走冤枉路。东京地铁线路图可以参见官方 &lt;a class="link" href="https://www.tokyometro.jp/cn/subwaymap/index.html" target="_blank" rel="noopener"
 >运行线路图&lt;/a>。&lt;/p>
-&lt;p>&lt;strong>可使用三日通乘车的路线仅包含上述运行图中的单字母路线（线路标识通常为空心圆形或圆角矩形加字母，如：Ⓐ 浅草线、Ⓖ 银座线、Ⓜ 丸之内线等）&lt;/strong>，而不包含 JR 线路（通常为双字母线路，如 JK 京滨东北线、JY 山手线）及私营线路（线路标识通常为圆形，如：R 临海线）。&lt;/p>
+&lt;p>&lt;strong>可使用三日通乘车的路线仅包含上述运行图中的单字母路线（线路标识通常为空心圆形或圆角矩形加字母，如：&lt;code>A&lt;/code> 浅草线、&lt;code>G&lt;/code> 银座线、&lt;code>M&lt;/code> 丸之内线等）&lt;/strong>，而不包含 JR 线路（通常为双字母线路，如 &lt;code>JK&lt;/code> 京滨东北线、&lt;code>JY&lt;/code> 山手线）及私营线路（线路标识通常为圆形，如：&lt;code>R&lt;/code> 临海线）。&lt;/p>
 &lt;p>&lt;img src="https://jinggqu.github.io/posts/trip-to-tokyo/assets/metro_lines.png"
 width="1300"
 height="1351"
@@ -21,7 +21,7 @@ class="gallery-image"
 data-flex-grow="96"
 data-flex-basis="230px"
 >&lt;/p>
-&lt;p>由于东京地铁皆由字母+站点数字编号标识，因此在辨识方向时，仅需查看站点数字编号的变化趋势即可。例如：从东京站前往新宿站，仅需乘坐 Ⓜ 丸之内线从第 17 站到第 8 站。地铁站内辨别列车方向时，亦可通过站点数字编号来判断列车行驶方向。详见下图站点名左侧蓝色方框部分。&lt;/p>
+&lt;p>由于东京地铁皆由字母+站点数字编号标识，因此在辨识方向时，仅需查看站点数字编号的变化趋势即可。例如：从东京站前往新宿站，仅需乘坐 &lt;code>M&lt;/code> 丸之内线从第 17 站到第 8 站。地铁站内辨别列车方向时，亦可通过站点数字编号来判断列车行驶方向。详见下图站点名左侧蓝色方框部分。&lt;/p>
 &lt;p>&lt;img src="https://jinggqu.github.io/posts/trip-to-tokyo/assets/metro.jpg"
 width="1200"
 height="2670"
@@ -44,7 +44,7 @@ data-flex-basis="107px"
 >Google Play&lt;/a> 和 &lt;a class="link" href="https://apps.apple.com/cn/app/voicetra/id581137577" target="_blank" rel="noopener"
 >App Store&lt;/a> 中下载。&lt;/p>
 &lt;h3 id="住宿">住宿
-&lt;/h3>&lt;p>此次住宿选择了位于银座附近的酒店，靠近日比谷线筑地站（Ⓗ-11）与有乐町线新富町站（Ⓨ-20）。每人每晚约合 HKD 540，性价比极高。详见 &lt;a class="link" href="https://hk.trip.com/hotels/detail/?hotelId=688281" target="_blank" rel="noopener"
+&lt;/h3>&lt;p>此次住宿选择了位于银座附近的酒店，靠近日比谷线筑地站（&lt;code>H&lt;/code>-11）与有乐町线新富町站（&lt;code>Y&lt;/code>-20）。每人每晚约合 HKD 540，性价比极高。详见 &lt;a class="link" href="https://hk.trip.com/hotels/detail/?hotelId=688281" target="_blank" rel="noopener"
 >東京銀座首都酒店茜館&lt;/a>。&lt;/p>
 &lt;h2 id="第一天富士山">第一天：富士山
 &lt;/h2>&lt;blockquote>
@@ -403,7 +403,7 @@ data-flex-basis="213px"
 >&lt;/p></description></item><item><title>台湾游记</title><link>https://jinggqu.github.io/posts/trip-to-taiwan/</link><pubDate>Wed, 04 Dec 2024 23:59:59 +0800</pubDate><guid>https://jinggqu.github.io/posts/trip-to-taiwan/</guid><description>&lt;h1 id="台湾游记">台湾游记
 &lt;/h1>&lt;h2 id="出发前准备">出发前准备
 &lt;/h2>&lt;h3 id="换现金">换现金
-&lt;/h3>&lt;p>建议每人准备 NT$2000-5000，方便日常消费。入境后，可以在任意 711 便利店或 ATM 机使用中国大陆银联卡取现，实时汇率，附加少量手续费。&lt;/p>
+&lt;/h3>&lt;p>建议每人准备 TWD 2000-5000，方便日常消费。入境后，可以在任意 711 便利店或 ATM 机使用中国大陆银联卡取现，实时汇率，附加少量手续费。&lt;/p>
 &lt;h3 id="金福气">金福气
 &lt;/h3>&lt;p>出发前至少一天登记金福气，入境后可以参加抽奖活动。登记网址：&lt;a class="link" href="https://5000.taiwan.net.tw/index.html" target="_blank" rel="noopener"
 >金福气官网&lt;/a>。&lt;/p>
@@ -424,7 +424,7 @@ data-flex-grow="173"
 data-flex-basis="417px"
 >&lt;/p>
 &lt;h3 id="电话卡">电话卡
-&lt;/h3>&lt;p>可在中华电信柜台办理五日不限流量卡，费用 NT$300 每张，支持信用卡或 Google Pay 等电子支付方式，方便随时上网。&lt;/p>
+&lt;/h3>&lt;p>可在中华电信柜台办理五日不限流量卡，费用 TWD 300 每张，支持信用卡或 Google Pay 等电子支付方式，方便随时上网。&lt;/p>
 &lt;h3 id="高铁和台铁购票">高铁和台铁购票
 &lt;/h3>&lt;p>台湾的高铁站一般在市区外围，台铁站大多在市中心。高铁速度较快，但票价较贵；台铁速度慢，但适合城市间旅行。可以通过「高铁订票通」和「台铁订票通」APP 查看列车时刻表。&lt;/p>
 &lt;p>在 711 便利店的高铁自助机可使用护照购票，但仅支持现金支付。也可以到高铁站或台铁站购票，支持信用卡或 Google Pay。&lt;/p>
@@ -452,9 +452,9 @@ data-flex-basis="954px"
 &lt;/ul>
 &lt;h4 id="景点">景点
 &lt;/h4>&lt;ul>
-&lt;li>&lt;strong>台北 101&lt;/strong>：可以乘高速电梯到达顶层（30 秒上升 80+ 层），欣赏台北 360 度的美丽夜景，门票 NT$540（学生有优惠，记得携带学生证），支持 Google Pay。台北 101 营业到 21:00。&lt;/li>
+&lt;li>&lt;strong>台北 101&lt;/strong>：可以乘高速电梯到达顶层（30 秒上升 80+ 层），欣赏台北 360 度的美丽夜景，门票 TWD 540（学生有优惠，记得携带学生证），支持 Google Pay。台北 101 营业到 21:00。&lt;/li>
 &lt;li>&lt;strong>国立台湾大学&lt;/strong>：需从台北 101 附近乘公交车前往。公交车招手即停，上车下车均需刷卡，下车要提前按铃。&lt;/li>
-&lt;li>&lt;strong>台北故宫博物院&lt;/strong>：参观完整且快速地逛完需要大半天的时间，门票 NT$350。这里有丰富的文物，建议安排充足的时间。台北故宫位置偏远，但有餐厅且风景优美，如在故宫用餐建议坐在窗边位置，可以适用信用卡或 Google Pay 等电子支付方式。故宫内设有纪念品商店，包含经典画作复刻版、经典文物冰箱贴等，可电子支付。&lt;/li>
+&lt;li>&lt;strong>台北故宫博物院&lt;/strong>：参观完整且快速地逛完需要大半天的时间，门票 TWD 350。这里有丰富的文物，建议安排充足的时间。台北故宫位置偏远，但有餐厅且风景优美，如在故宫用餐建议坐在窗边位置，可以适用信用卡或 Google Pay 等电子支付方式。故宫内设有纪念品商店，包含经典画作复刻版、经典文物冰箱贴等，可电子支付。&lt;/li>
 &lt;li>&lt;strong>艋舺（měngxiá）龙山寺和艋舺公园&lt;/strong>：较多人在寺庙内参拜，建议提前安排好时间。&lt;/li>
 &lt;li>&lt;strong>淡水河日落&lt;/strong>：日落前，从艋舺龙山寺至少提前 30 分钟出发，走到淡水河边欣赏壮丽的日落，景色非常迷人。&lt;/li>
 &lt;li>&lt;strong>西门町&lt;/strong>：沿着淡水河可一路步行至西门町吃晚饭逛夜市。&lt;/li>
@@ -564,7 +564,7 @@ data-flex-grow="150"
 data-flex-basis="360px"
 >&lt;/p>
 &lt;h3 id="台中">台中
-&lt;/h3>&lt;p>由台北市乘坐高铁即可前往台中，票价 NT$700 每人，行程共约一个小时。台中高铁站在台中市区西南角，前往酒店时可搭乘捷运（运营时间为06:00-24:00）或在高铁站负一层乘坐出租车。&lt;/p>
+&lt;/h3>&lt;p>由台北市乘坐高铁即可前往台中，票价 TWD 700 每人，行程共约一个小时。台中高铁站在台中市区西南角，前往酒店时可搭乘捷运（运营时间为06:00-24:00）或在高铁站负一层乘坐出租车。&lt;/p>
 &lt;h4 id="住宿-1">住宿
 &lt;/h4>&lt;ul>
 &lt;li>&lt;strong>台中东旅&lt;/strong>，双床房每人每晚约 HK$220（包含早餐），距离台铁台中站很近，方便出行。在线预订：&lt;a class="link" href="https://hk.trip.com/hotels/detail/?hotelId=66443711" target="_blank" rel="noopener"
@@ -577,7 +577,7 @@ data-flex-basis="360px"
 &lt;h4 id="景点-1">景点
 &lt;/h4>&lt;ul>
 &lt;li>&lt;strong>合欢山&lt;/strong>：&lt;a class="link" href="https://recreation.forest.gov.tw/Forest/RA?typ_id=0300004" target="_blank" rel="noopener"
->合欢山国家森林游乐区&lt;/a> 东峰海拔约为 3421 米。乘车抵达合欢山游客服务中心，可经松雪楼由步道前往山顶，总长约 1000 米，爬升约 300 米。山顶气温较低（约 10 摄氏度），风大且紫外线强，建议备防风衣物与防晒霜。山顶有机会看到「金翼白眉」鸟类。全程包车费用 NT$5000（往返市区与合欢山景区），单程耗时约 2 小时 30 分钟。可能会有轻微的高原反应。&lt;/li>
+>合欢山国家森林游乐区&lt;/a> 东峰海拔约为 3421 米。乘车抵达合欢山游客服务中心，可经松雪楼由步道前往山顶，总长约 1000 米，爬升约 300 米。山顶气温较低（约 10 摄氏度），风大且紫外线强，建议备防风衣物与防晒霜。山顶有机会看到「金翼白眉」鸟类。全程包车费用 TWD 5000（往返市区与合欢山景区），单程耗时约 2 小时 30 分钟。可能会有轻微的高原反应。&lt;/li>
 &lt;li>&lt;strong>&lt;a class="link" href="https://www.cingjing.gov.tw/" target="_blank" rel="noopener"
 >清境农场&lt;/a>&lt;/strong>：在这里可以与小羊亲密接触，购买羊饲料和小羊互动，黄昏时分非常美丽。&lt;/li>
 &lt;/ul>
@@ -687,7 +687,7 @@ data-flex-basis="320px"
 &lt;h4 id="景点-2">景点
 &lt;/h4>&lt;ul>
 &lt;li>&lt;strong>台湾文学馆&lt;/strong>：市区散步时，可朝「汤德章纪念公园」方向前进，此处为台南市的交通动脉，七条交通要道汇聚于此。台湾文学馆亦在此地。这里是台南市的重要文化地标，可以了解台湾的文学历史。&lt;/li>
-&lt;li>&lt;strong>四草绿色隧道&lt;/strong>：需要乘车前往，游览总时间约 30 分钟，票价 NT$200。绿意盎然的环境非常适合放松。&lt;/li>
+&lt;li>&lt;strong>四草绿色隧道&lt;/strong>：需要乘车前往，游览总时间约 30 分钟，票价 TWD 200。绿意盎然的环境非常适合放松。&lt;/li>
 &lt;li>&lt;strong>安平港渔港北堤灯塔&lt;/strong>：绿色隧道游览结束后，需提早在日落前抵达安平港渔港北堤灯塔（请注意当天日落时间）。北堤附近有大片沙滩，日落方向即为大陆福建省广东省。&lt;/li>
 &lt;/ul>
 &lt;p>&lt;img src="https://jinggqu.github.io/posts/trip-to-taiwan/assets/1739431506555.jpeg"
@@ -788,7 +788,7 @@ data-flex-basis="180px"
 &lt;/h4>&lt;ul>
 &lt;li>&lt;strong>驳二艺术特区&lt;/strong>：驳二艺术特区将码头仓库群改造艺术园区，设有商铺、食肆、书店（诚品书店，值得一去）等，亦可观赏到多个艺术装置、运行中的有轨电车以及废旧机车等。详情请参考 &lt;a class="link" href="https://pier2.org/" target="_blank" rel="noopener"
 >驳二艺术特区官方网站&lt;/a>。&lt;/li>
-&lt;li>&lt;strong>旗津岛&lt;/strong>：从高雄新滨码头出发，搭乘轮渡前往旗津岛。由于旗津岛属狭长布局，因此建议上岸后在旗津码头租借四轮车，方便后续游览。旗津岛高雄灯塔在旗津码头西侧，且需要步行上山（约15分钟）。灯塔处可俯瞰旗津岛老街的彩色房子。骑四轮车沿着旗津三路即可到达彩虹教堂，教堂外设有两个艺术装置，可拍照打卡。由于旗津岛属狭长布局，可多留一些时间慢慢驾车游览。&lt;/li>
+&lt;li>&lt;strong>旗津岛&lt;/strong>：从高雄新滨码头出发，搭乘轮渡前往旗津岛。由于旗津岛属狭长布局，因此建议上岸后在旗津码头租借四轮车，方便后续游览。旗津岛高雄灯塔在旗津码头西侧，且需要步行上山（约 15 分钟）。灯塔处可俯瞰旗津岛老街的彩色房子。骑四轮车沿着旗津三路即可到达彩虹教堂，教堂外设有两个艺术装置，可拍照打卡。由于旗津岛属狭长布局，可多留一些时间慢慢驾车游览。&lt;/li>
 &lt;/ul>
 &lt;p>&lt;img src="https://jinggqu.github.io/posts/trip-to-taiwan/assets/1739432023734.jpeg"
 width="3072"

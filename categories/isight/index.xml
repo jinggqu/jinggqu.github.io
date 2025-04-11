@@ -14,7 +14,9 @@
 &lt;h2 id="实验">实验
 &lt;/h2>&lt;h3 id="数据准备">数据准备
 &lt;/h3>&lt;p>如下图所示，定义了三个输入参数以及两个输出参数，并在 excel 中使用名称管理器为这 5 个变量设置了名称。两个输出参数的计算方法分别如下。&lt;/p>
-$$ volume = length \times height \times width $$$$ costs = 2 \times length^2 + 3 \times width^2 + 0.05 \times height^3 $$&lt;p>&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210729094237.png"
+$$ volume = length \times height \times width $$&lt;p>
+&lt;/p>
+$$ costs = 2 \times length^2 + 3 \times width^2 + 0.05 \times height^3 $$&lt;p>&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210729094237.png"
 width="751"
 height="582"
 srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210729094237_hu_aa3d3d0a3dbeb9f.png 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210729094237_hu_7640ea3c5942a3e0.png 1024w"
