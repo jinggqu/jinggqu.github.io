@@ -530,24 +530,15 @@ data-flex-basis="437px"
 &lt;/div>
 &lt;/div>&lt;p>其中，&lt;code>/usr/local/software/nginx-1.18.0&lt;/code> 为 Nginx 源目录，&lt;code>--prefix&lt;/code> 参数指定新版本生成的目录，&lt;code>--add-module&lt;/code> 参数表示添加模块，&lt;code>$YOUR_PATH&lt;/code> 需要手动替换为 fastdfs-nginx-module 模块的文件路径，本例中为 &lt;code>/usr/local/software/fastdfs-nginx-module&lt;/code>。&lt;/p>
 &lt;p>安装好之后可以通过以下命令查看 Nginx 模块，如果输出与下列内容类似，则表示模块添加成功。&lt;/p>
-&lt;div class="goat svg-container ">
-&lt;svg
-xmlns="http://www.w3.org/2000/svg"
-font-family="Menlo,Lucida Console,monospace"
-viewBox="0 0 72 25"
->
-&lt;g transform='translate(8,16)'>
-&lt;text text-anchor='middle' x='0' y='4' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='8' y='4' fill='currentColor' style='font-size:1em'>g&lt;/text>
-&lt;text text-anchor='middle' x='16' y='4' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='24' y='4' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='32' y='4' fill='currentColor' style='font-size:1em'>x&lt;/text>
-&lt;text text-anchor='middle' x='48' y='4' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='56' y='4' fill='currentColor' style='font-size:1em'>V&lt;/text>
-&lt;/g>
-&lt;/svg>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">nginx -V
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;pre>&lt;code>## 输出内容
+&lt;/div>&lt;pre>&lt;code>## 输出内容
 nginx version: nginx/1.18.0
 built by gcc 8.3.1 20191121 (Red Hat 8.3.1-5) (GCC)
 configure arguments: --prefix=/usr/local/nginx/ --add-module=/usr/local/software/fastdfs-nginx-module/src

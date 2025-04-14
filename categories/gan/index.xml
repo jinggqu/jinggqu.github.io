@@ -35,106 +35,19 @@
 >https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-2020.11-Windows-x86_64.exe&lt;/a>&lt;/p>
 &lt;p>Anaconda 安装教程网络上已经有很多，故此处不再赘述。&lt;/p>
 &lt;p>安装完成后，我们需要手动配置 Anaconda 的环境变量，在用户变量的 Path 中添加 Anaconda 的安装路径以及其子文件夹，具体内容如下。&lt;/p>
-&lt;div class="goat svg-container ">
-&lt;svg
-xmlns="http://www.w3.org/2000/svg"
-font-family="Menlo,Lucida Console,monospace"
-viewBox="0 0 288 57"
->
-&lt;g transform='translate(8,16)'>
-&lt;text text-anchor='middle' x='0' y='4' fill='currentColor' style='font-size:1em'>C&lt;/text>
-&lt;text text-anchor='middle' x='0' y='20' fill='currentColor' style='font-size:1em'>C&lt;/text>
-&lt;text text-anchor='middle' x='0' y='36' fill='currentColor' style='font-size:1em'>C&lt;/text>
-&lt;text text-anchor='middle' x='8' y='4' fill='currentColor' style='font-size:1em'>:&lt;/text>
-&lt;text text-anchor='middle' x='8' y='20' fill='currentColor' style='font-size:1em'>:&lt;/text>
-&lt;text text-anchor='middle' x='8' y='36' fill='currentColor' style='font-size:1em'>:&lt;/text>
-&lt;text text-anchor='middle' x='16' y='4' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='16' y='20' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='16' y='36' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='24' y='4' fill='currentColor' style='font-size:1em'>U&lt;/text>
-&lt;text text-anchor='middle' x='24' y='20' fill='currentColor' style='font-size:1em'>U&lt;/text>
-&lt;text text-anchor='middle' x='24' y='36' fill='currentColor' style='font-size:1em'>U&lt;/text>
-&lt;text text-anchor='middle' x='32' y='4' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='32' y='20' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='32' y='36' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='40' y='4' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='40' y='20' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='40' y='36' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='48' y='4' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='48' y='20' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='48' y='36' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='56' y='4' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='56' y='20' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='56' y='36' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='64' y='4' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='64' y='20' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='64' y='36' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='72' y='4' fill='currentColor' style='font-size:1em'>x&lt;/text>
-&lt;text text-anchor='middle' x='72' y='20' fill='currentColor' style='font-size:1em'>x&lt;/text>
-&lt;text text-anchor='middle' x='72' y='36' fill='currentColor' style='font-size:1em'>x&lt;/text>
-&lt;text text-anchor='middle' x='80' y='4' fill='currentColor' style='font-size:1em'>v&lt;/text>
-&lt;text text-anchor='middle' x='80' y='20' fill='currentColor' style='font-size:1em'>v&lt;/text>
-&lt;text text-anchor='middle' x='80' y='36' fill='currentColor' style='font-size:1em'>v&lt;/text>
-&lt;text text-anchor='middle' x='88' y='4' fill='currentColor' style='font-size:1em'>y&lt;/text>
-&lt;text text-anchor='middle' x='88' y='20' fill='currentColor' style='font-size:1em'>y&lt;/text>
-&lt;text text-anchor='middle' x='88' y='36' fill='currentColor' style='font-size:1em'>y&lt;/text>
-&lt;text text-anchor='middle' x='96' y='4' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='96' y='20' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='96' y='36' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='104' y='4' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='104' y='20' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='104' y='36' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='112' y='4' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='112' y='20' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='112' y='36' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='120' y='4' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='120' y='20' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='120' y='36' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='128' y='4' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='128' y='20' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='128' y='36' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='136' y='4' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='136' y='20' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='136' y='36' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='144' y='4' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='144' y='20' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='144' y='36' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='152' y='4' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='152' y='20' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='152' y='36' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='160' y='4' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='160' y='20' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='160' y='36' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='168' y='4' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='168' y='20' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='168' y='36' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='176' y='4' fill='currentColor' style='font-size:1em'>3&lt;/text>
-&lt;text text-anchor='middle' x='176' y='20' fill='currentColor' style='font-size:1em'>3&lt;/text>
-&lt;text text-anchor='middle' x='176' y='36' fill='currentColor' style='font-size:1em'>3&lt;/text>
-&lt;text text-anchor='middle' x='184' y='20' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='184' y='36' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='192' y='20' fill='currentColor' style='font-size:1em'>S&lt;/text>
-&lt;text text-anchor='middle' x='192' y='36' fill='currentColor' style='font-size:1em'>L&lt;/text>
-&lt;text text-anchor='middle' x='200' y='20' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='200' y='36' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='208' y='20' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='208' y='36' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='216' y='20' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='216' y='36' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='224' y='20' fill='currentColor' style='font-size:1em'>p&lt;/text>
-&lt;text text-anchor='middle' x='224' y='36' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='232' y='20' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='232' y='36' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='240' y='20' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='240' y='36' fill='currentColor' style='font-size:1em'>y&lt;/text>
-&lt;text text-anchor='middle' x='248' y='36' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='256' y='36' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='264' y='36' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='272' y='36' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;/g>
-&lt;/svg>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">C:\Users\xvyn\anaconda3
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">C:\Users\xvyn\anaconda3\Scripts
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">C:\Users\xvyn\anaconda3\Library\bin
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;p>上述配置请根据 Anaconda 实际安装路径进行调整，配置完成的效果如下图所示。&lt;/p>
+&lt;/div>&lt;p>上述配置请根据 Anaconda 实际安装路径进行调整，配置完成的效果如下图所示。&lt;/p>
 &lt;p>&lt;img src="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152533.png"
 width="1058"
 height="1086"

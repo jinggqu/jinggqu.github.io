@@ -22,143 +22,26 @@ data-flex-basis="448px"
 &lt;/h3>&lt;blockquote>
 &lt;p>本文中 LibTorch 解压后的存放目录为 &lt;code>D:\Software\libtorch-lts&lt;/code>，后续配置过程中，读者请按照自己实际情况进行相关设置。&lt;/p>&lt;/blockquote>
 &lt;p>在 Visual Studio 中，点击 &lt;code>项目 -&amp;gt; libtorch-toturial 项目属性&lt;/code>，在左侧导航栏中找到 &lt;code>VC++ 目录&lt;/code> 选项。在右侧的 &lt;code>包含目录&lt;/code> 选项中将 LibTorch include 目录添加进去，详细如下。&lt;/p>
-&lt;div class="goat svg-container ">
-&lt;svg
-xmlns="http://www.w3.org/2000/svg"
-font-family="Menlo,Lucida Console,monospace"
-viewBox="0 0 448 41"
->
-&lt;g transform='translate(8,16)'>
-&lt;text text-anchor='middle' x='0' y='4' fill='currentColor' style='font-size:1em'>D&lt;/text>
-&lt;text text-anchor='middle' x='0' y='20' fill='currentColor' style='font-size:1em'>D&lt;/text>
-&lt;text text-anchor='middle' x='8' y='4' fill='currentColor' style='font-size:1em'>:&lt;/text>
-&lt;text text-anchor='middle' x='8' y='20' fill='currentColor' style='font-size:1em'>:&lt;/text>
-&lt;text text-anchor='middle' x='16' y='4' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='16' y='20' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='24' y='4' fill='currentColor' style='font-size:1em'>S&lt;/text>
-&lt;text text-anchor='middle' x='24' y='20' fill='currentColor' style='font-size:1em'>S&lt;/text>
-&lt;text text-anchor='middle' x='32' y='4' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='32' y='20' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='40' y='4' fill='currentColor' style='font-size:1em'>f&lt;/text>
-&lt;text text-anchor='middle' x='40' y='20' fill='currentColor' style='font-size:1em'>f&lt;/text>
-&lt;text text-anchor='middle' x='48' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='48' y='20' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='56' y='4' fill='currentColor' style='font-size:1em'>w&lt;/text>
-&lt;text text-anchor='middle' x='56' y='20' fill='currentColor' style='font-size:1em'>w&lt;/text>
-&lt;text text-anchor='middle' x='64' y='4' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='64' y='20' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='72' y='4' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='72' y='20' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='80' y='4' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='80' y='20' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='88' y='4' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='88' y='20' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='96' y='4' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='96' y='20' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='104' y='4' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='104' y='20' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='112' y='4' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='112' y='20' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='120' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='120' y='20' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='128' y='4' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='128' y='20' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='136' y='4' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='136' y='20' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='144' y='4' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='144' y='20' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='152' y='4' fill='currentColor' style='font-size:1em'>h&lt;/text>
-&lt;text text-anchor='middle' x='152' y='20' fill='currentColor' style='font-size:1em'>h&lt;/text>
-&lt;text text-anchor='middle' x='160' y='4' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='160' y='20' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='168' y='4' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='168' y='20' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='176' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='176' y='20' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='184' y='4' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='184' y='20' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='192' y='4' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='192' y='20' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='200' y='4' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='200' y='20' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='208' y='4' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='208' y='20' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='216' y='4' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='216' y='20' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='224' y='4' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='224' y='20' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='232' y='4' fill='currentColor' style='font-size:1em'>u&lt;/text>
-&lt;text text-anchor='middle' x='232' y='20' fill='currentColor' style='font-size:1em'>u&lt;/text>
-&lt;text text-anchor='middle' x='240' y='4' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='240' y='20' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='248' y='4' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='248' y='20' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='256' y='20' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='264' y='20' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='272' y='20' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='280' y='20' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='288' y='20' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='296' y='20' fill='currentColor' style='font-size:1em'>h&lt;/text>
-&lt;text text-anchor='middle' x='304' y='20' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='312' y='20' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='320' y='20' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='328' y='20' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='336' y='20' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='344' y='20' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='352' y='20' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='360' y='20' fill='currentColor' style='font-size:1em'>p&lt;/text>
-&lt;text text-anchor='middle' x='368' y='20' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='376' y='20' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='384' y='20' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='392' y='20' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='400' y='20' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='408' y='20' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='416' y='20' fill='currentColor' style='font-size:1em'>u&lt;/text>
-&lt;text text-anchor='middle' x='424' y='20' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='432' y='20' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;/g>
-&lt;/svg>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">D:\Software\libtorch-lts\include
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">D:\Software\libtorch-lts\include\torch\csrc\api\include
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;p>接着找到 &lt;code>库目录&lt;/code> 选项，将 LibTorch lib 目录添加进去，详细如下。&lt;/p>
-&lt;div class="goat svg-container ">
-&lt;svg
-xmlns="http://www.w3.org/2000/svg"
-font-family="Menlo,Lucida Console,monospace"
-viewBox="0 0 232 25"
->
-&lt;g transform='translate(8,16)'>
-&lt;text text-anchor='middle' x='0' y='4' fill='currentColor' style='font-size:1em'>D&lt;/text>
-&lt;text text-anchor='middle' x='8' y='4' fill='currentColor' style='font-size:1em'>:&lt;/text>
-&lt;text text-anchor='middle' x='16' y='4' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='24' y='4' fill='currentColor' style='font-size:1em'>S&lt;/text>
-&lt;text text-anchor='middle' x='32' y='4' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='40' y='4' fill='currentColor' style='font-size:1em'>f&lt;/text>
-&lt;text text-anchor='middle' x='48' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='56' y='4' fill='currentColor' style='font-size:1em'>w&lt;/text>
-&lt;text text-anchor='middle' x='64' y='4' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='72' y='4' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='80' y='4' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='88' y='4' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='96' y='4' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='104' y='4' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='112' y='4' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='120' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='128' y='4' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='136' y='4' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='144' y='4' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='152' y='4' fill='currentColor' style='font-size:1em'>h&lt;/text>
-&lt;text text-anchor='middle' x='160' y='4' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='168' y='4' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='176' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='184' y='4' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='192' y='4' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='200' y='4' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='208' y='4' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='216' y='4' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;/g>
-&lt;/svg>
+&lt;/div>&lt;p>接着找到 &lt;code>库目录&lt;/code> 选项，将 LibTorch lib 目录添加进去，详细如下。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">D:\Software\libtorch-lts\lib
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;p>配置结果如下图，注意检查窗口顶栏 &lt;code>配置&lt;/code> 是否为 &lt;code>Release&lt;/code>，&lt;code>平台&lt;/code> 是否为 &lt;code>x64&lt;/code>。&lt;/p>
+&lt;/div>&lt;p>配置结果如下图，注意检查窗口顶栏 &lt;code>配置&lt;/code> 是否为 &lt;code>Release&lt;/code>，&lt;code>平台&lt;/code> 是否为 &lt;code>x64&lt;/code>。&lt;/p>
 &lt;p>&lt;img src="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027160310.png"
 width="1275"
 height="715"
@@ -170,271 +53,53 @@ data-flex-grow="178"
 data-flex-basis="427px"
 >&lt;/p>
 &lt;p>然后找到 &lt;code>链接器 -&amp;gt; 输入 -&amp;gt; 附加依赖项&lt;/code> 选项，在其中填入 LibTorch lib 路径下（即 &lt;code>D:\Software\libtorch-lts\lib&lt;/code>）所有 &lt;code>*.lib&lt;/code> 文件的文件名，详细如下。&lt;/p>
-&lt;div class="goat svg-container ">
-&lt;svg
-xmlns="http://www.w3.org/2000/svg"
-font-family="Menlo,Lucida Console,monospace"
-viewBox="0 0 248 329"
->
-&lt;g transform='translate(8,16)'>
-&lt;text text-anchor='middle' x='0' y='4' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='0' y='20' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='0' y='36' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='0' y='52' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='0' y='68' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='0' y='84' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='0' y='100' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='0' y='116' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='0' y='132' fill='currentColor' style='font-size:1em'>f&lt;/text>
-&lt;text text-anchor='middle' x='0' y='148' fill='currentColor' style='font-size:1em'>f&lt;/text>
-&lt;text text-anchor='middle' x='0' y='164' fill='currentColor' style='font-size:1em'>g&lt;/text>
-&lt;text text-anchor='middle' x='0' y='180' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='0' y='196' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='0' y='212' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='0' y='228' fill='currentColor' style='font-size:1em'>m&lt;/text>
-&lt;text text-anchor='middle' x='0' y='244' fill='currentColor' style='font-size:1em'>p&lt;/text>
-&lt;text text-anchor='middle' x='0' y='260' fill='currentColor' style='font-size:1em'>p&lt;/text>
-&lt;text text-anchor='middle' x='0' y='276' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='0' y='292' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='0' y='308' fill='currentColor' style='font-size:1em'>X&lt;/text>
-&lt;text text-anchor='middle' x='8' y='4' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='8' y='20' fill='currentColor' style='font-size:1em'>1&lt;/text>
-&lt;text text-anchor='middle' x='8' y='36' fill='currentColor' style='font-size:1em'>1&lt;/text>
-&lt;text text-anchor='middle' x='8' y='52' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='8' y='68' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='8' y='84' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='8' y='100' fill='currentColor' style='font-size:1em'>p&lt;/text>
-&lt;text text-anchor='middle' x='8' y='116' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='8' y='132' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='8' y='148' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='8' y='164' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='8' y='180' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='8' y='196' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='8' y='212' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='8' y='228' fill='currentColor' style='font-size:1em'>k&lt;/text>
-&lt;text text-anchor='middle' x='8' y='244' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='8' y='260' fill='currentColor' style='font-size:1em'>y&lt;/text>
-&lt;text text-anchor='middle' x='8' y='276' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='8' y='292' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='8' y='308' fill='currentColor' style='font-size:1em'>N&lt;/text>
-&lt;text text-anchor='middle' x='16' y='4' fill='currentColor' style='font-size:1em'>m&lt;/text>
-&lt;text text-anchor='middle' x='16' y='20' fill='currentColor' style='font-size:1em'>0&lt;/text>
-&lt;text text-anchor='middle' x='16' y='36' fill='currentColor' style='font-size:1em'>0&lt;/text>
-&lt;text text-anchor='middle' x='16' y='52' fill='currentColor' style='font-size:1em'>f&lt;/text>
-&lt;text text-anchor='middle' x='16' y='68' fill='currentColor' style='font-size:1em'>f&lt;/text>
-&lt;text text-anchor='middle' x='16' y='84' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='16' y='100' fill='currentColor' style='font-size:1em'>u&lt;/text>
-&lt;text text-anchor='middle' x='16' y='116' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='16' y='132' fill='currentColor' style='font-size:1em'>g&lt;/text>
-&lt;text text-anchor='middle' x='16' y='148' fill='currentColor' style='font-size:1em'>j&lt;/text>
-&lt;text text-anchor='middle' x='16' y='164' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='16' y='180' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='16' y='196' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='16' y='212' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='16' y='228' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='16' y='244' fill='currentColor' style='font-size:1em'>h&lt;/text>
-&lt;text text-anchor='middle' x='16' y='260' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='16' y='276' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='16' y='292' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='16' y='308' fill='currentColor' style='font-size:1em'>N&lt;/text>
-&lt;text text-anchor='middle' x='24' y='4' fill='currentColor' style='font-size:1em'>j&lt;/text>
-&lt;text text-anchor='middle' x='24' y='20' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='24' y='36' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='24' y='52' fill='currentColor' style='font-size:1em'>f&lt;/text>
-&lt;text text-anchor='middle' x='24' y='68' fill='currentColor' style='font-size:1em'>f&lt;/text>
-&lt;text text-anchor='middle' x='24' y='84' fill='currentColor' style='font-size:1em'>g&lt;/text>
-&lt;text text-anchor='middle' x='24' y='100' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='24' y='116' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='24' y='132' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='24' y='148' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='24' y='164' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='24' y='180' fill='currentColor' style='font-size:1em'>p&lt;/text>
-&lt;text text-anchor='middle' x='24' y='196' fill='currentColor' style='font-size:1em'>p&lt;/text>
-&lt;text text-anchor='middle' x='24' y='212' fill='currentColor' style='font-size:1em'>p&lt;/text>
-&lt;text text-anchor='middle' x='24' y='228' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='24' y='244' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='24' y='260' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='24' y='276' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='24' y='292' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='24' y='308' fill='currentColor' style='font-size:1em'>P&lt;/text>
-&lt;text text-anchor='middle' x='32' y='4' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='32' y='20' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='32' y='36' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='32' y='52' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='32' y='68' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='32' y='84' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='32' y='100' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='32' y='116' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='32' y='132' fill='currentColor' style='font-size:1em'>m&lt;/text>
-&lt;text text-anchor='middle' x='32' y='148' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='32' y='164' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='32' y='180' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='32' y='196' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='32' y='212' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='32' y='228' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='32' y='244' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='32' y='260' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='32' y='276' fill='currentColor' style='font-size:1em'>h&lt;/text>
-&lt;text text-anchor='middle' x='32' y='292' fill='currentColor' style='font-size:1em'>h&lt;/text>
-&lt;text text-anchor='middle' x='32' y='308' fill='currentColor' style='font-size:1em'>A&lt;/text>
-&lt;text text-anchor='middle' x='40' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='40' y='20' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='40' y='36' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='40' y='52' fill='currentColor' style='font-size:1em'>2&lt;/text>
-&lt;text text-anchor='middle' x='40' y='68' fill='currentColor' style='font-size:1em'>2&lt;/text>
-&lt;text text-anchor='middle' x='40' y='84' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='40' y='100' fill='currentColor' style='font-size:1em'>f&lt;/text>
-&lt;text text-anchor='middle' x='40' y='116' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='40' y='132' fill='currentColor' style='font-size:1em'>m&lt;/text>
-&lt;text text-anchor='middle' x='40' y='148' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='40' y='164' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='40' y='180' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='40' y='196' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='40' y='212' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='40' y='228' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='40' y='244' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='40' y='260' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='40' y='276' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='40' y='292' fill='currentColor' style='font-size:1em'>_&lt;/text>
-&lt;text text-anchor='middle' x='40' y='308' fill='currentColor' style='font-size:1em'>C&lt;/text>
-&lt;text text-anchor='middle' x='48' y='4' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='48' y='20' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='48' y='36' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='48' y='52' fill='currentColor' style='font-size:1em'>_&lt;/text>
-&lt;text text-anchor='middle' x='48' y='68' fill='currentColor' style='font-size:1em'>_&lt;/text>
-&lt;text text-anchor='middle' x='48' y='84' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='48' y='100' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='48' y='116' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='48' y='132' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='48' y='148' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='48' y='164' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='48' y='180' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='48' y='196' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='48' y='212' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='48' y='228' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='48' y='244' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='48' y='260' fill='currentColor' style='font-size:1em'>h&lt;/text>
-&lt;text text-anchor='middle' x='48' y='276' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='48' y='292' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='48' y='308' fill='currentColor' style='font-size:1em'>K&lt;/text>
-&lt;text text-anchor='middle' x='56' y='4' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='56' y='36' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='56' y='52' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='56' y='68' fill='currentColor' style='font-size:1em'>m&lt;/text>
-&lt;text text-anchor='middle' x='56' y='84' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='56' y='100' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='56' y='116' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='56' y='132' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='56' y='148' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='56' y='164' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='56' y='180' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='56' y='196' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='56' y='212' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='56' y='228' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='56' y='244' fill='currentColor' style='font-size:1em'>p&lt;/text>
-&lt;text text-anchor='middle' x='56' y='260' fill='currentColor' style='font-size:1em'>_&lt;/text>
-&lt;text text-anchor='middle' x='56' y='276' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='56' y='292' fill='currentColor' style='font-size:1em'>p&lt;/text>
-&lt;text text-anchor='middle' x='56' y='308' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='64' y='4' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='64' y='52' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='64' y='68' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='64' y='100' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='64' y='132' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='64' y='148' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='64' y='180' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='64' y='196' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='64' y='212' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='64' y='228' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='64' y='244' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='64' y='260' fill='currentColor' style='font-size:1em'>j&lt;/text>
-&lt;text text-anchor='middle' x='64' y='276' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='64' y='292' fill='currentColor' style='font-size:1em'>u&lt;/text>
-&lt;text text-anchor='middle' x='64' y='308' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='72' y='4' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='72' y='52' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='72' y='68' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='72' y='100' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='72' y='132' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='72' y='180' fill='currentColor' style='font-size:1em'>u&lt;/text>
-&lt;text text-anchor='middle' x='72' y='196' fill='currentColor' style='font-size:1em'>u&lt;/text>
-&lt;text text-anchor='middle' x='72' y='212' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='72' y='228' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='72' y='244' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='72' y='260' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='72' y='292' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='72' y='308' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='80' y='52' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='80' y='68' fill='currentColor' style='font-size:1em'>u&lt;/text>
-&lt;text text-anchor='middle' x='80' y='100' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='80' y='180' fill='currentColor' style='font-size:1em'>f&lt;/text>
-&lt;text text-anchor='middle' x='80' y='196' fill='currentColor' style='font-size:1em'>f&lt;/text>
-&lt;text text-anchor='middle' x='80' y='212' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='80' y='244' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='80' y='260' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='80' y='292' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='80' y='308' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='88' y='52' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='88' y='68' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='88' y='180' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='88' y='196' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='88' y='212' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='88' y='244' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='88' y='260' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='88' y='292' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='96' y='52' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='96' y='68' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='96' y='180' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='96' y='196' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='96' y='212' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='96' y='244' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='96' y='260' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='96' y='292' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='104' y='52' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='104' y='68' fill='currentColor' style='font-size:1em'>_&lt;/text>
-&lt;text text-anchor='middle' x='104' y='180' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='104' y='196' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='104' y='244' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='104' y='260' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='112' y='52' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='112' y='68' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='112' y='180' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='112' y='196' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='112' y='244' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='112' y='260' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='120' y='52' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='120' y='68' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='120' y='180' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='128' y='52' fill='currentColor' style='font-size:1em'>_&lt;/text>
-&lt;text text-anchor='middle' x='128' y='68' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='128' y='180' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='136' y='52' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='136' y='68' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='136' y='180' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='144' y='52' fill='currentColor' style='font-size:1em'>p&lt;/text>
-&lt;text text-anchor='middle' x='144' y='68' fill='currentColor' style='font-size:1em'>_&lt;/text>
-&lt;text text-anchor='middle' x='144' y='180' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='152' y='52' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='152' y='68' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='152' y='180' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='160' y='52' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='160' y='68' fill='currentColor' style='font-size:1em'>y&lt;/text>
-&lt;text text-anchor='middle' x='168' y='52' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='168' y='68' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='176' y='52' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='176' y='68' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='184' y='52' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='184' y='68' fill='currentColor' style='font-size:1em'>m&lt;/text>
-&lt;text text-anchor='middle' x='192' y='68' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='200' y='68' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='208' y='68' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='216' y='68' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='224' y='68' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='232' y='68' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;/g>
-&lt;/svg>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">asmjit.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">c10.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">c10d.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">caffe2_detectron_ops.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">caffe2_module_test_dynamic.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">clog.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cpuinfo.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">dnnl.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">fbgemm.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">fbjni.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gloo.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">libprotobuf-lite.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">libprotobuf.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">libprotoc.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mkldnn.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pthreadpool.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pytorch_jni.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">torch.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">torch_cpu.lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">XNNPACK.lib
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;p>最后，将 &lt;code>D:\Software\libtorch-lts\lib&lt;/code> 路径下所有的 &lt;code>*.dll&lt;/code> 文件拷贝至 &lt;code>项目路径 -&amp;gt; x64 -&amp;gt; Release&lt;/code> 路径下，如下图。&lt;/p>
+&lt;/div>&lt;p>最后，将 &lt;code>D:\Software\libtorch-lts\lib&lt;/code> 路径下所有的 &lt;code>*.dll&lt;/code> 文件拷贝至 &lt;code>项目路径 -&amp;gt; x64 -&amp;gt; Release&lt;/code> 路径下，如下图。&lt;/p>
 &lt;p>&lt;img src="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027163802.png"
 width="839"
 height="615"
@@ -481,167 +146,31 @@ data-flex-basis="243px"
 &lt;/h2>&lt;h3 id="数据准备">数据准备
 &lt;/h3>&lt;p>本节将以深度学习经典案例——手写数字识别来演示 LibTorch 的使用。首先需要下载 mnist 手写数字数据集，你可以在&lt;a class="link" href="http://yann.lecun.com/exdb/mnist/" target="_blank" rel="noopener"
 >这里下载&lt;/a>，下载完成后将其解压到 &lt;code>libtorch-toturial.cpp&lt;/code> 同一目录 &lt;code>data&lt;/code> 文件夹下，目录结构如下。&lt;/p>
-&lt;div class="goat svg-container ">
-&lt;svg
-xmlns="http://www.w3.org/2000/svg"
-font-family="Menlo,Lucida Console,monospace"
-viewBox="0 0 272 153"
->
-&lt;g transform='translate(8,16)'>
-&lt;text text-anchor='middle' x='0' y='4' fill='currentColor' style='font-size:1em'>├&lt;/text>
-&lt;text text-anchor='middle' x='0' y='20' fill='currentColor' style='font-size:1em'>│&lt;/text>
-&lt;text text-anchor='middle' x='0' y='36' fill='currentColor' style='font-size:1em'>│&lt;/text>
-&lt;text text-anchor='middle' x='0' y='52' fill='currentColor' style='font-size:1em'>│&lt;/text>
-&lt;text text-anchor='middle' x='0' y='68' fill='currentColor' style='font-size:1em'>│&lt;/text>
-&lt;text text-anchor='middle' x='0' y='84' fill='currentColor' style='font-size:1em'>│&lt;/text>
-&lt;text text-anchor='middle' x='0' y='100' fill='currentColor' style='font-size:1em'>│&lt;/text>
-&lt;text text-anchor='middle' x='0' y='116' fill='currentColor' style='font-size:1em'>│&lt;/text>
-&lt;text text-anchor='middle' x='0' y='132' fill='currentColor' style='font-size:1em'>│&lt;/text>
-&lt;text text-anchor='middle' x='8' y='4' fill='currentColor' style='font-size:1em'>─&lt;/text>
-&lt;text text-anchor='middle' x='16' y='4' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='24' y='4' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='24' y='20' fill='currentColor' style='font-size:1em'>│&lt;/text>
-&lt;text text-anchor='middle' x='24' y='36' fill='currentColor' style='font-size:1em'>│&lt;/text>
-&lt;text text-anchor='middle' x='24' y='52' fill='currentColor' style='font-size:1em'>├&lt;/text>
-&lt;text text-anchor='middle' x='24' y='68' fill='currentColor' style='font-size:1em'>│&lt;/text>
-&lt;text text-anchor='middle' x='24' y='84' fill='currentColor' style='font-size:1em'>│&lt;/text>
-&lt;text text-anchor='middle' x='24' y='100' fill='currentColor' style='font-size:1em'>│&lt;/text>
-&lt;text text-anchor='middle' x='24' y='116' fill='currentColor' style='font-size:1em'>│&lt;/text>
-&lt;text text-anchor='middle' x='32' y='4' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='32' y='52' fill='currentColor' style='font-size:1em'>─&lt;/text>
-&lt;text text-anchor='middle' x='40' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='40' y='52' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='48' y='4' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='48' y='20' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='48' y='52' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='56' y='4' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='56' y='20' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='56' y='52' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='64' y='4' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='64' y='20' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='64' y='52' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='72' y='4' fill='currentColor' style='font-size:1em'>h&lt;/text>
-&lt;text text-anchor='middle' x='72' y='20' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='80' y='4' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='80' y='20' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='80' y='68' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='80' y='84' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='80' y='100' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='80' y='116' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='88' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='88' y='20' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='88' y='68' fill='currentColor' style='font-size:1em'>1&lt;/text>
-&lt;text text-anchor='middle' x='88' y='84' fill='currentColor' style='font-size:1em'>1&lt;/text>
-&lt;text text-anchor='middle' x='88' y='100' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='88' y='116' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='96' y='4' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='96' y='20' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='96' y='68' fill='currentColor' style='font-size:1em'>0&lt;/text>
-&lt;text text-anchor='middle' x='96' y='84' fill='currentColor' style='font-size:1em'>0&lt;/text>
-&lt;text text-anchor='middle' x='96' y='100' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='96' y='116' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='104' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='104' y='20' fill='currentColor' style='font-size:1em'>h&lt;/text>
-&lt;text text-anchor='middle' x='104' y='68' fill='currentColor' style='font-size:1em'>k&lt;/text>
-&lt;text text-anchor='middle' x='104' y='84' fill='currentColor' style='font-size:1em'>k&lt;/text>
-&lt;text text-anchor='middle' x='104' y='100' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='104' y='116' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='112' y='4' fill='currentColor' style='font-size:1em'>u&lt;/text>
-&lt;text text-anchor='middle' x='112' y='20' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='112' y='68' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='112' y='84' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='112' y='100' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='112' y='116' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='120' y='4' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='120' y='20' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='120' y='68' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='120' y='84' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='120' y='100' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='120' y='116' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='128' y='4' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='128' y='20' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='128' y='68' fill='currentColor' style='font-size:1em'>m&lt;/text>
-&lt;text text-anchor='middle' x='128' y='84' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='128' y='100' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='128' y='116' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='136' y='4' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='136' y='20' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='136' y='68' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='136' y='84' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='136' y='100' fill='currentColor' style='font-size:1em'>m&lt;/text>
-&lt;text text-anchor='middle' x='136' y='116' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='144' y='4' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='144' y='20' fill='currentColor' style='font-size:1em'>u&lt;/text>
-&lt;text text-anchor='middle' x='144' y='68' fill='currentColor' style='font-size:1em'>g&lt;/text>
-&lt;text text-anchor='middle' x='144' y='84' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='144' y='100' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='144' y='116' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='152' y='20' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='152' y='68' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='152' y='84' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='152' y='100' fill='currentColor' style='font-size:1em'>g&lt;/text>
-&lt;text text-anchor='middle' x='152' y='116' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='160' y='20' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='160' y='68' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='160' y='84' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='160' y='100' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='160' y='116' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='168' y='20' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='168' y='68' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='168' y='84' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='168' y='100' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='168' y='116' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='176' y='20' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='176' y='68' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='176' y='84' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='176' y='100' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='176' y='116' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='184' y='20' fill='currentColor' style='font-size:1em'>.&lt;/text>
-&lt;text text-anchor='middle' x='184' y='68' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='184' y='84' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='184' y='100' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='184' y='116' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='192' y='20' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='192' y='68' fill='currentColor' style='font-size:1em'>x&lt;/text>
-&lt;text text-anchor='middle' x='192' y='84' fill='currentColor' style='font-size:1em'>x&lt;/text>
-&lt;text text-anchor='middle' x='192' y='100' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='192' y='116' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='200' y='20' fill='currentColor' style='font-size:1em'>p&lt;/text>
-&lt;text text-anchor='middle' x='200' y='68' fill='currentColor' style='font-size:1em'>3&lt;/text>
-&lt;text text-anchor='middle' x='200' y='84' fill='currentColor' style='font-size:1em'>1&lt;/text>
-&lt;text text-anchor='middle' x='200' y='100' fill='currentColor' style='font-size:1em'>x&lt;/text>
-&lt;text text-anchor='middle' x='200' y='116' fill='currentColor' style='font-size:1em'>x&lt;/text>
-&lt;text text-anchor='middle' x='208' y='20' fill='currentColor' style='font-size:1em'>p&lt;/text>
-&lt;text text-anchor='middle' x='208' y='68' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='208' y='84' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='208' y='100' fill='currentColor' style='font-size:1em'>3&lt;/text>
-&lt;text text-anchor='middle' x='208' y='116' fill='currentColor' style='font-size:1em'>1&lt;/text>
-&lt;text text-anchor='middle' x='216' y='68' fill='currentColor' style='font-size:1em'>u&lt;/text>
-&lt;text text-anchor='middle' x='216' y='84' fill='currentColor' style='font-size:1em'>u&lt;/text>
-&lt;text text-anchor='middle' x='216' y='100' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='216' y='116' fill='currentColor' style='font-size:1em'>-&lt;/text>
-&lt;text text-anchor='middle' x='224' y='68' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='224' y='84' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='224' y='100' fill='currentColor' style='font-size:1em'>u&lt;/text>
-&lt;text text-anchor='middle' x='224' y='116' fill='currentColor' style='font-size:1em'>u&lt;/text>
-&lt;text text-anchor='middle' x='232' y='68' fill='currentColor' style='font-size:1em'>y&lt;/text>
-&lt;text text-anchor='middle' x='232' y='84' fill='currentColor' style='font-size:1em'>y&lt;/text>
-&lt;text text-anchor='middle' x='232' y='100' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='232' y='116' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='240' y='68' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='240' y='84' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='240' y='100' fill='currentColor' style='font-size:1em'>y&lt;/text>
-&lt;text text-anchor='middle' x='240' y='116' fill='currentColor' style='font-size:1em'>y&lt;/text>
-&lt;text text-anchor='middle' x='248' y='68' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='248' y='84' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='248' y='100' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='248' y='116' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='256' y='100' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='256' y='116' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;/g>
-&lt;/svg>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">├─libtorch-toturial
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ libtorch-toturial.cpp
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├─data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ t10k-images-idx3-ubyte
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ t10k-labels-idx1-ubyte
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ train-images-idx3-ubyte
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ train-labels-idx1-ubyte
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;h3 id="源代码">源代码
+&lt;/div>&lt;h3 id="源代码">源代码
 &lt;/h3>&lt;p>手写数字识别的源代码可以在 &lt;a class="link" href="https://github.com/pytorch/examples/blob/master/cpp/mnist/mnist.cpp" target="_blank" rel="noopener"
 >LibTorch 官方示例&lt;/a> 中找到，请将其拷贝到项目的 &lt;code>libtorch-toturial.cpp&lt;/code> 中。&lt;/p>
 &lt;h3 id="结果">结果
@@ -664,60 +193,17 @@ data-flex-basis="354px"
 >Boost 官方网站&lt;/a> 与 &lt;a class="link" href="https://github.com/dpilger26/NumCpp" target="_blank" rel="noopener"
 >NumCpp Github 页面&lt;/a> 进行下载。&lt;/p>
 &lt;p>与 LibTorch 配置过程类似，我们需要在 Visual Studio 项目属性中找到 &lt;code>VC++ 目录 -&amp;gt; 包含目录&lt;/code> 选项，将 Boost 库与 NumCpp 库的路径添加进去，具体路径如下。&lt;/p>
-&lt;div class="goat svg-container ">
-&lt;svg
-xmlns="http://www.w3.org/2000/svg"
-font-family="Menlo,Lucida Console,monospace"
-viewBox="0 0 216 41"
->
-&lt;g transform='translate(8,16)'>
-&lt;text text-anchor='middle' x='0' y='4' fill='currentColor' style='font-size:1em'>D&lt;/text>
-&lt;text text-anchor='middle' x='0' y='20' fill='currentColor' style='font-size:1em'>D&lt;/text>
-&lt;text text-anchor='middle' x='8' y='4' fill='currentColor' style='font-size:1em'>:&lt;/text>
-&lt;text text-anchor='middle' x='8' y='20' fill='currentColor' style='font-size:1em'>:&lt;/text>
-&lt;text text-anchor='middle' x='16' y='4' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='16' y='20' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='24' y='4' fill='currentColor' style='font-size:1em'>S&lt;/text>
-&lt;text text-anchor='middle' x='24' y='20' fill='currentColor' style='font-size:1em'>S&lt;/text>
-&lt;text text-anchor='middle' x='32' y='4' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='32' y='20' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='40' y='4' fill='currentColor' style='font-size:1em'>f&lt;/text>
-&lt;text text-anchor='middle' x='40' y='20' fill='currentColor' style='font-size:1em'>f&lt;/text>
-&lt;text text-anchor='middle' x='48' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='48' y='20' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='56' y='4' fill='currentColor' style='font-size:1em'>w&lt;/text>
-&lt;text text-anchor='middle' x='56' y='20' fill='currentColor' style='font-size:1em'>w&lt;/text>
-&lt;text text-anchor='middle' x='64' y='4' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='64' y='20' fill='currentColor' style='font-size:1em'>a&lt;/text>
-&lt;text text-anchor='middle' x='72' y='4' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='72' y='20' fill='currentColor' style='font-size:1em'>r&lt;/text>
-&lt;text text-anchor='middle' x='80' y='4' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='80' y='20' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;text text-anchor='middle' x='88' y='4' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='88' y='20' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='96' y='4' fill='currentColor' style='font-size:1em'>b&lt;/text>
-&lt;text text-anchor='middle' x='96' y='20' fill='currentColor' style='font-size:1em'>N&lt;/text>
-&lt;text text-anchor='middle' x='104' y='4' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='104' y='20' fill='currentColor' style='font-size:1em'>u&lt;/text>
-&lt;text text-anchor='middle' x='112' y='4' fill='currentColor' style='font-size:1em'>o&lt;/text>
-&lt;text text-anchor='middle' x='112' y='20' fill='currentColor' style='font-size:1em'>m&lt;/text>
-&lt;text text-anchor='middle' x='120' y='4' fill='currentColor' style='font-size:1em'>s&lt;/text>
-&lt;text text-anchor='middle' x='120' y='20' fill='currentColor' style='font-size:1em'>C&lt;/text>
-&lt;text text-anchor='middle' x='128' y='4' fill='currentColor' style='font-size:1em'>t&lt;/text>
-&lt;text text-anchor='middle' x='128' y='20' fill='currentColor' style='font-size:1em'>p&lt;/text>
-&lt;text text-anchor='middle' x='136' y='20' fill='currentColor' style='font-size:1em'>p&lt;/text>
-&lt;text text-anchor='middle' x='144' y='20' fill='currentColor' style='font-size:1em'>\&lt;/text>
-&lt;text text-anchor='middle' x='152' y='20' fill='currentColor' style='font-size:1em'>i&lt;/text>
-&lt;text text-anchor='middle' x='160' y='20' fill='currentColor' style='font-size:1em'>n&lt;/text>
-&lt;text text-anchor='middle' x='168' y='20' fill='currentColor' style='font-size:1em'>c&lt;/text>
-&lt;text text-anchor='middle' x='176' y='20' fill='currentColor' style='font-size:1em'>l&lt;/text>
-&lt;text text-anchor='middle' x='184' y='20' fill='currentColor' style='font-size:1em'>u&lt;/text>
-&lt;text text-anchor='middle' x='192' y='20' fill='currentColor' style='font-size:1em'>d&lt;/text>
-&lt;text text-anchor='middle' x='200' y='20' fill='currentColor' style='font-size:1em'>e&lt;/text>
-&lt;/g>
-&lt;/svg>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">D:\Software\boost
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">D:\Software\NumCpp\include
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;p>然后即可使用下述程序片段进行检查是否配置正确，若成功运行并生成了 3x4 个浮点随机数，则说明配置无误。&lt;/p>
+&lt;/div>&lt;p>然后即可使用下述程序片段进行检查是否配置正确，若成功运行并生成了 3x4 个浮点随机数，则说明配置无误。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
