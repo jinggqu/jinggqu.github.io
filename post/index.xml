@@ -1576,7 +1576,7 @@ data-flex-basis="360px"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>通过定义 &lt;code>L{width}&lt;/code>、&lt;code>C{width}&lt;/code>、&lt;code>R{width}&lt;/code> 三个命令，可以快速实现在表格中插入多行内容，并且与默认的 &lt;code>l&lt;/code>、&lt;code>c&lt;/code>、&lt;code>r&lt;/code> 类似，可以显式指定内容的对齐方式。&lt;/p>
-&lt;h2 id="表格自动格式化">表格自动格式化
+&lt;h2 id="正文及表格自动格式化">正文及表格自动格式化
 &lt;/h2>&lt;p>在 VSCode 编写 LaTeX 项目中的表格时，最常用到的功能即为自动格式化。LaTeX 文件自动格式化依赖 VSCode 中的 &lt;a class="link" href="https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop" target="_blank" rel="noopener"
 >LaTeX Workshop&lt;/a> 插件，在使用格式化前请先安装该插件。&lt;/p>
 &lt;p>在 Windows 平台中格式化的快捷键为 &lt;code>Alt&lt;/code> + &lt;code>Shift&lt;/code> + &lt;code>F&lt;/code>。格式化时，VSCode 会根据 &lt;code>&amp;amp;&lt;/code> 与 &lt;code>\\&lt;/code> 的位置自动调整表格的对齐方式。通常情况下，表格中的每一行内容末尾都会有 &lt;code>\\&lt;/code> 符号用于标志换行，而每一列内容之间都会有 &lt;code>&amp;amp;&lt;/code> 符号用于标志列的分隔。&lt;/p>
@@ -1588,6 +1588,19 @@ data-flex-basis="360px"
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="err">-y=lookForAlignDelims:tabular:alignFinalDoubleBackSlash:&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="macos-无法格式化">MacOS 无法格式化
+&lt;/h2>&lt;p>若格式化时 VSCode - Output - LaTeX Workshop 中出现以下错误内容，则说明缺少 &lt;code>File::HomeDir&lt;/code> perl 模块。&lt;/p>
+&lt;blockquote>
+&lt;p>stderr: Can&amp;rsquo;t locate File/HomeDir.pm in @INC (&lt;strong>you may need to install the File::HomeDir module&lt;/strong>) (@INC contains:&amp;hellip;&lt;/p>&lt;/blockquote>
+&lt;p>可通过以下命令安装，安装完成后重启 VSCode 即可。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">cpan -i File::HomeDir
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;h2 id="表格列分隔宽度">表格列分隔宽度
