@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RustDesk on Anthony's blog</title><link>https://jinggqu.github.io/categories/rustdesk/</link><description>Recent content in RustDesk on Anthony's blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 18 Aug 2025 12:00:00 +0800</lastBuildDate><atom:link href="https://jinggqu.github.io/categories/rustdesk/index.xml" rel="self" type="application/rss+xml"/><item><title>使用 RustDesk 实现内网穿透</title><link>https://jinggqu.github.io/posts/rustdesk/</link><pubDate>Mon, 18 Aug 2025 12:00:00 +0800</pubDate><guid>https://jinggqu.github.io/posts/rustdesk/</guid><description>&lt;h1 id="使用-rustdesk-实现内网穿透"&gt;使用 RustDesk 实现内网穿透
+&lt;/h1&gt;&lt;p&gt;RustDesk 是一款开源远程桌面软件，支持 TCP 隧道（tunneling）功能，这可以用于转发端口，从而允许从其他设备（Windows 或 macOS）通过 SSH 访问 Ubuntu 服务器。即使服务器无 GUI，RustDesk 也可以在 headless（无头）模式下运行作为服务端。TCP 隧道本质上是客户端发起的端口转发：客户端连接到服务器的 RustDesk 后，设置本地端口转发到服务器的 SSH 端口（默认 &lt;code&gt;22&lt;/code&gt;），然后从客户端本地 SSH 到该端口即可访问服务器。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;此设置假设 Ubuntu 服务器的 SSH 服务已启用（&lt;code&gt;sudo apt install openssh-server &amp;amp;&amp;amp; sudo systemctl start ssh&lt;/code&gt;）。&lt;/li&gt;
+&lt;li&gt;默认情况下，RustDesk 使用公共中继服务器。如果需要自托管中继服务器（例如防火墙限制），可以额外安装 RustDesk Server，但这里聚焦于基本设置。&lt;/li&gt;
+&lt;li&gt;TCP 隧道需要在客户端的 RustDesk GUI 中配置（Windows/macOS 有 GUI），服务器侧只需启用并运行 RustDesk 服务。&lt;/li&gt;
+&lt;li&gt;安全提示：使用强密码，并考虑自托管以避免公共中继。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="在-ubuntu-服务器上安装和配置-rustdeskcli-操作"&gt;在 Ubuntu 服务器上安装和配置 RustDesk（CLI 操作）
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;更新系统包：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt update &amp;amp;&amp;amp; sudo apt upgrade -y
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;下载最新 RustDesk deb 包（检查 &lt;a class="link" href="https://github.com/rustdesk/rustdesk/releases" target="_blank" rel="noopener"
+&gt;RustDesk GitHub Releases&lt;/a&gt; 获取最新版本，例如 1.4.2）：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-gdscript3" data-lang="gdscript3"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;wget&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rustdesk&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rustdesk&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;releases&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;download&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;1.4&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rustdesk&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.4&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;x86_64&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;deb&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装 deb 包：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo dpkg -i rustdesk-*.deb
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;修复任何依赖问题：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt-get install -f
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装 headless 支持所需包（虚拟显示驱动，可选）：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt install ubuntu-desktop xserver-xorg-video-dummy lightdm -y
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;启用 headless 模式：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo rustdesk --option allow-linux-headless Y
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;作为系统服务启动 RustDesk（自动后台运行）：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl start rustdesk
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl enable rustdesk # 开机自启
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;获取 RustDesk ID（用于客户端连接）：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo rustdesk --get-id
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;（输出类似：123456789）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设置永久密码（替换 &lt;code&gt;&amp;lt;your_password&amp;gt;&lt;/code&gt; 为强密码）：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo rustdesk --password &amp;lt;your_password&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;启用 TCP 隧道（默认已启用，但可手动确认/设置）：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;编辑配置文件（通常在 &lt;code&gt;/root/.config/rustdesk/RustDesk.toml&lt;/code&gt;）：
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo vim /root/.config/rustdesk/RustDesk.toml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;添加或修改：
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;enable-tunnel = &amp;#34;Y&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;保存后，重启服务：
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl restart rustdesk
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="在客户端设备上配置-rustdesk-和-tcp-隧道"&gt;在客户端设备上配置 RustDesk 和 TCP 隧道
+&lt;/h2&gt;&lt;p&gt;各平台都可从 &lt;a class="link" href="https://github.com/rustdesk/rustdesk/releases/" target="_blank" rel="noopener"
+&gt;RustDesk GitHub Releases&lt;/a&gt; 下载并安装 RustDesk 客户端。安装完成后打开 RustDesk 客户端，输入服务器的 ID 和密码进行连接。连接成功后，在 RustDesk 界面中设置 TCP 隧道。&lt;/p&gt;
+&lt;h3 id="设置端口转发"&gt;设置端口转发
+&lt;/h3&gt;&lt;p&gt;点击已添加设备菜单中的 &lt;code&gt;TCP Tunneling&lt;/code&gt; 按钮&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/rustdesk/assets/main-view.webp"
+width="2809"
+height="2154"
+srcset="https://jinggqu.github.io/posts/rustdesk/assets/main-view_hu_b82c423decd36fb8.webp 480w, https://jinggqu.github.io/posts/rustdesk/assets/main-view_hu_469f82f07d6a6e07.webp 1024w"
+loading="lazy"
+alt="RustDesk 已添加设备中的 TCP Tunneling 按钮"
+class="gallery-image"
+data-flex-grow="130"
+data-flex-basis="312px"
+&gt;&lt;/p&gt;
+&lt;p&gt;添加新隧道：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;本地端口：任意可用端口，例如 50002（本地监听端口）。&lt;/li&gt;
+&lt;li&gt;远程主机：localhost（或服务器内网 IP，如果不同）。&lt;/li&gt;
+&lt;li&gt;远程端口：22（SSH 端口）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/rustdesk/assets/port-forwarding.webp"
+width="1686"
+height="1066"
+srcset="https://jinggqu.github.io/posts/rustdesk/assets/port-forwarding_hu_9b4e4f227523721f.webp 480w, https://jinggqu.github.io/posts/rustdesk/assets/port-forwarding_hu_62ee569c2aa99488.webp 1024w"
+loading="lazy"
+alt="Port Forwarding 界面"
+class="gallery-image"
+data-flex-grow="158"
+data-flex-basis="379px"
+&gt;&lt;/p&gt;
+&lt;p&gt;上述端口转发设置将实时生效，在使用过程中请勿关闭端口转发窗口。&lt;/p&gt;
+&lt;h3 id="测试隧道"&gt;测试隧道
+&lt;/h3&gt;&lt;p&gt;在客户端命令行（Windows: PowerShell 或 cmd；macOS: Terminal）运行：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ssh &amp;lt;ubuntu_username&amp;gt;@localhost -p 50002
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;输入 Ubuntu 服务器的 SSH 密码，即可连接。这会将客户端的本地 &lt;code&gt;50002&lt;/code&gt; 端口流量转发到服务器的 &lt;code&gt;22&lt;/code&gt; 端口，实现 SSH 访问。&lt;/p&gt;
+&lt;p&gt;或者可以通过 Visual Studio Code / Cursor 等支持 SSH 访问的软件进行上述测试，详细的 SSH 配置如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Host my-linux-rustdesk
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; HostName localhost
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; User root
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Port 50002
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="其他使用场景"&gt;其他使用场景
+&lt;/h2&gt;&lt;p&gt;除了上述的 SSH 连接之外，还可以通过将 Windows 设备的 Remote Desktop Protocol 端口（RDP 端口默认为 &lt;code&gt;3389&lt;/code&gt;）映射到本地，例如在上述 Port Forwarding 窗口中配置本地 &lt;code&gt;40002&lt;/code&gt; 端口转发到远端 &lt;code&gt;3389&lt;/code&gt; 端口。然后使用 &lt;a class="link" href="https://learn.microsoft.com/en-us/windows-app/get-started-connect-devices-desktops-apps" target="_blank" rel="noopener"
+&gt;Windows APP&lt;/a&gt; 新建 RDP 远程桌面连接，Windows APP 中的设置如下图，设置远端 Windows 用户名和密码后，即可通过 RustDesk 端口转发的形式完成远程桌面访问。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/rustdesk/assets/RDP.webp"
+width="916"
+height="616"
+srcset="https://jinggqu.github.io/posts/rustdesk/assets/RDP_hu_4b71934c3e3d4c5a.webp 480w, https://jinggqu.github.io/posts/rustdesk/assets/RDP_hu_6bdf090bf2adfd45.webp 1024w"
+loading="lazy"
+alt="Windows APP 中 IP 和端口设置为 localhost 以及转发的端口"
+class="gallery-image"
+data-flex-grow="148"
+data-flex-basis="356px"
+&gt;&lt;/p&gt;
+&lt;p&gt;但话说回来，RustDesk 本身就支持远程桌面访问，上述需求也许算是一个伪需求吧～&lt;/p&gt;
+&lt;h2 id="为-rustdesk-设置代理"&gt;为 RustDesk 设置代理
+&lt;/h2&gt;&lt;p&gt;在某些情况下穿透不太稳定，因此可以设置代理使远程连接更加丝滑。如果本机已经安装代理软件且默认开放局域网访问（如 Clash 系列软件，默认开启本机 &lt;code&gt;7890&lt;/code&gt; 端口接收其他软件或设备的代理请求），因此可以将 RustDesk 的流量转发给 Clash（&lt;code&gt;127.0.0.1:7890&lt;/code&gt;）使其托管，设置方法如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/rustdesk/assets/proxy.webp"
+width="2809"
+height="2154"
+srcset="https://jinggqu.github.io/posts/rustdesk/assets/proxy_hu_9a1c99efa5748b1.webp 480w, https://jinggqu.github.io/posts/rustdesk/assets/proxy_hu_bb7834b3c2171996.webp 1024w"
+loading="lazy"
+alt="RustDesk 代理设置界面"
+class="gallery-image"
+data-flex-grow="130"
+data-flex-basis="312px"
+&gt;&lt;/p&gt;
+&lt;h2 id="常见问题排查"&gt;常见问题排查
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;连接失败&lt;/strong&gt;：检查防火墙（&lt;code&gt;sudo ufw allow 21114:21119/tcp &amp;amp;&amp;amp; sudo ufw allow 21116/udp&lt;/code&gt;），或使用自托管服务器（参考 &lt;a class="link" href="https://rustdesk.com/docs/en/self-host/" target="_blank" rel="noopener"
+&gt;https://rustdesk.com/docs/en/self-host/&lt;/a&gt;）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;无输出&lt;/strong&gt;：CLI 命令需 sudo 执行。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;密码加密&lt;/strong&gt;：如果配置文件中密码加密，可用 &lt;code&gt;--get-temp-password&lt;/code&gt; 获取临时密码。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;多设备&lt;/strong&gt;：每个客户端独立连接并设置隧道，支持同时多个。&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

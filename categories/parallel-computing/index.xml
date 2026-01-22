@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Parallel Computing on Anthony's blog</title><link>https://jinggqu.github.io/categories/parallel-computing/</link><description>Recent content in Parallel Computing on Anthony's blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 11 Jan 2021 15:00:00 +0800</lastBuildDate><atom:link href="https://jinggqu.github.io/categories/parallel-computing/index.xml" rel="self" type="application/rss+xml"/><item><title>并行计算总结</title><link>https://jinggqu.github.io/posts/parallel-computing-summary/</link><pubDate>Mon, 11 Jan 2021 15:00:00 +0800</pubDate><guid>https://jinggqu.github.io/posts/parallel-computing-summary/</guid><description>&lt;h1 id="并行计算总结"&gt;并行计算总结
+&lt;/h1&gt;&lt;h2 id="1-概念"&gt;1. 概念
+&lt;/h2&gt;&lt;h3 id="11-摩尔定律moores-law"&gt;1.1 摩尔定律（Moore&amp;rsquo;s law）
+&lt;/h3&gt;&lt;p&gt;摩尔定律是由英特尔（Intel）创始人之一戈登·摩尔提出的。其内容为：集成电路上可容纳的晶体管数目，约每隔两年便会增加一倍；经常被引用的“18 个月”，是由英特尔首席执行官大卫·豪斯（David House）提出：预计 18 个月会将芯片的性能提高一倍（即更多的晶体管使其更快），是一种以倍数增长的观测。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;通常认为摩尔定律具体的内容：每 18 个月，芯片的性能将提高一倍&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3 id="12-新摩尔定律存疑"&gt;1.2 新摩尔定律（存疑）
+&lt;/h3&gt;&lt;p&gt;由于单个核心性能提升有着严重的瓶颈问题，未来的计算机硬件不会更快，但会更“宽”。&lt;/p&gt;
+&lt;h3 id="13-常见并行模式"&gt;1.3 常见并行模式
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;进程 + 线程
+硬件组织通常是多机+多核，编程环境 MPI+OpenMP&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;线程 + GPU 线程
+硬件组织通常是多核+多 GPU，编程环境 OpenMP+CUDA/OpenCL&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;进程 + 线程 + GPU 线程
+硬件组织通常是多机+多核+多 GPU，编程环境 MPI+OpenMP+CUDA/OpenCL&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="14-cpu-与-gpu-区别"&gt;1.4 CPU 与 GPU 区别
+&lt;/h3&gt;&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/parallel-computing-summary/assets/20210111155959.webp"
+width="2244"
+height="1070"
+srcset="https://jinggqu.github.io/posts/parallel-computing-summary/assets/20210111155959_hu_dd79f437e9f48676.webp 480w, https://jinggqu.github.io/posts/parallel-computing-summary/assets/20210111155959_hu_c41d861664a0e9eb.webp 1024w"
+loading="lazy"
+alt="CPU 与 GPU 架构对比图"
+class="gallery-image"
+data-flex-grow="209"
+data-flex-basis="503px"
+&gt;&lt;/p&gt;
+&lt;p&gt;上图中，绿色的是计算单元，橙红色的是存储单元，橙黄色的是控制单元。其中，各个部件详细释义：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ALU：算术逻辑单元（&lt;strong&gt;A&lt;/strong&gt;rithmetic &lt;strong&gt;L&lt;/strong&gt;ogic &lt;strong&gt;U&lt;/strong&gt;nit），是一种可对二进制整数执行算术运算或位运算的组合逻辑数字电路；&lt;/li&gt;
+&lt;li&gt;Control：控制单元，负责指挥 CPU 工作，控制其他设备的活动；&lt;/li&gt;
+&lt;li&gt;Cache：用于减少处理器访问内存所需平均时间的部件；&lt;/li&gt;
+&lt;li&gt;DRAM：动态随机存取存储器（&lt;strong&gt;D&lt;/strong&gt;ynamic &lt;strong&gt;R&lt;/strong&gt;andom &lt;strong&gt;A&lt;/strong&gt;ccess &lt;strong&gt;M&lt;/strong&gt;emory），即内存。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;简而言之，CPU 擅长于复杂逻辑控制，GPU 擅长于简单重复运算。&lt;/p&gt;
+&lt;h2 id="2-cuda-简介及架构"&gt;2. CUDA 简介及架构
+&lt;/h2&gt;&lt;p&gt;CUDA（&lt;strong&gt;C&lt;/strong&gt;ompute &lt;strong&gt;U&lt;/strong&gt;nified &lt;strong&gt;D&lt;/strong&gt;evice &lt;strong&gt;A&lt;/strong&gt;rchitecture）是 NVIDIA 推出的的通用并行计算架构，该架构使 GPU 能够解决大量重复性的计算问题。&lt;/p&gt;
+&lt;h3 id="21-物理架构"&gt;2.1 物理架构
+&lt;/h3&gt;&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/parallel-computing-summary/assets/20210111162222.webp"
+width="3014"
+height="1395"
+srcset="https://jinggqu.github.io/posts/parallel-computing-summary/assets/20210111162222_hu_f6c841d14387e0fb.webp 480w, https://jinggqu.github.io/posts/parallel-computing-summary/assets/20210111162222_hu_f2eedef9c31b1bfa.webp 1024w"
+loading="lazy"
+alt="CUDA 物理架构示意图"
+class="gallery-image"
+data-flex-grow="216"
+data-flex-basis="518px"
+&gt;&lt;/p&gt;
+&lt;h3 id="22-kernel-函数启动参数"&gt;2.2 kernel 函数启动参数
+&lt;/h3&gt;&lt;h4 id="221-blockspergrid"&gt;2.2.1 blocksPerGrid
+&lt;/h4&gt;&lt;p&gt;用于定义 kernel 函数使用的 block 数量，可以定义为一、二与三维结构，示例如下；&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c" data-lang="c"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 使用 8 个 block
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;blocksPerGrid&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 使用 2 * 2 个 block
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;dim3&lt;/span&gt; &lt;span class="nf"&gt;blocksPerGrid&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 使用 2 * 2 * 2 个 block
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;dim3&lt;/span&gt; &lt;span class="nf"&gt;blocksPerGrid&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="222-threadsperblock"&gt;2.2.2 threadsPerBlock
+&lt;/h4&gt;&lt;p&gt;用于定义每个 block 中使用的线程数量，与 block 类似，同样可以定义为一、二与三维结构。在目前的 GPU 上，一个线程块可以包含多达 &lt;strong&gt;1024&lt;/strong&gt; 个线程。示例如下；&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c" data-lang="c"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 使用 1024 个线程
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;threadsPerBlock&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1024&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 使用 32 * 32 个线程
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;dim3&lt;/span&gt; &lt;span class="nf"&gt;threadsPerBlock&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 使用 8 * 8 * 8 个线程
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;dim3&lt;/span&gt; &lt;span class="nf"&gt;threadsPerBlock&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="223-调用-kernel-函数"&gt;2.2.3 调用 kernel 函数
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c" data-lang="c"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 官方示例，sharedMemBytes 表示指定共享内存大小，单位为字节
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;kernelFunction&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;dimGrid&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dimBlock&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sharedMemBytes&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;(...);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 实际调用示例，sharedMemBytes 参数可省略
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;kernelFunction&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;blocksPerGrid&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;threadsPerBlock&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;(...);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="23-常用-cuda-关键字"&gt;2.3 常用 CUDA 关键字
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;函数定义方式&lt;/th&gt;
+&lt;th&gt;执行方&lt;/th&gt;
+&lt;th&gt;调用方&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;__device__&lt;/strong&gt; float DeviceFunc()&lt;/td&gt;
+&lt;td&gt;GPU&lt;/td&gt;
+&lt;td&gt;GPU&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;__global__&lt;/strong&gt; void KernelFunc()&lt;/td&gt;
+&lt;td&gt;GPU&lt;/td&gt;
+&lt;td&gt;CPU&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;__host__&lt;/strong&gt; float HostFunc()&lt;/td&gt;
+&lt;td&gt;CPU&lt;/td&gt;
+&lt;td&gt;CPU&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;__device__函数没有函数地址，也没有指向它的函数指针。在 device 端执行的函数有下面的限制:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;没有递归；&lt;/li&gt;
+&lt;li&gt;函数内部没有静态变量；&lt;/li&gt;
+&lt;li&gt;参数的数量是固定的。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id="231-__shared__"&gt;2.3.1 __shared__
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;存储于 GPU 上的 thread block 内的共享存储器；&lt;/li&gt;
+&lt;li&gt;和 thread block 具有相同的生命期；&lt;/li&gt;
+&lt;li&gt;只能被 thread block 内的线程存取。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;常用于声明变量，声明后的变量将会存储在 shared memory 中，例如&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c" data-lang="c"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 存储在 shared memory 中
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;__shared__&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 存储在 global memory 中
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="24-内存类型"&gt;2.4 内存类型
+&lt;/h3&gt;&lt;h4 id="241-register-与-local-memory"&gt;2.4.1 Register 与 Local Memory
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;对每个线程来说，寄存器都是线程私有的；&lt;/li&gt;
+&lt;li&gt;如果寄存器被消耗完，数据将被存储在 local memory。Local memory 是私有的，但是 local memory 中的数据是被保存在显存中，速度很慢；&lt;/li&gt;
+&lt;li&gt;输入和中间输出变量将被保存在 register 或者 local memory 中。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="242-shared-memory"&gt;2.4.2 Shared Memory
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;用于线程间通信的 shared memory。shared memory 是一块可以被同一 block 中的所有 thread 访问的可读写存储器；&lt;/li&gt;
+&lt;li&gt;访问 shared memory 几乎和访问 register 一样快，是实现线程间通信的延迟最小的方法；&lt;/li&gt;
+&lt;li&gt;shared memory 可以实现许多不同的功能，如用于保存公用的计数器或者 block 的公用结构。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="25-内存分配"&gt;2.5 内存分配
+&lt;/h3&gt;&lt;p&gt;通过如下语句可以实现 CUDA 内存分配，分配显存中的 global memory。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c" data-lang="c"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;cudaMalloc&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="n"&gt;devPtr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;size_t&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;其中&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;devPtr：对象指针；&lt;/li&gt;
+&lt;li&gt;size：分配的内存大小。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;例如&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c" data-lang="c"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;cudaMalloc&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;device_array&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;N&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;sizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;float&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;通过如下语句可以实现 CUDA 释放 global memory 中分配出的内存。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c" data-lang="c"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;cudaFree&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;devPtr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="26-数据交换"&gt;2.6 数据交换
+&lt;/h3&gt;&lt;p&gt;通过如下语句可以实现 CUDA 显存中数据与 CPU 内存端数据的交换。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c" data-lang="c"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;cudaMemcpy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;dst&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;size_t&lt;/span&gt; &lt;span class="n"&gt;count&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;enum&lt;/span&gt; &lt;span class="n"&gt;cudaMemcpyKind&lt;/span&gt; &lt;span class="n"&gt;kind&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;其中&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;dst：目的存储器地址；&lt;/li&gt;
+&lt;li&gt;src：源存储器地址；&lt;/li&gt;
+&lt;li&gt;count：拷贝数据的大小；&lt;/li&gt;
+&lt;li&gt;kind：数据传输类型，常用的包括以下两种：
+cudaMemcpyDeviceToHost：将显存中的数据拷贝到内存中；
+cudaMemcpyHostToDevice：将内存中的数据拷贝到显存中。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;例如&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c" data-lang="c"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;cudaMemcpy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;device_array&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;host_array&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;N&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;sizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;float&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;cudaMemcpyHostToDevice&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="27-线程同步"&gt;2.7 线程同步
+&lt;/h3&gt;&lt;h4 id="271-block-内线程同步"&gt;2.7.1 block 内线程同步
+&lt;/h4&gt;&lt;p&gt;通过调用以下方法，实现同一个 block 内所有线程同步。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c" data-lang="c"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;__syncthreads&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;例如&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c" data-lang="c"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;__global__&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(...)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;__syncthreads&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="272-cpu-与-gpu-线程同步"&gt;2.7.2 CPU 与 GPU 线程同步
+&lt;/h4&gt;&lt;p&gt;通常情况下，CPU 端调用 kernel 函数，并不会阻塞后续 CPU 端的代码执行，也即调用 kernel 函数是&lt;strong&gt;异步&lt;/strong&gt;的。若要实现同步的效果，只需在调用 kernel 函数后调用以下方法，进行线程同步即可。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c" data-lang="c"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;cudaDeviceSynchronize&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;cudaThreadSynchronize&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="c1"&gt;// 已过时，应避免使用
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;例如&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c" data-lang="c"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;kernel&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;blocksPerGrid&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;threadsPerBlock&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;(...);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;cudaDeviceSynchronize&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="3-cuda-编程"&gt;3 CUDA 编程
+&lt;/h2&gt;&lt;h3 id="31-矩阵相加"&gt;3.1 矩阵相加
+&lt;/h3&gt;&lt;p&gt;&lt;a class="link" href="https://github.com/jinggqu/ParallelComputing/blob/main/classwork/01/matrix_addition.cu" target="_blank" rel="noopener"
+&gt;https://github.com/jinggqu/ParallelComputing/blob/main/classwork/01/matrix_addition.cu&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="32-矩阵相乘"&gt;3.2 矩阵相乘
+&lt;/h3&gt;&lt;p&gt;&lt;a class="link" href="https://github.com/jinggqu/ParallelComputing/blob/main/classwork/02/matrix_multiplication.cu" target="_blank" rel="noopener"
+&gt;https://github.com/jinggqu/ParallelComputing/blob/main/classwork/02/matrix_multiplication.cu&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="33-并行规约"&gt;3.3 并行规约
+&lt;/h3&gt;&lt;p&gt;&lt;a class="link" href="https://github.com/jinggqu/ParallelComputing#%E4%BA%8C%E8%8E%B7%E5%8F%96%E7%9F%A9%E9%98%B5%E6%AF%8F%E4%B8%80%E8%A1%8C%E7%9A%84%E6%9C%80%E5%A4%A7%E5%80%BC" target="_blank" rel="noopener"
+&gt;https://github.com/jinggqu/ParallelComputing#%E4%BA%8C%E8%8E%B7%E5%8F%96%E7%9F%A9%E9%98%B5%E6%AF%8F%E4%B8%80%E8%A1%8C%E7%9A%84%E6%9C%80%E5%A4%A7%E5%80%BC&lt;/a&gt;&lt;/p&gt;</description></item><item><title>并行计算课程实践</title><link>https://jinggqu.github.io/posts/parallel-computing/</link><pubDate>Tue, 24 Nov 2020 10:00:00 +0800</pubDate><guid>https://jinggqu.github.io/posts/parallel-computing/</guid><description>&lt;h1 id="并行计算课程实践"&gt;并行计算课程实践
+&lt;/h1&gt;&lt;h2 id="写在前面"&gt;写在前面
+&lt;/h2&gt;&lt;h3 id="vim-基本操作"&gt;Vim 基本操作
+&lt;/h3&gt;&lt;h4 id="简介"&gt;简介
+&lt;/h4&gt;&lt;p&gt;vim 共分为三种模式，分别是命令模式（Command mode），输入模式（Insert mode）和底线命令模式（Last line mode）。 详见 &lt;a class="link" href="https://www.runoob.com/linux/linux-vim.html" target="_blank" rel="noopener"
+&gt;Linux vi/vim | 菜鸟教程&lt;/a&gt;。&lt;/p&gt;
+&lt;h4 id="编辑文件"&gt;编辑文件
+&lt;/h4&gt;&lt;p&gt;编辑文本文件可以通过 &lt;code&gt;vim 文件名&lt;/code&gt; 实现，如果文件原本不存在，则 Vim 会自动新建该文件。例如新建或编辑名为 test.txt 的文件，可以通过下面的命令实现。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vim test.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;进入编辑界面之后，按下 i 键或 Insert 键，即可进入输入模式开始编辑文件。&lt;/p&gt;
+&lt;h4 id="常用命令"&gt;常用命令
+&lt;/h4&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;命令&lt;/th&gt;
+&lt;th&gt;操作说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Esc&lt;/td&gt;
+&lt;td&gt;退出编辑模式&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;:wq&lt;/td&gt;
+&lt;td&gt;保存文件并退出 Vim&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;:q!&lt;/td&gt;
+&lt;td&gt;不保存文件并强制退出 Vim（慎用）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;:set nu&lt;/td&gt;
+&lt;td&gt;显示行号&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;i / Insert&lt;/td&gt;
+&lt;td&gt;切换到输入模式&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;删除当前光标所在处的字符&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;d&lt;/td&gt;
+&lt;td&gt;剪切光标所在行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;dd&lt;/td&gt;
+&lt;td&gt;删除光标所在行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;yy&lt;/td&gt;
+&lt;td&gt;复制光标所在行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;p&lt;/td&gt;
+&lt;td&gt;粘贴已复制或已剪切的数据&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;u&lt;/td&gt;
+&lt;td&gt;撤销上一步操作&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;gg&lt;/td&gt;
+&lt;td&gt;跳转到文件开头&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;G(shift+g)&lt;/td&gt;
+&lt;td&gt;跳转到文件末尾&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;/word&lt;/td&gt;
+&lt;td&gt;搜索名称为 word 的字符串&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;^&lt;/td&gt;
+&lt;td&gt;跳转到光标所在行首&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;$&lt;/td&gt;
+&lt;td&gt;跳转到光标所在行尾&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="代码及数据"&gt;代码及数据
+&lt;/h2&gt;&lt;p&gt;本文的代码均存放在 Github，地址 &lt;a class="link" href="https://github.com/jinggqu/ParallelComputing" target="_blank" rel="noopener"
+&gt;https://github.com/jinggqu/ParallelComputing&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;本例中所设计到的输入矩阵有两个：a 矩阵与 b 矩阵，其值相同，如下：&lt;/p&gt;
+&lt;p&gt;a、b 矩阵：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;18.04 8.47 16.82 17.15 19.58 4.24 7.20 16.50 5.97 11.90
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;10.25 13.50 7.83 11.03 20.45 19.68 13.65 15.40 3.04 13.03
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;0.35 5.22 2.95 17.27 3.36 8.61 2.79 2.34 21.45 4.69
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;11.02 18.02 13.16 6.36 13.69 11.26 10.60 20.89 6.28 16.56
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;11.31 16.53 8.59 19.15 6.08 7.57 17.35 19.74 1.50 20.39
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;11.30 1.85 4.13 14.24 19.12 7.49 1.38 0.43 9.83 1.35
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;5.12 20.84 19.37 18.27 5.73 11.59 8.06 16.33 11.01 14.34
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;11.42 0.84 9.40 20.01 19.99 15.48 6.11 15.86 13.74 7.60
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;14.77 3.56 9.45 18.90 17.81 7.09 4.92 19.19 7.52 14.75
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;20.54 12.64 14.12 18.44 9.44 19.84 8.56 17.50 14.69 19.56
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="矩阵相加"&gt;矩阵相加
+&lt;/h2&gt;&lt;h3 id="上传文件"&gt;上传文件
+&lt;/h3&gt;&lt;p&gt;在命令行中使用 &lt;code&gt;rz&lt;/code&gt; 命令开始上传文件，选中相应文件之后点击打开即可开始上传。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/parallel-computing/assets/20201124095937.webp"
+width="1094"
+height="876"
+srcset="https://jinggqu.github.io/posts/parallel-computing/assets/20201124095937_hu_bb32194f6f203850.webp 480w, https://jinggqu.github.io/posts/parallel-computing/assets/20201124095937_hu_6ee34f0549a898ab.webp 1024w"
+loading="lazy"
+alt="文件上传对话框"
+class="gallery-image"
+data-flex-grow="124"
+data-flex-basis="299px"
+&gt;&lt;/p&gt;
+&lt;h3 id="编译"&gt;编译
+&lt;/h3&gt;&lt;p&gt;执行 &lt;code&gt;nvcc&lt;/code&gt; 命令编译上述文件，生成可执行文件。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;nvcc -o matrixaddition matrixaddition.cu
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;其中，&lt;code&gt;-o matrixaddition&lt;/code&gt; 表示将可执行文件的文件名指定为 matrixaddition。若不指定，则默认为 a.out。&lt;/p&gt;
+&lt;p&gt;执行完上述操作之后，使用 &lt;code&gt;ll&lt;/code&gt; 命令可以查看现有的所有文件，输出如下。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-rwxrwxr-x. 1 cuda01 cuda01 569416 11 月 24 09:50 matrixaddition
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-rw-r--r--. 1 cuda01 cuda01 2023 11 月 24 09:49 matrixaddition.cu
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="运行"&gt;运行
+&lt;/h3&gt;&lt;p&gt;上述过程中生成了 &lt;code&gt;matrixaddition&lt;/code&gt; 可执行文件，执行下述命令即可开始运行。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./matrixaddition
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;输出结果如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;36.09 16.94 33.63 34.29 39.15 8.48 14.40 33.00 11.93 23.79
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;20.50 27.01 15.67 22.05 40.90 39.35 27.30 30.81 6.08 26.07
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;0.70 10.43 5.89 34.54 6.73 17.22 5.57 4.67 42.90 9.37
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;22.03 36.04 26.31 12.71 27.38 22.52 21.20 41.78 12.56 33.13
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;22.62 33.07 17.19 38.29 12.17 15.14 34.69 39.47 3.00 40.77
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;22.59 3.70 8.26 28.49 38.24 14.98 2.76 0.86 19.66 2.71
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;10.23 41.69 38.75 36.55 11.45 23.18 16.12 32.65 22.01 28.68
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;22.83 1.69 18.80 40.02 39.98 30.96 12.21 31.72 27.49 15.21
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;29.54 7.13 18.90 37.80 35.61 14.19 9.83 38.37 15.05 29.49
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;41.08 25.28 28.23 36.88 18.88 39.68 17.11 34.99 29.39 39.13
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="矩阵相乘"&gt;矩阵相乘
+&lt;/h2&gt;&lt;p&gt;与上述过程类似，将编写好的代码上传到服务器中，准备进行编译。&lt;/p&gt;
+&lt;h3 id="编译-1"&gt;编译
+&lt;/h3&gt;&lt;p&gt;执行 &lt;code&gt;nvcc&lt;/code&gt; 命令编译代码文件，生成可执行文件。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;nvcc -o matrixmultiplication matrixmultiplication.cu
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="运行-1"&gt;运行
+&lt;/h3&gt;&lt;p&gt;上述过程中生成了 &lt;code&gt;matrixmultiplication&lt;/code&gt; 可执行文件，执行下述命令即可开始运行。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./matrixmultiplication
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;相乘结果：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1434.15 1331.02 1349.52 2031.20 1607.49 1378.23 1109.41 1915.59 1198.52 1642.11
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1459.53 1356.36 1325.31 2057.32 1718.01 1479.91 1109.21 1791.41 1139.91 1573.60
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;840.46 667.29 691.96 1000.79 1033.85 727.56 517.53 1100.00 572.38 918.05
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1465.92 1237.35 1307.85 2113.54 1760.48 1593.65 1067.92 1812.61 1268.27 1554.78
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1106.95 1007.73 1027.50 1761.49 1474.07 1238.15 1092.06 1966.31 1278.88 1661.49
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;866.95 809.99 741.98 1093.15 931.67 600.26 684.60 1144.12 468.24 1008.11
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1394.52 1273.50 1259.89 1989.42 1802.07 1643.34 1025.81 1803.05 1353.40 1541.02
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1410.82 1162.53 1229.82 1926.65 1632.43 1203.22 978.71 1790.40 1080.38 1510.35
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1338.49 1253.85 1171.30 1826.25 1491.70 1298.11 1020.23 1856.90 1107.89 1567.99
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;1901.57 1436.10 1636.91 2460.80 2242.40 1747.59 1161.72 2187.99 1521.42 1855.17
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item></channel></rss>

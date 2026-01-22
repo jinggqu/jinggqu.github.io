@@ -1,0 +1,220 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="SAE 入门（二）——基于 tiny_dnn 的手写数字重建 前言 在上一篇文章中，我们使用 Python 使用 SAE 网络实现了手写数字的重建。在本文中，我们将尝试使用 tiny_dnn 库实现手写数字重建。\n"><title>SAE 入门（二）——基于 tiny_dnn 的手写数字重建</title><link rel=canonical href=https://jinggqu.github.io/posts/sae-2/><link rel=stylesheet href=/scss/style.min.833d6eed45de56f48306bf57268d5b8cdfc8a60e8e7bdc99810464fcd033f7c6.css><meta property='og:title' content="SAE 入门（二）——基于 tiny_dnn 的手写数字重建"><meta property='og:description' content="SAE 入门（二）——基于 tiny_dnn 的手写数字重建 前言 在上一篇文章中，我们使用 Python 使用 SAE 网络实现了手写数字的重建。在本文中，我们将尝试使用 tiny_dnn 库实现手写数字重建。\n"><meta property='og:url' content='https://jinggqu.github.io/posts/sae-2/'><meta property='og:site_name' content="Anthony's blog"><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:published_time' content='2021-01-28T18:00:00+08:00'><meta property='article:modified_time' content='2021-01-28T18:00:00+08:00'><meta name=twitter:title content="SAE 入门（二）——基于 tiny_dnn 的手写数字重建"><meta name=twitter:description content="SAE 入门（二）——基于 tiny_dnn 的手写数字重建 前言 在上一篇文章中，我们使用 Python 使用 SAE 网络实现了手写数字的重建。在本文中，我们将尝试使用 tiny_dnn 库实现手写数字重建。\n"></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_d10682067064815c.webp width=300 height=300 class=site-logo loading=lazy alt=Avatar></a></figure><div class=site-meta><h1 class=site-name><a href=/>Anthony's blog</a></h1><h2 class=site-description></h2></div></header><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/archives><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=https://github.com/jinggqu target=_blank><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+<span>GitHub</span></a></li><li><a href=https://unsplash.com/@xvyn target=_blank><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Unsplash</span></a></li><li><a href=/index.xml target=_blank><svg class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="5" cy="19" r="1"/><path d="M4 4a16 16 0 0116 16"/><path d="M4 11a9 9 0 019 9"/></svg>
+<span>RSS</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#前言>前言</a></li><li><a href=#tiny_dnn-简介>tiny_dnn 简介</a></li><li><a href=#搭建环境>搭建环境</a><ol><li><a href=#版本要求>版本要求</a></li><li><a href=#创建项目>创建项目</a></li><li><a href=#编辑配置>编辑配置</a></li><li><a href=#编写代码>编写代码</a></li></ol></li><li><a href=#结果展示>结果展示</a></li><li><a href=#性能对比>性能对比</a></li><li><a href=#存在的不足>存在的不足</a></li><li><a href=#参考文献>参考文献</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/stacked-autoencoder/>Stacked-Autoencoder
+</a><a href=/categories/machine-learning/>Machine-Learning</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/posts/sae-2/>SAE 入门（二）——基于 tiny_dnn 的手写数字重建</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published datetime=2021-01-28T18:00:00+08:00>Jan 28, 2021</time></div></footer></div></header><section class=article-content><h1 id=sae-入门二基于-tiny_dnn-的手写数字重建>SAE 入门（二）——基于 tiny_dnn 的手写数字重建</h1><h2 id=前言>前言</h2><p>在<a class=link href=https://jinggqu.github.io/posts/sae-1/ target=_blank rel=noopener>上一篇文章</a>中，我们使用 Python 使用 SAE 网络实现了手写数字的重建。在本文中，我们将尝试使用 tiny_dnn 库实现手写数字重建。</p><h2 id=tiny_dnn-简介>tiny_dnn 简介</h2><p>tiny-dnn 项目地址：https://github.com/tiny-dnn/tiny-dnn，这是深度学习的一个 C ++ 14 实现。它适合在有限的计算资源，嵌入式系统和 IoT 设备上进行深度学习。整个项目仅由头文件构成，使用时无需编译，直接引用即可。</p><h2 id=搭建环境>搭建环境</h2><h3 id=版本要求>版本要求</h3><p>需要一个 C++ 14 编译器，例如 gcc 4.9+，clang 3.6+ 或者 VS 2015+。本文中使用 <strong>Visual Studio 2019</strong> 为例进行配置。</p><h3 id=创建项目>创建项目</h3><p>打开 VS，创建一个名为 testTinyDNN 的<strong>控制台应用</strong>。将 tiny_dnn 下载解压之后，放置到如下图所示的位置，与 <code>testTinyDNN.cpp</code> 属于同一层级。</p><p><img src=/posts/sae-2/assets/20210129112851.webp width=827 height=267 srcset="/posts/sae-2/assets/20210129112851_hu_94ec61166c7b3dd5.webp 480w, /posts/sae-2/assets/20210129112851_hu_d6bfb2854bd504f7.webp 1024w" loading=lazy alt=项目文件结构示意图 class=gallery-image data-flex-grow=309 data-flex-basis=743px></p><h3 id=编辑配置>编辑配置</h3><ol><li>编辑 <code>config.h</code> 文件第 61 行，将其取消注释；这样我们才可以将栈式自编码器预测的图片保存到本地。涉及内容如下：</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm> * Enable Image API support.
+</span></span></span><span class=line><span class=cl><span class=cm> * Currently we use stb by default.
+</span></span></span><span class=line><span class=cl><span class=cm> **/</span>
+</span></span><span class=line><span class=cl><span class=cp>#define DNN_USE_IMAGE_API
+</span></span></span></code></pre></td></tr></table></div></div><ol start=2><li>编辑 <code>image.h</code> 文件第 378 行，将 <code>border_width</code> 值设置为 0，这样保存的图片每个像素周围就不会存在白色边框。涉及内容如下：</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=k>const</span> <span class=n>size_t</span> <span class=n>border_width</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=编写代码>编写代码</h3><p>打开 <code>testTinyDNN.cpp</code> 文件，将下列代码粘贴进去。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span><span class=lnt>85
+</span><span class=lnt>86
+</span><span class=lnt>87
+</span><span class=lnt>88
+</span><span class=lnt>89
+</span><span class=lnt>90
+</span><span class=lnt>91
+</span><span class=lnt>92
+</span><span class=lnt>93
+</span><span class=lnt>94
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;iostream&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;string&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&#34;tiny_dnn/tiny_dnn.h&#34;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=k>using</span> <span class=k>namespace</span> <span class=n>tiny_dnn</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>using</span> <span class=k>namespace</span> <span class=n>tiny_dnn</span><span class=o>::</span><span class=n>activation</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>using</span> <span class=k>namespace</span> <span class=n>tiny_dnn</span><span class=o>::</span><span class=n>layers</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>using</span> <span class=k>namespace</span> <span class=n>std</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cp>#define EPOCHS 50
+</span></span></span><span class=line><span class=cl><span class=cp>#define BATCH_SIZE 256
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>sae</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// define network, optimizer and engine
+</span></span></span><span class=line><span class=cl>    <span class=n>network</span><span class=o>&lt;</span><span class=n>sequential</span><span class=o>&gt;</span> <span class=n>net</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>adam</span> <span class=n>optimizer</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>core</span><span class=o>::</span><span class=n>backend_t</span> <span class=n>backend_type</span> <span class=o>=</span> <span class=n>core</span><span class=o>::</span><span class=n>default_engine</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// construct network layers, include 3 encoder layers and 3 decoder layers
+</span></span></span><span class=line><span class=cl>    <span class=n>net</span> <span class=o>&lt;&lt;</span> <span class=n>fully_connected_layer</span><span class=p>(</span><span class=mi>784</span><span class=p>,</span> <span class=mi>128</span><span class=p>,</span> <span class=nb>true</span><span class=p>,</span> <span class=n>backend_type</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=n>relu</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=o>&lt;&lt;</span> <span class=n>fully_connected_layer</span><span class=p>(</span><span class=mi>128</span><span class=p>,</span> <span class=mi>64</span><span class=p>,</span> <span class=nb>true</span><span class=p>,</span> <span class=n>backend_type</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=n>relu</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=o>&lt;&lt;</span> <span class=n>fully_connected_layer</span><span class=p>(</span><span class=mi>64</span><span class=p>,</span> <span class=mi>32</span><span class=p>,</span> <span class=nb>true</span><span class=p>,</span> <span class=n>backend_type</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=n>relu</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=o>&lt;&lt;</span> <span class=n>fully_connected_layer</span><span class=p>(</span><span class=mi>32</span><span class=p>,</span> <span class=mi>64</span><span class=p>,</span> <span class=nb>true</span><span class=p>,</span> <span class=n>backend_type</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=n>relu</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=o>&lt;&lt;</span> <span class=n>fully_connected_layer</span><span class=p>(</span><span class=mi>64</span><span class=p>,</span> <span class=mi>128</span><span class=p>,</span> <span class=nb>true</span><span class=p>,</span> <span class=n>backend_type</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=n>sigmoid</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=o>&lt;&lt;</span> <span class=n>fully_connected_layer</span><span class=p>(</span><span class=mi>128</span><span class=p>,</span> <span class=mi>784</span><span class=p>,</span> <span class=nb>true</span><span class=p>,</span> <span class=n>backend_type</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// load MNIST dataset
+</span></span></span><span class=line><span class=cl>    <span class=n>vector</span><span class=o>&lt;</span><span class=n>vec_t</span><span class=o>&gt;</span> <span class=n>train_images</span><span class=p>,</span> <span class=n>test_images</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>string</span> <span class=n>data_dir_path</span> <span class=o>=</span> <span class=s>&#34;tiny_dnn/data&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>parse_mnist_images</span><span class=p>(</span><span class=n>data_dir_path</span> <span class=o>+</span> <span class=s>&#34;/train-images.idx3-ubyte&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=o>&amp;</span><span class=n>train_images</span><span class=p>,</span> <span class=o>-</span><span class=mf>1.0</span><span class=p>,</span> <span class=mf>1.0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>parse_mnist_images</span><span class=p>(</span><span class=n>data_dir_path</span> <span class=o>+</span> <span class=s>&#34;/t10k-images.idx3-ubyte&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=o>&amp;</span><span class=n>test_images</span><span class=p>,</span> <span class=o>-</span><span class=mf>1.0</span><span class=p>,</span> <span class=mf>1.0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;start training&#34;</span> <span class=o>&lt;&lt;</span> <span class=n>endl</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// define learning rate (0.05)
+</span></span></span><span class=line><span class=cl>    <span class=n>optimizer</span><span class=p>.</span><span class=n>alpha</span> <span class=o>*=</span> <span class=k>static_cast</span><span class=o>&lt;</span><span class=n>tiny_dnn</span><span class=o>::</span><span class=n>float_t</span><span class=o>&gt;</span><span class=p>(</span><span class=mf>0.05</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// display training progress bar, and show training duration
+</span></span></span><span class=line><span class=cl>    <span class=n>progress_display</span> <span class=n>disp</span><span class=p>(</span><span class=k>static_cast</span><span class=o>&lt;</span><span class=kt>unsigned</span> <span class=kt>long</span><span class=o>&gt;</span><span class=p>(</span><span class=n>train_images</span><span class=p>.</span><span class=n>size</span><span class=p>()));</span>
+</span></span><span class=line><span class=cl>    <span class=n>timer</span> <span class=n>t</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// create callback
+</span></span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>epoch</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>auto</span> <span class=n>on_enumerate_epoch</span> <span class=o>=</span> <span class=p>[</span><span class=o>&amp;</span><span class=p>]()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>epoch</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;</span><span class=se>\n</span><span class=s>&#34;</span> <span class=o>&lt;&lt;</span> <span class=n>t</span><span class=p>.</span><span class=n>elapsed</span><span class=p>()</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;s elapsed.&#34;</span> <span class=o>&lt;&lt;</span> <span class=n>endl</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;epoch=&#34;</span> <span class=o>&lt;&lt;</span> <span class=n>epoch</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;/&#34;</span> <span class=o>&lt;&lt;</span> <span class=n>EPOCHS</span> <span class=o>&lt;&lt;</span> <span class=n>endl</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>disp</span><span class=p>.</span><span class=n>restart</span><span class=p>(</span><span class=k>static_cast</span><span class=o>&lt;</span><span class=kt>unsigned</span> <span class=kt>long</span><span class=o>&gt;</span><span class=p>(</span><span class=n>train_images</span><span class=p>.</span><span class=n>size</span><span class=p>()));</span>
+</span></span><span class=line><span class=cl>        <span class=n>t</span><span class=p>.</span><span class=n>restart</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>auto</span> <span class=n>on_enumerate_minibatch</span> <span class=o>=</span> <span class=p>[</span><span class=o>&amp;</span><span class=p>]()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>disp</span> <span class=o>+=</span> <span class=n>BATCH_SIZE</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// training
+</span></span></span><span class=line><span class=cl>    <span class=n>net</span><span class=p>.</span><span class=n>fit</span><span class=o>&lt;</span><span class=n>mse</span><span class=o>&gt;</span><span class=p>(</span><span class=n>optimizer</span><span class=p>,</span> <span class=n>train_images</span><span class=p>,</span> <span class=n>train_images</span><span class=p>,</span> <span class=n>BATCH_SIZE</span><span class=p>,</span> <span class=n>EPOCHS</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>on_enumerate_minibatch</span><span class=p>,</span> <span class=n>on_enumerate_epoch</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// save model
+</span></span></span><span class=line><span class=cl>    <span class=n>net</span><span class=p>.</span><span class=n>save</span><span class=p>(</span><span class=s>&#34;sae-net&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;end training.&#34;</span> <span class=o>&lt;&lt;</span> <span class=n>endl</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// if the model already exists, you can read it directly
+</span></span></span><span class=line><span class=cl>    <span class=c1>//net.load(&#34;sae-net&#34;);
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// save layers to image
+</span></span></span><span class=line><span class=cl>    <span class=c1>//for (size_t i = 0; i &lt; net.depth(); i++) {
+</span></span></span><span class=line><span class=cl>    <span class=c1>//    auto out_img = net[i]-&gt;output_to_image();
+</span></span></span><span class=line><span class=cl>    <span class=c1>//    auto filename = &#34;layer_&#34; + to_string(i) + &#34;.bmp&#34;;
+</span></span></span><span class=line><span class=cl>    <span class=c1>//    out_img.save(filename);
+</span></span></span><span class=line><span class=cl>    <span class=c1>//}
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// test and show results
+</span></span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=mi>10</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=c1>// get predicted result image
+</span></span></span><span class=line><span class=cl>        <span class=k>auto</span> <span class=n>predict</span> <span class=o>=</span> <span class=n>net</span><span class=p>.</span><span class=n>predict</span><span class=p>(</span><span class=n>test_images</span><span class=p>[</span><span class=n>i</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1>// save predicted result image to file
+</span></span></span><span class=line><span class=cl>        <span class=k>auto</span> <span class=n>image</span> <span class=o>=</span> <span class=n>vec2image</span><span class=o>&lt;</span><span class=kt>float</span><span class=o>&gt;</span><span class=p>(</span><span class=n>predict</span><span class=p>,</span> <span class=mi>10</span><span class=p>,</span> <span class=mi>28</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>auto</span> <span class=n>filename</span> <span class=o>=</span> <span class=s>&#34;image_predicted_&#34;</span> <span class=o>+</span> <span class=n>to_string</span><span class=p>(</span><span class=n>i</span><span class=p>)</span> <span class=o>+</span> <span class=s>&#34;.bmp&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>image</span><span class=p>.</span><span class=n>save</span><span class=p>(</span><span class=n>filename</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1>// save the origin test image to file
+</span></span></span><span class=line><span class=cl>        <span class=n>image</span> <span class=o>=</span> <span class=n>vec2image</span><span class=o>&lt;</span><span class=kt>float</span><span class=o>&gt;</span><span class=p>(</span><span class=n>test_images</span><span class=p>[</span><span class=n>i</span><span class=p>],</span> <span class=mi>10</span><span class=p>,</span> <span class=mi>28</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>filename</span> <span class=o>=</span> <span class=s>&#34;image_test_&#34;</span> <span class=o>+</span> <span class=n>to_string</span><span class=p>(</span><span class=n>i</span><span class=p>)</span> <span class=o>+</span> <span class=s>&#34;.bmp&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>image</span><span class=p>.</span><span class=n>save</span><span class=p>(</span><span class=n>filename</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>sae</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>在代码中，我们定义了每批次训练数据量为 256 条，总共训练 50 个批次。</p><p>网络结构为 3 个编码层 + 3 个解码层。编码层将数据从 784（28 * 28） 维分别编码（降维）到 128、64、32 维，解码器再将 32 维的编码结果解码（升维）到 64、128、784 维，完成手写数字重建。各层之间的激活函数选用 <code>relu()</code> 与 <code>sigmoid()</code>。</p><h2 id=结果展示>结果展示</h2><p><img src=/posts/sae-2/assets/20210129163100.webp width=2011 height=389 srcset="/posts/sae-2/assets/20210129163100_hu_87566522907ea9b2.webp 480w, /posts/sae-2/assets/20210129163100_hu_d524d451c02bfb7f.webp 1024w" loading=lazy alt=手写数字重建效果对比图 class=gallery-image data-flex-grow=516 data-flex-basis=1240px></p><p>从上到下，第一行为测试图像，第二行为 keras 搭建的 SAE 网络重建图像，第三行为 tiny_dnn 搭建的 SAE 网络重建图像。下面展示数字 2 和 5 重建的详细效果，左侧为 Python 平台重建结果，右侧为 C++ 平台重建结果。</p><p>数字 2</p><p><img src=/posts/sae-2/assets/20210129182201.webp width=1498 height=767 srcset="/posts/sae-2/assets/20210129182201_hu_968e3db06a118374.webp 480w, /posts/sae-2/assets/20210129182201_hu_d70b93806d58a885.webp 1024w" loading=lazy alt="数字 2 的重建效果对比" class=gallery-image data-flex-grow=195 data-flex-basis=468px></p><p>数字 5</p><p><img src=/posts/sae-2/assets/20210129181931.webp width=1503 height=780 srcset="/posts/sae-2/assets/20210129181931_hu_6cbbd7cfdac2d4f8.webp 480w, /posts/sae-2/assets/20210129181931_hu_1e14d543b4c42334.webp 1024w" loading=lazy alt="数字 5 的重建效果对比" class=gallery-image data-flex-grow=192 data-flex-basis=462px></p><h2 id=性能对比>性能对比</h2><p>测试使用的 CPU 型号为 Intel i5-4200H，基准频率为 2.80GHz。</p><p>基于 tiny_dnn 的 C++ 平台训练时长为 2624.95 秒，基于 keras 的 Python 平台训练时长为 135.70 秒。在 50 个 epoch 测试中，Python 平台比 C++ 平台快了大约 19 倍，Python 平台 loss 大约为 0.08。由重建图片结果不难看出，Python 平台效果明显优于 C++ 平台。</p><h2 id=存在的不足>存在的不足</h2><ol><li>C++ 平台目前无法计算每个 epoch 的 loss；</li><li>将在 C++ 平台测试更多的 epoch，观察图像重建效果是否会有改善。</li></ol><h2 id=参考文献>参考文献</h2><ol><li><a class=link href=https://mightynotes.wordpress.com/2017/10/11/a-simple-and-basic-tutorial-of-tiny-dnn/ target=_blank rel=noopener>A simple and basic tutorial of tiny-dnn</a></li><li><a class=link href=https://tiny-dnn.readthedocs.io/en/latest/getting_started/Getting-started.html target=_blank rel=noopener>A quick introduction to tiny-dnn</a></li><li><a class=link href=https://tiny-dnn.readthedocs.io/en/latest/how_tos/How-Tos.html#construct-the-network-model target=_blank rel=noopener>Details about tiny-dnn&rsquo;s API and short examples</a></li></ol></section><footer class=article-footer><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css integrity=sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js integrity=sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8 crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{const e=[".main-article",".widget--toc"];e.forEach(e=>{const t=document.querySelector(e);t&&renderMathInElement(t,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}],ignoredClasses:["gist"]})})})</script></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/posts/sae-1/><div class=article-details><h2 class=article-title>SAE 入门（一）</h2></div></a></article><article><a href=/posts/gan-for-hand-written-digits/><div class=article-details><h2 class=article-title>GAN 网络之手写数字生成</h2></div></a></article></div></div></aside><script src=https://giscus.app/client.js data-repo=jinggqu/jinggqu.github.io data-repo-id="MDEwOlJlcG9zaXRvcnkxNDkyMTI2MDk=" data-category=Announcements data-category-id=DIC_kwDOCOTNwc4Ca4Al data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=light data-lang=en data-loading crossorigin=anonymous async></script><script>function setGiscusTheme(e){let t=document.querySelector("iframe.giscus-frame");t&&t.contentWindow.postMessage({giscus:{setConfig:{theme:e}}},"https://giscus.app")}(function(){addEventListener("message",t=>{if(event.origin!=="https://giscus.app")return;e()}),window.addEventListener("onColorSchemeChange",e);function e(){setGiscusTheme(document.documentElement.dataset.scheme==="light"?"light":"dark")}})()</script><footer class=site-footer><section class=copyright>&copy;
+2018 -
+2026 Anthony's blog</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.33.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.c922af694cc257bf1ecc41c0dd7b0430f9114ec280ccf67cd2c6ad55f5316c4e.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
