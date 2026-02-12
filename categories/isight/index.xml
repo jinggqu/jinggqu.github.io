@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Isight on Anthony's blog</title><link>https://jinggqu.github.io/categories/isight/</link><description>Recent content in Isight on Anthony's blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 28 Jul 2021 19:00:00 +0800</lastBuildDate><atom:link href="https://jinggqu.github.io/categories/isight/index.xml" rel="self" type="application/rss+xml"/><item><title>基于 Isight 的实验设计</title><link>https://jinggqu.github.io/posts/isight-doe/</link><pubDate>Wed, 28 Jul 2021 19:00:00 +0800</pubDate><guid>https://jinggqu.github.io/posts/isight-doe/</guid><description>&lt;h1 id="基于-isight-的实验设计"&gt;基于 Isight 的实验设计
+&lt;/h1&gt;&lt;h2 id="实验设计"&gt;实验设计
+&lt;/h2&gt;&lt;p&gt;实验设计（Design Of Experiments，DOE），一种安排实验和分析实验数据的数理统计方法。通过实验，研究并确定影响因子，通过改变因子设置以使输出达到最佳值；要严格按照计划进行实验，并进行分析，从而找到改进的途径。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;通过有效的实验方案的设计，找到可行的工艺方法和产品指标。&lt;/li&gt;
+&lt;li&gt;筛选重要因子，确定真正的影响因素，从而有目标地进行质量改进。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="isight"&gt;Isight
+&lt;/h2&gt;&lt;h3 id="版本"&gt;版本
+&lt;/h3&gt;&lt;p&gt;本文采用 Isight 2016 版本，下载链接：https://dl.downloadly.ir/Files/Software2/DS_SIMULIA_Isight_2016_HF4_Downloadly.ir.rar。&lt;/p&gt;
+&lt;h3 id="安装"&gt;安装
+&lt;/h3&gt;&lt;p&gt;安装过程不再赘述，值得一提的是，在设置 Isight FlexNet License 时，&lt;strong&gt;首选 License 服务器名&lt;/strong&gt;应填写 &lt;code&gt;27011@localhost&lt;/code&gt;，其余留空即可。
+完成安装后，启动 Isight 2016.HF4 Design Gateway。&lt;/p&gt;
+&lt;h2 id="实验"&gt;实验
+&lt;/h2&gt;&lt;h3 id="数据准备"&gt;数据准备
+&lt;/h3&gt;&lt;p&gt;如下图所示，定义了三个输入参数以及两个输出参数，并在 excel 中使用名称管理器为这 5 个变量设置了名称。两个输出参数的计算方法分别如下。&lt;/p&gt;
+$$ volume = length \times height \times width $$&lt;p&gt;
+&lt;/p&gt;
+$$ costs = 2 \times length^2 + 3 \times width^2 + 0.05 \times height^3 $$&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210729094237.webp"
+width="751"
+height="582"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210729094237_hu_ae450420e00464bf.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210729094237_hu_c0fb9dcf1d79a143.webp 1024w"
+loading="lazy"
+alt="Excel 中的变量定义和计算公式"
+class="gallery-image"
+data-flex-grow="129"
+data-flex-basis="309px"
+&gt;&lt;/p&gt;
+&lt;h3 id="新建任务"&gt;新建任务
+&lt;/h3&gt;&lt;p&gt;打开 Isight 任务界面，将 Application Components 中的 Excel 组件拖拽到如下图所示的位置。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210728195651.webp"
+width="1383"
+height="842"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210728195651_hu_a8dd6ecf93f9ebb1.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210728195651_hu_a7ff87b61685a356.webp 1024w"
+loading="lazy"
+alt="Isight 任务界面添加 Excel 组件"
+class="gallery-image"
+data-flex-grow="164"
+data-flex-basis="394px"
+&gt;&lt;/p&gt;
+&lt;p&gt;此时会发现底部有一黄色警告，这是因为我们还没有正确配置 Excel 文件地址。双击刚刚添加的 Excel 组件即可打开配置界面，在顶部选中数据文件。由于我们在 Excel 文件中提前对变量进行命名，故此时 Isight 会提示并自动生成变量，如下图所示。确认无误后点击下方 OK 即可回到任务界面。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210728200028.webp"
+width="995"
+height="716"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210728200028_hu_bdf34b139a7b0d81.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210728200028_hu_27ca6360bd119279.webp 1024w"
+loading="lazy"
+alt="Excel 组件配置界面及自动生成的变量"
+class="gallery-image"
+data-flex-grow="138"
+data-flex-basis="333px"
+&gt;&lt;/p&gt;
+&lt;h3 id="配置-doe"&gt;配置 DOE
+&lt;/h3&gt;&lt;p&gt;将 Process Components 选项组中的 DOE 组件拖拽到如下图所示的位置上。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210728200342.webp"
+width="1383"
+height="842"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210728200342_hu_d95227b9a071ac1d.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210728200342_hu_bfb2ebf0f06ffdf1.webp 1024w"
+loading="lazy"
+alt="添加 DOE 组件到流程中"
+class="gallery-image"
+data-flex-grow="164"
+data-flex-basis="394px"
+&gt;&lt;/p&gt;
+&lt;p&gt;双击 DOE 组件进行详细配置。首先配置 Factors，我们选中所有的输入参数，并将这些参数的实验区间调整为基数 -20%~20%。配置如下所示。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210728200648.webp"
+width="825"
+height="529"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210728200648_hu_c38e131abded2fc8.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210728200648_hu_6bb9529aaf9b88d5.webp 1024w"
+loading="lazy"
+alt="DOE 输入参数配置界面"
+class="gallery-image"
+data-flex-grow="155"
+data-flex-basis="374px"
+&gt;&lt;/p&gt;
+&lt;p&gt;切换到 General 选项卡，实验技术选择拉丁方，实验点数输入 50，点击下方的 Apply 生成实验次序，此时可以在 Design Matrix 中查看样本矩阵。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210728200807.webp"
+width="825"
+height="529"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210728200807_hu_1c52b5c91dbcc9ae.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210728200807_hu_1e394d8bff1f393c.webp 1024w"
+loading="lazy"
+alt="DOE 通用设置选项卡"
+class="gallery-image"
+data-flex-grow="155"
+data-flex-basis="374px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210728201214.webp"
+width="825"
+height="529"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210728201214_hu_8dd183bb394ebc67.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210728201214_hu_484921e451e150f7.webp 1024w"
+loading="lazy"
+alt="DOE 设计矩阵预览"
+class="gallery-image"
+data-flex-grow="155"
+data-flex-basis="374px"
+&gt;&lt;/p&gt;
+&lt;p&gt;切换到 Postprocessing 选项卡，在这里配置两个输出参数的目标，即 costs 最小化，volume 最大化，如下图所示。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210728201336.webp"
+width="825"
+height="529"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210728201336_hu_983a32aee89551fb.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210728201336_hu_5badfd604d05fea6.webp 1024w"
+loading="lazy"
+alt="输出参数目标设置界面"
+class="gallery-image"
+data-flex-grow="155"
+data-flex-basis="374px"
+&gt;&lt;/p&gt;
+&lt;h3 id="进行实验"&gt;进行实验
+&lt;/h3&gt;&lt;p&gt;在实验之前，首先在 Graph Templates 选项卡中添加图标，方便后续的数据可视化。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210728201658.webp"
+width="1383"
+height="842"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210728201658_hu_c3da930633fb1230.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210728201658_hu_c92f4ddcc891949f.webp 1024w"
+loading="lazy"
+alt="添加图表模板界面"
+class="gallery-image"
+data-flex-grow="164"
+data-flex-basis="394px"
+&gt;&lt;/p&gt;
+&lt;p&gt;在此例中，我们选择添加 Main Effect Graph 用来观察各个输入参数都两个输出参数的影响权重。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210729080918.webp"
+width="784"
+height="417"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210729080918_hu_bf52b19792af965b.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210729080918_hu_b113613b5f3af755.webp 1024w"
+loading="lazy"
+alt="主效应图模板选择界面"
+class="gallery-image"
+data-flex-grow="188"
+data-flex-basis="451px"
+&gt;&lt;/p&gt;
+&lt;p&gt;点击菜单栏中的三角形按钮，运行实验。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210728201456.webp"
+width="1383"
+height="842"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210728201456_hu_9c9fd166d1c915af.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210728201456_hu_90a60476dee021.webp 1024w"
+loading="lazy"
+alt="运行实验按钮位置"
+class="gallery-image"
+data-flex-grow="164"
+data-flex-basis="394px"
+&gt;&lt;/p&gt;
+&lt;h3 id="结果分析"&gt;结果分析
+&lt;/h3&gt;&lt;p&gt;在 Isight Runtime Gateway 中的 History 选项卡中，如下图所示，表格中的绿色行表示最优解。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210729081901.webp"
+width="1264"
+height="792"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210729081901_hu_c5fc16f026e45a5a.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210729081901_hu_fdafb7fae4cea85c.webp 1024w"
+loading="lazy"
+alt="实验结果历史记录及最优解"
+class="gallery-image"
+data-flex-grow="159"
+data-flex-basis="383px"
+&gt;&lt;/p&gt;
+&lt;p&gt;在 Graphs 选项卡中，可以看到之前添加的图表已经填充了本次运行的结果。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210729085526.webp"
+width="1264"
+height="792"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210729085526_hu_90056fe5f2c8678c.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210729085526_hu_6fec0f5f4e1566d0.webp 1024w"
+loading="lazy"
+alt="实验结果图表展示"
+class="gallery-image"
+data-flex-grow="159"
+data-flex-basis="383px"
+&gt;&lt;/p&gt;
+&lt;h3 id="代理模型"&gt;代理模型
+&lt;/h3&gt;&lt;p&gt;代理模型是工程问题中常用的一个优化方法。当实际问题（高精度模型）计算量很大、不容易求解时，可以使用计算量较小、求解迅速的简化模型来替代原模型，加速优化过程。在 Isight Runtime Gateway 中，我们切换到 Visual Design 选项卡，点击 Create Approximation 创建一个代理模型。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210729085720.webp"
+width="1264"
+height="792"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210729085720_hu_cd9ecc5b11cde679.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210729085720_hu_9edaa228913ea77a.webp 1024w"
+loading="lazy"
+alt="创建代理模型界面"
+class="gallery-image"
+data-flex-grow="159"
+data-flex-basis="383px"
+&gt;&lt;/p&gt;
+&lt;h4 id="一阶响应曲面模型"&gt;一阶响应曲面模型
+&lt;/h4&gt;&lt;p&gt;由于 volume 项是由三个输入参数相乘得到，故我们可以先创建一阶（线性）响应曲面模型对 volume 进行拟合。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210729093344.webp"
+width="684"
+height="492"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210729093344_hu_5e7dc400d3388f9f.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210729093344_hu_84f9253d19e3ddd.webp 1024w"
+loading="lazy"
+alt="一阶响应曲面模型创建界面"
+class="gallery-image"
+data-flex-grow="139"
+data-flex-basis="333px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210729093420.webp"
+width="1264"
+height="792"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210729093420_hu_1ac8592c337ea1dd.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210729093420_hu_9b5d4f709db1140a.webp 1024w"
+loading="lazy"
+alt="一阶响应曲面模型系数"
+class="gallery-image"
+data-flex-grow="159"
+data-flex-basis="383px"
+&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Polynomial term&lt;/th&gt;
+&lt;th&gt;Coefficient&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Constant&lt;/td&gt;
+&lt;td&gt;-8061.40938210593&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x01&lt;/td&gt;
+&lt;td&gt;273.292484060334&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x02&lt;/td&gt;
+&lt;td&gt;398.117601806449&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x03&lt;/td&gt;
+&lt;td&gt;149.130521907&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;即拟合曲线如下，R Square = 0.8935。&lt;/p&gt;
+$$ costs = 273.292484060334 \times length + 398.117601806449 \times width + 149.130521907 \times height $$&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210729093515.webp"
+width="1264"
+height="792"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210729093515_hu_9b31448892071bc3.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210729093515_hu_f466059cce248c0f.webp 1024w"
+loading="lazy"
+alt="volume 参数的拟合曲线图"
+class="gallery-image"
+data-flex-grow="159"
+data-flex-basis="383px"
+&gt;&lt;/p&gt;
+&lt;h4 id="三阶响应曲面模型"&gt;三阶响应曲面模型
+&lt;/h4&gt;&lt;p&gt;由于 costs 项是由三个输入参数高阶相乘得到，最高为 height 三阶，故我们创建一个三阶响应曲面模型对 costs 进行拟合。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210729094418.webp"
+width="684"
+height="492"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210729094418_hu_7bfd7cd6dd6aa9b1.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210729094418_hu_397773659fab3c0d.webp 1024w"
+loading="lazy"
+alt="三阶响应曲面模型创建界面"
+class="gallery-image"
+data-flex-grow="139"
+data-flex-basis="333px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210729091411.webp"
+width="1264"
+height="792"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210729091411_hu_c6e3e4623e58563b.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210729091411_hu_cd8eff2164802298.webp 1024w"
+loading="lazy"
+alt="三阶响应曲面模型系数"
+class="gallery-image"
+data-flex-grow="159"
+data-flex-basis="383px"
+&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Polynomial term&lt;/th&gt;
+&lt;th&gt;Coefficient&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Constant&lt;/td&gt;
+&lt;td&gt;-4.23710301832585e-010&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x01&lt;/td&gt;
+&lt;td&gt;-2.10336177869166e-010&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x02&lt;/td&gt;
+&lt;td&gt;3.51571404416191e-010&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x03&lt;/td&gt;
+&lt;td&gt;3.616047694285e-011&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x01**2&lt;/td&gt;
+&lt;td&gt;1.44086437819406e-011&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x02**2&lt;/td&gt;
+&lt;td&gt;1.99999999996241&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x03**2&lt;/td&gt;
+&lt;td&gt;2.99999999999869&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x01*x02&lt;/td&gt;
+&lt;td&gt;3.92239176204056e-013&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x01*x03&lt;/td&gt;
+&lt;td&gt;-1.74648188795555e-013&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x02*x03&lt;/td&gt;
+&lt;td&gt;3.35578146664684e-013&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x01**3&lt;/td&gt;
+&lt;td&gt;0.0499999999996755&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x02**3&lt;/td&gt;
+&lt;td&gt;1.27267233735159e-012&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x03**3&lt;/td&gt;
+&lt;td&gt;1.52574123633321e-014&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;即拟合曲线如下，R Square = 1。&lt;/p&gt;
+$$ costs = 1.99999999996241 \times length^2 + 2.99999999999869 \times width^2 \\\\ + 0.0499999999996755 \times height^3 $$&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/isight-doe/assets/20210729092059.webp"
+width="1264"
+height="792"
+srcset="https://jinggqu.github.io/posts/isight-doe/assets/20210729092059_hu_203a233edbe80bdd.webp 480w, https://jinggqu.github.io/posts/isight-doe/assets/20210729092059_hu_9b0c864b902c4b96.webp 1024w"
+loading="lazy"
+alt="costs 参数的拟合曲线图"
+class="gallery-image"
+data-flex-grow="159"
+data-flex-basis="383px"
+&gt;&lt;/p&gt;
+&lt;h2 id="参考文献"&gt;参考文献
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;a class="link" href="https://zh.wikipedia.org/wiki/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%9E%8B" target="_blank" rel="noopener"
+&gt;代理模型&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://mp.weixin.qq.com/s/GQ8zvKV4ngMEP6_GahsOlQ" target="_blank" rel="noopener"
+&gt;近似模型之响应面建模&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://downloadly.net/2020/19/7856/03/isight/23/?#/7856-ds-simul-062109072929.html" target="_blank" rel="noopener"
+&gt;DS SIMULIA Isight 2020 Windows/Linux&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://zhuanlan.zhihu.com/p/265914617" target="_blank" rel="noopener"
+&gt;DOE 实验设计必备基础知识理解&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://zhuanlan.zhihu.com/p/349344651" target="_blank" rel="noopener"
+&gt;半导体工业软件（八）：DOE（实验设计）&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.jianshu.com/p/c67a3c1edefb" target="_blank" rel="noopener"
+&gt;常用实验设计方法（DOE）介绍&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.bilibili.com/video/BV1xW411q7YY" target="_blank" rel="noopener"
+&gt;【YouTube 转载】Isight 参数优化（士盟科技出品）（中文讲解）&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.bilibili.com/video/BV1a4411v7gf" target="_blank" rel="noopener"
+&gt;Abaqus Isight 视频合集&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</description></item></channel></rss>
