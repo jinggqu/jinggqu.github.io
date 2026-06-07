@@ -10,7 +10,8 @@
 &lt;/ul&gt;
 &lt;/blockquote&gt;
 &lt;h2 id="背景"&gt;背景
-&lt;/h2&gt;&lt;p&gt;今年买了阿里云 99 元/年的新老同享 ECS，想在上面部署 &lt;strong&gt;SonoX&lt;/strong&gt; — 一个基于 &lt;a class="link" href="https://ieeexplore.ieee.org/abstract/document/11429039" target="_blank" rel="noopener"
+&lt;/h2&gt;&lt;p&gt;今年买了阿里云 99 元/年的新老同享 ECS，想在上面部署 &lt;strong&gt;&lt;a class="link" href="https://polyustar.github.io/sonox" target="_blank" rel="noopener"
+&gt;SonoX&lt;/a&gt;&lt;/strong&gt; — 一个基于 &lt;a class="link" href="https://ieeexplore.ieee.org/abstract/document/11429039" target="_blank" rel="noopener"
 &gt;Switch&lt;/a&gt; 半监督学习框架的超声影像病灶分割与分类平台。&lt;/p&gt;
 &lt;p&gt;服务器配置如下：&lt;/p&gt;
 &lt;table&gt;
@@ -187,7 +188,8 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;配合 &lt;code&gt;SONOX_CPU_THREADS=1&lt;/code&gt;（限制 PyTorch 线程数避免争抢），在 2 vCPU 上单次分类推理约 3-5 秒，内存峰值可控。&lt;/p&gt;
 &lt;h2 id="磁盘缓存避免重复推理"&gt;磁盘缓存：避免重复推理
-&lt;/h2&gt;&lt;p&gt;SonoX 的 API 按原始文件名标识同一张图片。如果用户反复查看同一张图的 segmentation/classification 结果，完全没有必要重新跑一遍推理。&lt;/p&gt;
+&lt;/h2&gt;&lt;p&gt;&lt;a class="link" href="https://polyustar.github.io/sonox" target="_blank" rel="noopener"
+&gt;SonoX&lt;/a&gt; 的 API 按原始文件名标识同一张图片。如果用户反复查看同一张图的 segmentation/classification 结果，完全没有必要重新跑一遍推理。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
