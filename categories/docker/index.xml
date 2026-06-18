@@ -1,12 +1,14 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docker on Anthony's blog</title><link>https://jinggqu.github.io/categories/docker/</link><description>Recent content in Docker on Anthony's blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 02 Sep 2020 18:37:11 +0800</lastBuildDate><atom:link href="https://jinggqu.github.io/categories/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>初识 Docker</title><link>https://jinggqu.github.io/posts/getting-to-know-docker/</link><pubDate>Wed, 02 Sep 2020 18:37:11 +0800</pubDate><guid>https://jinggqu.github.io/posts/getting-to-know-docker/</guid><description>&lt;h1 id="初识-docker"&gt;初识 Docker
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docker on Anthony's blog</title><link>https://jinggqu.github.io/categories/docker/</link><description>Recent content in Docker on Anthony's blog</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Wed, 02 Sep 2020 18:37:11 +0800</lastBuildDate><atom:link href="https://jinggqu.github.io/categories/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>初识 Docker</title><link>https://jinggqu.github.io/posts/getting-to-know-docker/</link><pubDate>Wed, 02 Sep 2020 18:37:11 +0800</pubDate><guid>https://jinggqu.github.io/posts/getting-to-know-docker/</guid><description>&lt;h1 id="初识-docker"&gt;初识 Docker
 &lt;/h1&gt;&lt;h2 id="docker-简介"&gt;Docker 简介
 &lt;/h2&gt;&lt;p&gt;简介来自于 &lt;a class="link" href="http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html" target="_blank" rel="noopener"
-&gt;Docker 入门教程 - 阮一峰的网络日志&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Docker 属于 Linux 容器的一种封装，提供简单易用的容器使用接口。它是目前最流行的 Linux 容器解决方案。&lt;/p&gt;
+ &gt;Docker 入门教程 - 阮一峰的网络日志&lt;/a&gt;&lt;/p&gt;
+
+ &lt;blockquote&gt;
+ &lt;p&gt;Docker 属于 Linux 容器的一种封装，提供简单易用的容器使用接口。它是目前最流行的 Linux 容器解决方案。&lt;/p&gt;
 &lt;p&gt;Docker 将应用程序与该程序的依赖，打包在一个文件里面。运行这个文件，就会生成一个虚拟容器。程序在这个虚拟容器里运行，就好像在真实的物理机上运行一样。有了 Docker，就不用担心环境问题。&lt;/p&gt;
 &lt;p&gt;总体来说，Docker 的接口相当简单，用户可以方便地创建和使用容器，把自己的应用放入容器。容器还可以进行版本管理、复制、分享、修改，就像管理普通的代码一样。&lt;/p&gt;
-&lt;/blockquote&gt;
+
+ &lt;/blockquote&gt;
 &lt;h2 id="安装-docker"&gt;安装 Docker
 &lt;/h2&gt;&lt;p&gt;在此部分，作者使用的是 Centos 8.2 进行的操作，下述的安装命令仅保证在该环境下运行。&lt;/p&gt;
 &lt;h3 id="设置-docker-仓库"&gt;设置 Docker 仓库
@@ -171,7 +173,7 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;h2 id="配置-docker-仓库"&gt;配置 Docker 仓库
 &lt;/h2&gt;&lt;p&gt;由于在国内连接 Docker 官方仓库 &lt;a class="link" href="https://hub.docker.com" target="_blank" rel="noopener"
-&gt;https://hub.docker.com&lt;/a&gt; 十分缓慢，故我们可以将仓库地址更换为国内的各种源，详细步骤如下。&lt;/p&gt;
+ &gt;https://hub.docker.com&lt;/a&gt; 十分缓慢，故我们可以将仓库地址更换为国内的各种源，详细步骤如下。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;在 &lt;code&gt;/etc/docker&lt;/code&gt; 目录中新增一个名为 &lt;code&gt;daemon.json&lt;/code&gt; 的配置文件，如果已经存在这个文件，则只需要进行修改。&lt;/li&gt;
 &lt;li&gt;将该文件中的 &lt;code&gt;registry-mirrors&lt;/code&gt; 项修改为如下形式。&lt;/li&gt;

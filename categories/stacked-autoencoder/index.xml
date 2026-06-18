@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Stacked-Autoencoder on Anthony's blog</title><link>https://jinggqu.github.io/categories/stacked-autoencoder/</link><description>Recent content in Stacked-Autoencoder on Anthony's blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 28 Jan 2021 18:00:00 +0800</lastBuildDate><atom:link href="https://jinggqu.github.io/categories/stacked-autoencoder/index.xml" rel="self" type="application/rss+xml"/><item><title>SAE 入门（二）——基于 tiny_dnn 的手写数字重建</title><link>https://jinggqu.github.io/posts/sae-2/</link><pubDate>Thu, 28 Jan 2021 18:00:00 +0800</pubDate><guid>https://jinggqu.github.io/posts/sae-2/</guid><description>&lt;h1 id="sae-入门二基于-tiny_dnn-的手写数字重建"&gt;SAE 入门（二）——基于 tiny_dnn 的手写数字重建
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Stacked-Autoencoder on Anthony's blog</title><link>https://jinggqu.github.io/categories/stacked-autoencoder/</link><description>Recent content in Stacked-Autoencoder on Anthony's blog</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Thu, 28 Jan 2021 18:00:00 +0800</lastBuildDate><atom:link href="https://jinggqu.github.io/categories/stacked-autoencoder/index.xml" rel="self" type="application/rss+xml"/><item><title>SAE 入门（二）——基于 tiny_dnn 的手写数字重建</title><link>https://jinggqu.github.io/posts/sae-2/</link><pubDate>Thu, 28 Jan 2021 18:00:00 +0800</pubDate><guid>https://jinggqu.github.io/posts/sae-2/</guid><description>&lt;h1 id="sae-入门二基于-tiny_dnn-的手写数字重建"&gt;SAE 入门（二）——基于 tiny_dnn 的手写数字重建
 &lt;/h1&gt;&lt;h2 id="前言"&gt;前言
 &lt;/h2&gt;&lt;p&gt;在&lt;a class="link" href="https://jinggqu.github.io/posts/sae-1/" target="_blank" rel="noopener"
-&gt;上一篇文章&lt;/a&gt;中，我们使用 Python 使用 SAE 网络实现了手写数字的重建。在本文中，我们将尝试使用 tiny_dnn 库实现手写数字重建。&lt;/p&gt;
+ &gt;上一篇文章&lt;/a&gt;中，我们使用 Python 使用 SAE 网络实现了手写数字的重建。在本文中，我们将尝试使用 tiny_dnn 库实现手写数字重建。&lt;/p&gt;
 &lt;h2 id="tiny_dnn-简介"&gt;tiny_dnn 简介
 &lt;/h2&gt;&lt;p&gt;tiny-dnn 项目地址：https://github.com/tiny-dnn/tiny-dnn，这是深度学习的一个 C ++ 14 实现。它适合在有限的计算资源，嵌入式系统和 IoT 设备上进行深度学习。整个项目仅由头文件构成，使用时无需编译，直接引用即可。&lt;/p&gt;
 &lt;h2 id="搭建环境"&gt;搭建环境
@@ -10,14 +10,18 @@
 &lt;h3 id="创建项目"&gt;创建项目
 &lt;/h3&gt;&lt;p&gt;打开 VS，创建一个名为 testTinyDNN 的&lt;strong&gt;控制台应用&lt;/strong&gt;。将 tiny_dnn 下载解压之后，放置到如下图所示的位置，与 &lt;code&gt;testTinyDNN.cpp&lt;/code&gt; 属于同一层级。&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/sae-2/assets/20210129112851.webp"
-width="827"
-height="267"
-srcset="https://jinggqu.github.io/posts/sae-2/assets/20210129112851_hu_94ec61166c7b3dd5.webp 480w, https://jinggqu.github.io/posts/sae-2/assets/20210129112851_hu_d6bfb2854bd504f7.webp 1024w"
-loading="lazy"
-alt="项目文件结构示意图"
-class="gallery-image"
-data-flex-grow="309"
-data-flex-basis="743px"
+	width="827"
+	height="267"
+	srcset="https://jinggqu.github.io/posts/sae-2/assets/20210129112851_hu_94ec61166c7b3dd5.webp 480w, https://jinggqu.github.io/posts/sae-2/assets/20210129112851_hu_d6bfb2854bd504f7.webp 1024w"
+	loading="lazy"
+	
+		alt="项目文件结构示意图"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="309"
+		data-flex-basis="743px"
+	
 &gt;
 &lt;/p&gt;
 &lt;h3 id="编辑配置"&gt;编辑配置
@@ -251,39 +255,51 @@ data-flex-basis="743px"
 &lt;p&gt;网络结构为 3 个编码层 + 3 个解码层。编码层将数据从 784（28 * 28） 维分别编码（降维）到 128、64、32 维，解码器再将 32 维的编码结果解码（升维）到 64、128、784 维，完成手写数字重建。各层之间的激活函数选用 &lt;code&gt;relu()&lt;/code&gt; 与 &lt;code&gt;sigmoid()&lt;/code&gt;。&lt;/p&gt;
 &lt;h2 id="结果展示"&gt;结果展示
 &lt;/h2&gt;&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/sae-2/assets/20210129163100.webp"
-width="2011"
-height="389"
-srcset="https://jinggqu.github.io/posts/sae-2/assets/20210129163100_hu_87566522907ea9b2.webp 480w, https://jinggqu.github.io/posts/sae-2/assets/20210129163100_hu_d524d451c02bfb7f.webp 1024w"
-loading="lazy"
-alt="手写数字重建效果对比图"
-class="gallery-image"
-data-flex-grow="516"
-data-flex-basis="1240px"
+	width="2011"
+	height="389"
+	srcset="https://jinggqu.github.io/posts/sae-2/assets/20210129163100_hu_87566522907ea9b2.webp 480w, https://jinggqu.github.io/posts/sae-2/assets/20210129163100_hu_d524d451c02bfb7f.webp 1024w"
+	loading="lazy"
+	
+		alt="手写数字重建效果对比图"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="516"
+		data-flex-basis="1240px"
+	
 &gt;
 &lt;/p&gt;
 &lt;p&gt;从上到下，第一行为测试图像，第二行为 keras 搭建的 SAE 网络重建图像，第三行为 tiny_dnn 搭建的 SAE 网络重建图像。下面展示数字 2 和 5 重建的详细效果，左侧为 Python 平台重建结果，右侧为 C++ 平台重建结果。&lt;/p&gt;
 &lt;p&gt;数字 2&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/sae-2/assets/20210129182201.webp"
-width="1498"
-height="767"
-srcset="https://jinggqu.github.io/posts/sae-2/assets/20210129182201_hu_968e3db06a118374.webp 480w, https://jinggqu.github.io/posts/sae-2/assets/20210129182201_hu_d70b93806d58a885.webp 1024w"
-loading="lazy"
-alt="数字 2 的重建效果对比"
-class="gallery-image"
-data-flex-grow="195"
-data-flex-basis="468px"
+	width="1498"
+	height="767"
+	srcset="https://jinggqu.github.io/posts/sae-2/assets/20210129182201_hu_968e3db06a118374.webp 480w, https://jinggqu.github.io/posts/sae-2/assets/20210129182201_hu_d70b93806d58a885.webp 1024w"
+	loading="lazy"
+	
+		alt="数字 2 的重建效果对比"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="195"
+		data-flex-basis="468px"
+	
 &gt;
 &lt;/p&gt;
 &lt;p&gt;数字 5&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/sae-2/assets/20210129181931.webp"
-width="1503"
-height="780"
-srcset="https://jinggqu.github.io/posts/sae-2/assets/20210129181931_hu_6cbbd7cfdac2d4f8.webp 480w, https://jinggqu.github.io/posts/sae-2/assets/20210129181931_hu_1e14d543b4c42334.webp 1024w"
-loading="lazy"
-alt="数字 5 的重建效果对比"
-class="gallery-image"
-data-flex-grow="192"
-data-flex-basis="462px"
+	width="1503"
+	height="780"
+	srcset="https://jinggqu.github.io/posts/sae-2/assets/20210129181931_hu_6cbbd7cfdac2d4f8.webp 480w, https://jinggqu.github.io/posts/sae-2/assets/20210129181931_hu_1e14d543b4c42334.webp 1024w"
+	loading="lazy"
+	
+		alt="数字 5 的重建效果对比"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="192"
+		data-flex-basis="462px"
+	
 &gt;
 &lt;/p&gt;
 &lt;h2 id="性能对比"&gt;性能对比
@@ -297,11 +313,11 @@ data-flex-basis="462px"
 &lt;h2 id="参考文献"&gt;参考文献
 &lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;&lt;a class="link" href="https://mightynotes.wordpress.com/2017/10/11/a-simple-and-basic-tutorial-of-tiny-dnn/" target="_blank" rel="noopener"
-&gt;A simple and basic tutorial of tiny-dnn&lt;/a&gt;&lt;/li&gt;
+ &gt;A simple and basic tutorial of tiny-dnn&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://tiny-dnn.readthedocs.io/en/latest/getting_started/Getting-started.html" target="_blank" rel="noopener"
-&gt;A quick introduction to tiny-dnn&lt;/a&gt;&lt;/li&gt;
+ &gt;A quick introduction to tiny-dnn&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://tiny-dnn.readthedocs.io/en/latest/how_tos/How-Tos.html#construct-the-network-model" target="_blank" rel="noopener"
-&gt;Details about tiny-dnn&amp;rsquo;s API and short examples&lt;/a&gt;&lt;/li&gt;
+ &gt;Details about tiny-dnn&amp;rsquo;s API and short examples&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;</description></item><item><title>SAE 入门（一）</title><link>https://jinggqu.github.io/posts/sae-1/</link><pubDate>Wed, 20 Jan 2021 18:00:00 +0800</pubDate><guid>https://jinggqu.github.io/posts/sae-1/</guid><description>&lt;h1 id="sae-入门一"&gt;SAE 入门（一）
 &lt;/h1&gt;&lt;h2 id="autoencoder-简介"&gt;Autoencoder 简介
 &lt;/h2&gt;&lt;p&gt;自编码器（Autoencoder，AE），是一种利用反向传播（backpropagation，BP）算法&lt;strong&gt;使得输出值等于输入值&lt;/strong&gt;的神经网络，它先将输入压缩成潜在空间表征，然后通过这种表征来重构输出。其中，空间表征可以看作是输入数据的高级抽象，通常是将高维度的数据抽象为低维度的数据。&lt;/p&gt;
@@ -311,34 +327,44 @@ data-flex-basis="462px"
 &lt;p&gt;因此，整个自编码器可以用函数 $g(f(x)) = r$ 来描述，其中输出 $r$ 与原始输入 $x$ 相近。&lt;/p&gt;
 &lt;p&gt;自动编码器的目标是最大程度地减少输入和输出之间的重构误差。这有助于自动编码器学习数据中存在的重要功能。当表征很好地重建其输入时，则表示这个表征很好地保留了输入中存在的许多信息。整个过程如下图。&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/sae-1/assets/20210122142001.webp"
-width="1669"
-height="507"
-srcset="https://jinggqu.github.io/posts/sae-1/assets/20210122142001_hu_c1155aa9802c5451.webp 480w, https://jinggqu.github.io/posts/sae-1/assets/20210122142001_hu_e68dedf601233d5.webp 1024w"
-loading="lazy"
-alt="自编码器网络结构示意图"
-class="gallery-image"
-data-flex-grow="329"
-data-flex-basis="790px"
+	width="1669"
+	height="507"
+	srcset="https://jinggqu.github.io/posts/sae-1/assets/20210122142001_hu_c1155aa9802c5451.webp 480w, https://jinggqu.github.io/posts/sae-1/assets/20210122142001_hu_e68dedf601233d5.webp 1024w"
+	loading="lazy"
+	
+		alt="自编码器网络结构示意图"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="329"
+		data-flex-basis="790px"
+	
 &gt;
 &lt;/p&gt;
 &lt;h2 id="stacked-autoencoder-简介"&gt;Stacked Autoencoder 简介
 &lt;/h2&gt;&lt;p&gt;Stacked Autoencoder 简写作 SAE。SAE 与 AE 的主要区别在于编码器与解码器的层数，栈式自编码器包含多层隐藏层。具体网络结构如下图所示，图中有两层编码层，两层解码层。&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/sae-1/assets/20210122154135.webp"
-width="1505"
-height="811"
-srcset="https://jinggqu.github.io/posts/sae-1/assets/20210122154135_hu_dfdf893f0a524ca8.webp 480w, https://jinggqu.github.io/posts/sae-1/assets/20210122154135_hu_ea2ce8cb4eddae43.webp 1024w"
-loading="lazy"
-alt="栈式自编码器网络结构示意图"
-class="gallery-image"
-data-flex-grow="185"
-data-flex-basis="445px"
+	width="1505"
+	height="811"
+	srcset="https://jinggqu.github.io/posts/sae-1/assets/20210122154135_hu_dfdf893f0a524ca8.webp 480w, https://jinggqu.github.io/posts/sae-1/assets/20210122154135_hu_ea2ce8cb4eddae43.webp 1024w"
+	loading="lazy"
+	
+		alt="栈式自编码器网络结构示意图"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="185"
+		data-flex-basis="445px"
+	
 &gt;
 &lt;/p&gt;
 &lt;h2 id="代码实现"&gt;代码实现
-&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;代码环境配置，请参考 &lt;a class="link" href="https://jinggqu.github.io/posts/gan-for-hand-written-digits/" target="_blank" rel="noopener"
-&gt;GAN 网络之手写数字生成&lt;/a&gt; 第一小节——环境搭建。&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;/h2&gt;
+ &lt;blockquote&gt;
+ &lt;p&gt;代码环境配置，请参考 &lt;a class="link" href="https://jinggqu.github.io/posts/gan-for-hand-written-digits/" target="_blank" rel="noopener"
+ &gt;GAN 网络之手写数字生成&lt;/a&gt; 第一小节——环境搭建。&lt;/p&gt;
+
+ &lt;/blockquote&gt;
 &lt;p&gt;自编码器只是一种思想，在具体实现中，编码器和解码器可以由多种深度学习模型构成，例如全连接层、卷积层和 LSTM 等，以下使用 Keras 来实现栈式自编码器。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
@@ -640,28 +666,32 @@ data-flex-basis="445px"
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/sae-1/assets/20210122160643.webp"
-width="1920"
-height="455"
-srcset="https://jinggqu.github.io/posts/sae-1/assets/20210122160643_hu_2ca605d5b0b181e8.webp 480w, https://jinggqu.github.io/posts/sae-1/assets/20210122160643_hu_6cb88226e8fe9c25.webp 1024w"
-loading="lazy"
-alt="MNIST 手写数字自编码结果对比图"
-class="gallery-image"
-data-flex-grow="421"
-data-flex-basis="1012px"
+	width="1920"
+	height="455"
+	srcset="https://jinggqu.github.io/posts/sae-1/assets/20210122160643_hu_2ca605d5b0b181e8.webp 480w, https://jinggqu.github.io/posts/sae-1/assets/20210122160643_hu_6cb88226e8fe9c25.webp 1024w"
+	loading="lazy"
+	
+		alt="MNIST 手写数字自编码结果对比图"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="421"
+		data-flex-basis="1012px"
+	
 &gt;
 &lt;/p&gt;
 &lt;h2 id="参考文献"&gt;参考文献
 &lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;&lt;a class="link" href="https://medium.com/@venkatakrishna.jonnalagadda/sparse-stacked-and-variational-autoencoder-efe5bfe73b64" target="_blank" rel="noopener"
-&gt;Sparse, Stacked and Variational Autoencoder&lt;/a&gt;&lt;/li&gt;
+ &gt;Sparse, Stacked and Variational Autoencoder&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://medium.com/datadriveninvestor/deep-learning-autoencoders-db265359943e" target="_blank" rel="noopener"
-&gt;Deep Learning Autoencoders&lt;/a&gt;&lt;/li&gt;
+ &gt;Deep Learning Autoencoders&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://medium.com/datadriveninvestor/deep-autoencoder-using-keras-b77cd3e8be95" target="_blank" rel="noopener"
-&gt;Deep Autoencoder using Keras&lt;/a&gt;&lt;/li&gt;
+ &gt;Deep Autoencoder using Keras&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://zhuanlan.zhihu.com/p/34238979" target="_blank" rel="noopener"
-&gt;自编码器是什么？有什么用？这里有一份入门指南（附代码）&lt;/a&gt;&lt;/li&gt;
+ &gt;自编码器是什么？有什么用？这里有一份入门指南（附代码）&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://zh.wikipedia.org/wiki/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95" target="_blank" rel="noopener"
-&gt;反向传播算法 - 维基百科&lt;/a&gt;&lt;/li&gt;
+ &gt;反向传播算法 - 维基百科&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://github.com/Nana0606/autoencoder" target="_blank" rel="noopener"
-&gt;Autoencoder - Github&lt;/a&gt;&lt;/li&gt;
+ &gt;Autoencoder - Github&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;</description></item></channel></rss>

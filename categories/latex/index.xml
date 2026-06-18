@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LaTeX on Anthony's blog</title><link>https://jinggqu.github.io/categories/latex/</link><description>Recent content in LaTeX on Anthony's blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 25 Dec 2024 12:00:00 +0800</lastBuildDate><atom:link href="https://jinggqu.github.io/categories/latex/index.xml" rel="self" type="application/rss+xml"/><item><title>使用 VSCode 编写 LaTeX 项目的一些技巧</title><link>https://jinggqu.github.io/posts/latex-tricks/</link><pubDate>Wed, 25 Dec 2024 12:00:00 +0800</pubDate><guid>https://jinggqu.github.io/posts/latex-tricks/</guid><description>&lt;h1 id="使用-vscode-编写-latex-项目的一些技巧"&gt;使用 VSCode 编写 LaTeX 项目的一些技巧
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LaTeX on Anthony's blog</title><link>https://jinggqu.github.io/categories/latex/</link><description>Recent content in LaTeX on Anthony's blog</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Wed, 25 Dec 2024 12:00:00 +0800</lastBuildDate><atom:link href="https://jinggqu.github.io/categories/latex/index.xml" rel="self" type="application/rss+xml"/><item><title>使用 VSCode 编写 LaTeX 项目的一些技巧</title><link>https://jinggqu.github.io/posts/latex-tricks/</link><pubDate>Wed, 25 Dec 2024 12:00:00 +0800</pubDate><guid>https://jinggqu.github.io/posts/latex-tricks/</guid><description>&lt;h1 id="使用-vscode-编写-latex-项目的一些技巧"&gt;使用 VSCode 编写 LaTeX 项目的一些技巧
 &lt;/h1&gt;&lt;h2 id="表格单元格多行内容"&gt;表格单元格多行内容
 &lt;/h2&gt;&lt;p&gt;在 LaTeX 中，表格中的单元格内容默认是单行显示的，如果内容过长，会导致表格宽度过宽。此问题有两种解决方案：&lt;/p&gt;
 &lt;ol&gt;
@@ -87,7 +87,7 @@
 &lt;/div&gt;&lt;p&gt;通过定义 &lt;code&gt;L{width}&lt;/code&gt;、&lt;code&gt;C{width}&lt;/code&gt;、&lt;code&gt;R{width}&lt;/code&gt; 三个命令，可以快速实现在表格中插入多行内容，并且与默认的 &lt;code&gt;l&lt;/code&gt;、&lt;code&gt;c&lt;/code&gt;、&lt;code&gt;r&lt;/code&gt; 类似，可以显式指定内容的对齐方式。&lt;/p&gt;
 &lt;h2 id="正文及表格自动格式化"&gt;正文及表格自动格式化
 &lt;/h2&gt;&lt;p&gt;在 VSCode 编写 LaTeX 项目中的表格时，最常用到的功能即为自动格式化。LaTeX 文件自动格式化依赖 VSCode 中的 &lt;a class="link" href="https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop" target="_blank" rel="noopener"
-&gt;LaTeX Workshop&lt;/a&gt; 插件，在使用格式化前请先安装该插件。&lt;/p&gt;
+ &gt;LaTeX Workshop&lt;/a&gt; 插件，在使用格式化前请先安装该插件。&lt;/p&gt;
 &lt;p&gt;在 Windows 平台中格式化的快捷键为 &lt;code&gt;Alt&lt;/code&gt; + &lt;code&gt;Shift&lt;/code&gt; + &lt;code&gt;F&lt;/code&gt;。格式化时，VSCode 会根据 &lt;code&gt;&amp;amp;&lt;/code&gt; 与 &lt;code&gt;\\&lt;/code&gt; 的位置自动调整表格的对齐方式。通常情况下，表格中的每一行内容末尾都会有 &lt;code&gt;\\&lt;/code&gt; 符号用于标志换行，而每一列内容之间都会有 &lt;code&gt;&amp;amp;&lt;/code&gt; 符号用于标志列的分隔。&lt;/p&gt;
 &lt;p&gt;但在某些情况下，我们可能使用 &lt;code&gt;\makecell&lt;/code&gt; 命令手动插入 &lt;code&gt;\\&lt;/code&gt; 符号用于单元格内容手动换行。而在格式化时，VSCode 会根据 &lt;code&gt;&amp;amp;&lt;/code&gt; 与 &lt;code&gt;\\&lt;/code&gt; 的位置自动调整表格的对齐方式，在使用 &lt;code&gt;\makecell&lt;/code&gt; 的情况下，自动格式化功能可能会依据第一个 &lt;code&gt;\\&lt;/code&gt; 作为表格行末，这时候我们可以通过改变 LaTeX Workshop 设置来调整格式化的方式。&lt;/p&gt;
 &lt;p&gt;通过在 LaTeX Workshop 设置中指定按照每行最后一个 &lt;code&gt;\\&lt;/code&gt; 作为右边界格式化表格，即可解决上述问题。打开 VSCode 设置，搜索 &lt;code&gt;latex-workshop.formatting.latexindent.args&lt;/code&gt;，点击 &lt;code&gt;Add Item&lt;/code&gt; 选项，添加以下内容：&lt;/p&gt;
@@ -101,9 +101,11 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;h2 id="macos-无法格式化"&gt;MacOS 无法格式化
 &lt;/h2&gt;&lt;p&gt;若格式化时 VSCode - Output - LaTeX Workshop 中出现以下错误内容，则说明缺少 &lt;code&gt;File::HomeDir&lt;/code&gt; perl 模块。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;stderr: Can&amp;rsquo;t locate File/HomeDir.pm in @INC (&lt;strong&gt;you may need to install the File::HomeDir module&lt;/strong&gt;) (@INC contains:&amp;hellip;&lt;/p&gt;
-&lt;/blockquote&gt;
+
+ &lt;blockquote&gt;
+ &lt;p&gt;stderr: Can&amp;rsquo;t locate File/HomeDir.pm in @INC (&lt;strong&gt;you may need to install the File::HomeDir module&lt;/strong&gt;) (@INC contains:&amp;hellip;&lt;/p&gt;
+
+ &lt;/blockquote&gt;
 &lt;p&gt;可通过以下命令安装，安装完成后重启 VSCode 即可。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
@@ -114,9 +116,11 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;在安装上述 &lt;code&gt;File::HomeDir&lt;/code&gt; 时，可能会因为未安装 &lt;code&gt;xcode-command-line-tools&lt;/code&gt; 而报错，此时需要先安装 &lt;code&gt;xcode-command-line-tools&lt;/code&gt;。报错信息如下：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun&lt;/p&gt;
-&lt;/blockquote&gt;
+
+ &lt;blockquote&gt;
+ &lt;p&gt;xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun&lt;/p&gt;
+
+ &lt;/blockquote&gt;
 &lt;p&gt;使用以下命令安装 &lt;code&gt;xcode-command-line-tools&lt;/code&gt;，执行命令后按照弹窗指示安装，然后重复上述安装步骤即可。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
@@ -243,13 +247,13 @@
 &lt;/div&gt;&lt;h2 id="参考资料"&gt;参考资料
 &lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;&lt;a class="link" href="https://tex.stackexchange.com/a/12712" target="_blank" rel="noopener"
-&gt;How to create fixed width table columns with text raggedright/centered/raggedleft?&lt;/a&gt;&lt;/li&gt;
+ &gt;How to create fixed width table columns with text raggedright/centered/raggedleft?&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://github.com/cmhughes/latexindent.pl/issues/179#issuecomment-596623217" target="_blank" rel="noopener"
-&gt;tabular aligning on first double backslash instead of last&lt;/a&gt;&lt;/li&gt;
+ &gt;tabular aligning on first double backslash instead of last&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://www.overleaf.com/learn/latex/Questions/How_do_I_change_column_or_row_separation_in_LaTeX_tables%3F" target="_blank" rel="noopener"
-&gt;How do I change column or row separation in LaTeX tables?&lt;/a&gt;&lt;/li&gt;
+ &gt;How do I change column or row separation in LaTeX tables?&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://ctan.org/pkg/cleveref?lang=en" target="_blank" rel="noopener"
-&gt;cleveref – Intelligent cross-referencing&lt;/a&gt;&lt;/li&gt;
+ &gt;cleveref – Intelligent cross-referencing&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;</description></item><item><title>Docker 搭建 ShareLaTeX</title><link>https://jinggqu.github.io/posts/docker-host-sharelatex/</link><pubDate>Thu, 11 Mar 2021 08:00:00 +0800</pubDate><guid>https://jinggqu.github.io/posts/docker-host-sharelatex/</guid><description>&lt;h1 id="docker-搭建-sharelatex"&gt;Docker 搭建 ShareLaTeX
 &lt;/h1&gt;&lt;h2 id="安装-sharelatex"&gt;安装 ShareLaTeX
 &lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;

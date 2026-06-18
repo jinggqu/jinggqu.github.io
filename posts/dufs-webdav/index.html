@@ -1,0 +1,266 @@
+<!doctype html><html lang=en-US dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content='一键脚本 下面的脚本会安装 dufs、生成 launchd 配置、加载 WebDAV 服务，并打包出一个可点击启动的 WebDAV.app。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 #!/bin/zsh set -eu SHARE_DIR="$HOME/Documents/PT" # 需要共享的目录，改成实际路径 PORT="9999" # WebDAV 监听端口 APP_NAME="WebDAV" # 打包后显示的应用名称 LABEL="com.anthony.dufs.webdav" # launchd 服务标识，通常保持不变 BASE_DIR="$HOME/Library/Application Support/dufs-webdav" # 运行脚本保存目录 SCRIPT_PATH="$BASE_DIR/start-dufs-webdav.sh" # dufs 启动脚本 PLIST_PATH="$HOME/Library/LaunchAgents/${LABEL}.plist" # launchd 配置文件 LOG_DIR="$HOME/Library/Logs/dufs-webdav" # 服务日志目录 APP_SCRIPT="$HOME/Desktop/webdav-launcher.applescript" # 原始启动器脚本 APP_PATH="/Applications/${APP_NAME}.app" if ! command -v brew >/dev/null 2>&amp;1; then echo "Homebrew 未安装" exit 1 fi if ! command -v dufs >/dev/null 2>&amp;1; then brew install dufs fi DUFS_BIN="$(command -v dufs)" mkdir -p "$SHARE_DIR" "$BASE_DIR" "$HOME/Library/LaunchAgents" "$LOG_DIR" cat > "$SCRIPT_PATH" <<EOF #!/bin/zsh set -eu SHARE_DIR="$SHARE_DIR" PORT="$PORT" exec "$DUFS_BIN" "\\$SHARE_DIR" \\\\ --bind 0.0.0.0 \\\\ --port "\\$PORT" \\\\ --hidden ".*" \\\\ --allow-all EOF chmod +x "$SCRIPT_PATH" cat > "$PLIST_PATH" <<EOF <?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"> <plist version="1.0"> <dict> <key>Label</key> <string>$LABEL</string> <key>ProgramArguments</key> <array> <string>/bin/zsh</string> <string>$SCRIPT_PATH</string> </array> <key>RunAtLoad</key> <true/> <key>KeepAlive</key> <true/> <key>WorkingDirectory</key> <string>$SHARE_DIR</string> <key>StandardOutPath</key> <string>$LOG_DIR/stdout.log</string> <key>StandardErrorPath</key> <string>$LOG_DIR/stderr.log</string> </dict> </plist> EOF plutil -lint "$PLIST_PATH" cat > "$APP_SCRIPT" <<EOF on run set uid_text to do shell script "id -u" set agent_plist to "$PLIST_PATH" set agent_label to "gui/" & uid_text & "/$LABEL" set shell_cmd to "/bin/sh -lc " & quoted form of ("launchctl bootstrap gui/" & uid_text & " " & quoted form of agent_plist & " >/dev/null 2>&amp;1 || true; for i in 1 2 3 4 5; do launchctl kickstart -k " & quoted form of agent_label & " >/dev/null 2>&amp;1 && exit 0; sleep 1; launchctl bootstrap gui/" & uid_text & " " & quoted form of agent_plist & " >/dev/null 2>&amp;1 || true; done; exit 1") do shell script shell_cmd open location "http://127.0.0.1:$PORT/" end run EOF osacompile -o "$APP_PATH" "$APP_SCRIPT" launchctl bootout gui/$(id -u)/$LABEL >/dev/null 2>&amp;1 || true sleep 1 launchctl bootstrap gui/$(id -u) "$PLIST_PATH" sleep 1 launchctl kickstart -k gui/$(id -u)/$LABEL echo "服务地址: http://127.0.0.1:${PORT}/" echo "已生成: $APP_PATH" 前提 这套配置会将 SHARE_DIR 目录以匿名可写方式共享到局域网，适合可信内网环境。默认端口为 9999。\n'><title>用 Dufs 开启 WebDAV 文件共享服务</title><link rel=canonical href=https://jinggqu.github.io/posts/dufs-webdav/><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=preload as=style href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"><link rel=stylesheet href=/scss/style.min.405a14014566784f8bb5ebb67ce56925a43ce040555e0d4d1e3bfbdb1e895ecf.css><meta property='og:title' content="用 Dufs 开启 WebDAV 文件共享服务"><meta property='og:description' content='一键脚本 下面的脚本会安装 dufs、生成 launchd 配置、加载 WebDAV 服务，并打包出一个可点击启动的 WebDAV.app。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 #!/bin/zsh set -eu SHARE_DIR="$HOME/Documents/PT" # 需要共享的目录，改成实际路径 PORT="9999" # WebDAV 监听端口 APP_NAME="WebDAV" # 打包后显示的应用名称 LABEL="com.anthony.dufs.webdav" # launchd 服务标识，通常保持不变 BASE_DIR="$HOME/Library/Application Support/dufs-webdav" # 运行脚本保存目录 SCRIPT_PATH="$BASE_DIR/start-dufs-webdav.sh" # dufs 启动脚本 PLIST_PATH="$HOME/Library/LaunchAgents/${LABEL}.plist" # launchd 配置文件 LOG_DIR="$HOME/Library/Logs/dufs-webdav" # 服务日志目录 APP_SCRIPT="$HOME/Desktop/webdav-launcher.applescript" # 原始启动器脚本 APP_PATH="/Applications/${APP_NAME}.app" if ! command -v brew >/dev/null 2>&amp;1; then echo "Homebrew 未安装" exit 1 fi if ! command -v dufs >/dev/null 2>&amp;1; then brew install dufs fi DUFS_BIN="$(command -v dufs)" mkdir -p "$SHARE_DIR" "$BASE_DIR" "$HOME/Library/LaunchAgents" "$LOG_DIR" cat > "$SCRIPT_PATH" <<EOF #!/bin/zsh set -eu SHARE_DIR="$SHARE_DIR" PORT="$PORT" exec "$DUFS_BIN" "\\$SHARE_DIR" \\\\ --bind 0.0.0.0 \\\\ --port "\\$PORT" \\\\ --hidden ".*" \\\\ --allow-all EOF chmod +x "$SCRIPT_PATH" cat > "$PLIST_PATH" <<EOF <?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"> <plist version="1.0"> <dict> <key>Label</key> <string>$LABEL</string> <key>ProgramArguments</key> <array> <string>/bin/zsh</string> <string>$SCRIPT_PATH</string> </array> <key>RunAtLoad</key> <true/> <key>KeepAlive</key> <true/> <key>WorkingDirectory</key> <string>$SHARE_DIR</string> <key>StandardOutPath</key> <string>$LOG_DIR/stdout.log</string> <key>StandardErrorPath</key> <string>$LOG_DIR/stderr.log</string> </dict> </plist> EOF plutil -lint "$PLIST_PATH" cat > "$APP_SCRIPT" <<EOF on run set uid_text to do shell script "id -u" set agent_plist to "$PLIST_PATH" set agent_label to "gui/" & uid_text & "/$LABEL" set shell_cmd to "/bin/sh -lc " & quoted form of ("launchctl bootstrap gui/" & uid_text & " " & quoted form of agent_plist & " >/dev/null 2>&amp;1 || true; for i in 1 2 3 4 5; do launchctl kickstart -k " & quoted form of agent_label & " >/dev/null 2>&amp;1 && exit 0; sleep 1; launchctl bootstrap gui/" & uid_text & " " & quoted form of agent_plist & " >/dev/null 2>&amp;1 || true; done; exit 1") do shell script shell_cmd open location "http://127.0.0.1:$PORT/" end run EOF osacompile -o "$APP_PATH" "$APP_SCRIPT" launchctl bootout gui/$(id -u)/$LABEL >/dev/null 2>&amp;1 || true sleep 1 launchctl bootstrap gui/$(id -u) "$PLIST_PATH" sleep 1 launchctl kickstart -k gui/$(id -u)/$LABEL echo "服务地址: http://127.0.0.1:${PORT}/" echo "已生成: $APP_PATH" 前提 这套配置会将 SHARE_DIR 目录以匿名可写方式共享到局域网，适合可信内网环境。默认端口为 9999。\n'><meta property='og:url' content='https://jinggqu.github.io/posts/dufs-webdav/'><meta property='og:site_name' content="Anthony's blog"><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:published_time' content='2026-06-19T00:00:00+08:00'><meta property='article:modified_time' content='2026-06-19T00:00:00+08:00'><meta name=twitter:title content="用 Dufs 开启 WebDAV 文件共享服务"><meta name=twitter:description content='一键脚本 下面的脚本会安装 dufs、生成 launchd 配置、加载 WebDAV 服务，并打包出一个可点击启动的 WebDAV.app。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 #!/bin/zsh set -eu SHARE_DIR="$HOME/Documents/PT" # 需要共享的目录，改成实际路径 PORT="9999" # WebDAV 监听端口 APP_NAME="WebDAV" # 打包后显示的应用名称 LABEL="com.anthony.dufs.webdav" # launchd 服务标识，通常保持不变 BASE_DIR="$HOME/Library/Application Support/dufs-webdav" # 运行脚本保存目录 SCRIPT_PATH="$BASE_DIR/start-dufs-webdav.sh" # dufs 启动脚本 PLIST_PATH="$HOME/Library/LaunchAgents/${LABEL}.plist" # launchd 配置文件 LOG_DIR="$HOME/Library/Logs/dufs-webdav" # 服务日志目录 APP_SCRIPT="$HOME/Desktop/webdav-launcher.applescript" # 原始启动器脚本 APP_PATH="/Applications/${APP_NAME}.app" if ! command -v brew >/dev/null 2>&amp;1; then echo "Homebrew 未安装" exit 1 fi if ! command -v dufs >/dev/null 2>&amp;1; then brew install dufs fi DUFS_BIN="$(command -v dufs)" mkdir -p "$SHARE_DIR" "$BASE_DIR" "$HOME/Library/LaunchAgents" "$LOG_DIR" cat > "$SCRIPT_PATH" <<EOF #!/bin/zsh set -eu SHARE_DIR="$SHARE_DIR" PORT="$PORT" exec "$DUFS_BIN" "\\$SHARE_DIR" \\\\ --bind 0.0.0.0 \\\\ --port "\\$PORT" \\\\ --hidden ".*" \\\\ --allow-all EOF chmod +x "$SCRIPT_PATH" cat > "$PLIST_PATH" <<EOF <?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"> <plist version="1.0"> <dict> <key>Label</key> <string>$LABEL</string> <key>ProgramArguments</key> <array> <string>/bin/zsh</string> <string>$SCRIPT_PATH</string> </array> <key>RunAtLoad</key> <true/> <key>KeepAlive</key> <true/> <key>WorkingDirectory</key> <string>$SHARE_DIR</string> <key>StandardOutPath</key> <string>$LOG_DIR/stdout.log</string> <key>StandardErrorPath</key> <string>$LOG_DIR/stderr.log</string> </dict> </plist> EOF plutil -lint "$PLIST_PATH" cat > "$APP_SCRIPT" <<EOF on run set uid_text to do shell script "id -u" set agent_plist to "$PLIST_PATH" set agent_label to "gui/" & uid_text & "/$LABEL" set shell_cmd to "/bin/sh -lc " & quoted form of ("launchctl bootstrap gui/" & uid_text & " " & quoted form of agent_plist & " >/dev/null 2>&amp;1 || true; for i in 1 2 3 4 5; do launchctl kickstart -k " & quoted form of agent_label & " >/dev/null 2>&amp;1 && exit 0; sleep 1; launchctl bootstrap gui/" & uid_text & " " & quoted form of agent_plist & " >/dev/null 2>&amp;1 || true; done; exit 1") do shell script shell_cmd open location "http://127.0.0.1:$PORT/" end run EOF osacompile -o "$APP_PATH" "$APP_SCRIPT" launchctl bootout gui/$(id -u)/$LABEL >/dev/null 2>&amp;1 || true sleep 1 launchctl bootstrap gui/$(id -u) "$PLIST_PATH" sleep 1 launchctl kickstart -k gui/$(id -u)/$LABEL echo "服务地址: http://127.0.0.1:${PORT}/" echo "已生成: $APP_PATH" 前提 这套配置会将 SHARE_DIR 目录以匿名可写方式共享到局域网，适合可信内网环境。默认端口为 9999。\n'></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar.webp width=256 height=256 class=site-logo loading=lazy alt=Avatar></a></figure><div class=site-meta><h1 class=site-name><a href=/>Anthony's blog</a></h1><h2 class=site-description></h2></div></header><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/archives><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=https://github.com/jinggqu target=_blank><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+<span>GitHub</span></a></li><li><a href=https://unsplash.com/@xvyn target=_blank><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Unsplash</span></a></li><li><a href=/index.xml target=_blank><svg class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="5" cy="19" r="1"/><path d="M4 4a16 16 0 0116 16"/><path d="M4 11a9 9 0 019 9"/></svg>
+<span>RSS</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav class=toc-nav id=TableOfContents><ol><li><a href=#一键脚本>一键脚本</a></li><li><a href=#前提>前提</a></li><li><a href=#变量说明>变量说明</a></li><li><a href=#脚本做了什么>脚本做了什么</a></li><li><a href=#访问与验证>访问与验证</a></li><li><a href=#常见维护>常见维护</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/webdav/ style=background-color:#beefef;color:#0f3d3d>WebDAV
+</a><a href=/categories/dufs/ style=background-color:#e2beef;color:#320f3d>Dufs</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/posts/dufs-webdav/>用 Dufs 开启 WebDAV 文件共享服务</a></h2></div><footer class=article-meta><div class=inline-meta><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published datetime=2026-06-19T00:00:00+08:00>Jun 19, 2026</time></div></footer></div></header><aside class=article-toc><details><summary><div class=article-toc-title><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6-6 6"/></svg>
+<span>Table of contents</span></div></summary><nav class=toc-nav><ol><li><a href=#一键脚本>一键脚本</a></li><li><a href=#前提>前提</a></li><li><a href=#变量说明>变量说明</a></li><li><a href=#脚本做了什么>脚本做了什么</a></li><li><a href=#访问与验证>访问与验证</a></li><li><a href=#常见维护>常见维护</a></li></ol></nav></details></aside><section class=article-content><h2 id=一键脚本>一键脚本</h2><p>下面的脚本会安装 <code>dufs</code>、生成 <code>launchd</code> 配置、加载 WebDAV 服务，并打包出一个可点击启动的 <code>WebDAV.app</code>。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/zsh
+</span></span></span><span class=line><span class=cl><span class=nb>set</span> -eu
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>SHARE_DIR</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$HOME</span><span class=s2>/Documents/PT&#34;</span>                              <span class=c1># 需要共享的目录，改成实际路径</span>
+</span></span><span class=line><span class=cl><span class=nv>PORT</span><span class=o>=</span><span class=s2>&#34;9999&#34;</span>                                                 <span class=c1># WebDAV 监听端口</span>
+</span></span><span class=line><span class=cl><span class=nv>APP_NAME</span><span class=o>=</span><span class=s2>&#34;WebDAV&#34;</span>                                           <span class=c1># 打包后显示的应用名称</span>
+</span></span><span class=line><span class=cl><span class=nv>LABEL</span><span class=o>=</span><span class=s2>&#34;com.anthony.dufs.webdav&#34;</span>                             <span class=c1># launchd 服务标识，通常保持不变</span>
+</span></span><span class=line><span class=cl><span class=nv>BASE_DIR</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$HOME</span><span class=s2>/Library/Application Support/dufs-webdav&#34;</span>    <span class=c1># 运行脚本保存目录</span>
+</span></span><span class=line><span class=cl><span class=nv>SCRIPT_PATH</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$BASE_DIR</span><span class=s2>/start-dufs-webdav.sh&#34;</span>                <span class=c1># dufs 启动脚本</span>
+</span></span><span class=line><span class=cl><span class=nv>PLIST_PATH</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$HOME</span><span class=s2>/Library/LaunchAgents/</span><span class=si>${</span><span class=nv>LABEL</span><span class=si>}</span><span class=s2>.plist&#34;</span>      <span class=c1># launchd 配置文件</span>
+</span></span><span class=line><span class=cl><span class=nv>LOG_DIR</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$HOME</span><span class=s2>/Library/Logs/dufs-webdav&#34;</span>                    <span class=c1># 服务日志目录</span>
+</span></span><span class=line><span class=cl><span class=nv>APP_SCRIPT</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$HOME</span><span class=s2>/Desktop/webdav-launcher.applescript&#34;</span>      <span class=c1># 原始启动器脚本</span>
+</span></span><span class=line><span class=cl><span class=nv>APP_PATH</span><span class=o>=</span><span class=s2>&#34;/Applications/</span><span class=si>${</span><span class=nv>APP_NAME</span><span class=si>}</span><span class=s2>.app&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> ! <span class=nb>command</span> -v brew &gt;/dev/null 2&gt;<span class=p>&amp;</span>1<span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Homebrew 未安装&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> ! <span class=nb>command</span> -v dufs &gt;/dev/null 2&gt;<span class=p>&amp;</span>1<span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  brew install dufs
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>DUFS_BIN</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span><span class=nb>command</span> -v dufs<span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>mkdir -p <span class=s2>&#34;</span><span class=nv>$SHARE_DIR</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=nv>$BASE_DIR</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=nv>$HOME</span><span class=s2>/Library/LaunchAgents&#34;</span> <span class=s2>&#34;</span><span class=nv>$LOG_DIR</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>cat &gt; <span class=s2>&#34;</span><span class=nv>$SCRIPT_PATH</span><span class=s2>&#34;</span> <span class=s>&lt;&lt;EOF
+</span></span></span><span class=line><span class=cl><span class=s>#!/bin/zsh
+</span></span></span><span class=line><span class=cl><span class=s>set -eu
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>SHARE_DIR=&#34;$SHARE_DIR&#34;
+</span></span></span><span class=line><span class=cl><span class=s>PORT=&#34;$PORT&#34;
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>exec &#34;$DUFS_BIN&#34; &#34;\$SHARE_DIR&#34; \\
+</span></span></span><span class=line><span class=cl><span class=s>  --bind 0.0.0.0 \\
+</span></span></span><span class=line><span class=cl><span class=s>  --port &#34;\$PORT&#34; \\
+</span></span></span><span class=line><span class=cl><span class=s>  --hidden &#34;.*&#34; \\
+</span></span></span><span class=line><span class=cl><span class=s>  --allow-all
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>chmod +x <span class=s2>&#34;</span><span class=nv>$SCRIPT_PATH</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>cat &gt; <span class=s2>&#34;</span><span class=nv>$PLIST_PATH</span><span class=s2>&#34;</span> <span class=s>&lt;&lt;EOF
+</span></span></span><span class=line><span class=cl><span class=s>&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;
+</span></span></span><span class=line><span class=cl><span class=s>&lt;!DOCTYPE plist PUBLIC &#34;-//Apple//DTD PLIST 1.0//EN&#34; &#34;http://www.apple.com/DTDs/PropertyList-1.0.dtd&#34;&gt;
+</span></span></span><span class=line><span class=cl><span class=s>&lt;plist version=&#34;1.0&#34;&gt;
+</span></span></span><span class=line><span class=cl><span class=s>&lt;dict&gt;
+</span></span></span><span class=line><span class=cl><span class=s>  &lt;key&gt;Label&lt;/key&gt;
+</span></span></span><span class=line><span class=cl><span class=s>  &lt;string&gt;$LABEL&lt;/string&gt;
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>  &lt;key&gt;ProgramArguments&lt;/key&gt;
+</span></span></span><span class=line><span class=cl><span class=s>  &lt;array&gt;
+</span></span></span><span class=line><span class=cl><span class=s>    &lt;string&gt;/bin/zsh&lt;/string&gt;
+</span></span></span><span class=line><span class=cl><span class=s>    &lt;string&gt;$SCRIPT_PATH&lt;/string&gt;
+</span></span></span><span class=line><span class=cl><span class=s>  &lt;/array&gt;
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>  &lt;key&gt;RunAtLoad&lt;/key&gt;
+</span></span></span><span class=line><span class=cl><span class=s>  &lt;true/&gt;
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>  &lt;key&gt;KeepAlive&lt;/key&gt;
+</span></span></span><span class=line><span class=cl><span class=s>  &lt;true/&gt;
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>  &lt;key&gt;WorkingDirectory&lt;/key&gt;
+</span></span></span><span class=line><span class=cl><span class=s>  &lt;string&gt;$SHARE_DIR&lt;/string&gt;
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>  &lt;key&gt;StandardOutPath&lt;/key&gt;
+</span></span></span><span class=line><span class=cl><span class=s>  &lt;string&gt;$LOG_DIR/stdout.log&lt;/string&gt;
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>  &lt;key&gt;StandardErrorPath&lt;/key&gt;
+</span></span></span><span class=line><span class=cl><span class=s>  &lt;string&gt;$LOG_DIR/stderr.log&lt;/string&gt;
+</span></span></span><span class=line><span class=cl><span class=s>&lt;/dict&gt;
+</span></span></span><span class=line><span class=cl><span class=s>&lt;/plist&gt;
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>plutil -lint <span class=s2>&#34;</span><span class=nv>$PLIST_PATH</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>cat &gt; <span class=s2>&#34;</span><span class=nv>$APP_SCRIPT</span><span class=s2>&#34;</span> <span class=s>&lt;&lt;EOF
+</span></span></span><span class=line><span class=cl><span class=s>on run
+</span></span></span><span class=line><span class=cl><span class=s>	set uid_text to do shell script &#34;id -u&#34;
+</span></span></span><span class=line><span class=cl><span class=s>	set agent_plist to &#34;$PLIST_PATH&#34;
+</span></span></span><span class=line><span class=cl><span class=s>	set agent_label to &#34;gui/&#34; &amp; uid_text &amp; &#34;/$LABEL&#34;
+</span></span></span><span class=line><span class=cl><span class=s>	set shell_cmd to &#34;/bin/sh -lc &#34; &amp; quoted form of (&#34;launchctl bootstrap gui/&#34; &amp; uid_text &amp; &#34; &#34; &amp; quoted form of agent_plist &amp; &#34; &gt;/dev/null 2&gt;&amp;1 || true; for i in 1 2 3 4 5; do launchctl kickstart -k &#34; &amp; quoted form of agent_label &amp; &#34; &gt;/dev/null 2&gt;&amp;1 &amp;&amp; exit 0; sleep 1; launchctl bootstrap gui/&#34; &amp; uid_text &amp; &#34; &#34; &amp; quoted form of agent_plist &amp; &#34; &gt;/dev/null 2&gt;&amp;1 || true; done; exit 1&#34;)
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>	do shell script shell_cmd
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>	open location &#34;http://127.0.0.1:$PORT/&#34;
+</span></span></span><span class=line><span class=cl><span class=s>end run
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>osacompile -o <span class=s2>&#34;</span><span class=nv>$APP_PATH</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=nv>$APP_SCRIPT</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>launchctl bootout gui/<span class=k>$(</span>id -u<span class=k>)</span>/<span class=nv>$LABEL</span> &gt;/dev/null 2&gt;<span class=p>&amp;</span><span class=m>1</span> <span class=o>||</span> <span class=nb>true</span>
+</span></span><span class=line><span class=cl>sleep <span class=m>1</span>
+</span></span><span class=line><span class=cl>launchctl bootstrap gui/<span class=k>$(</span>id -u<span class=k>)</span> <span class=s2>&#34;</span><span class=nv>$PLIST_PATH</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>sleep <span class=m>1</span>
+</span></span><span class=line><span class=cl>launchctl kickstart -k gui/<span class=k>$(</span>id -u<span class=k>)</span>/<span class=nv>$LABEL</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;服务地址: http://127.0.0.1:</span><span class=si>${</span><span class=nv>PORT</span><span class=si>}</span><span class=s2>/&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;已生成: </span><span class=nv>$APP_PATH</span><span class=s2>&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=前提>前提</h2><p>这套配置会将 <code>SHARE_DIR</code> 目录以匿名可写方式共享到局域网，适合可信内网环境。默认端口为 <code>9999</code>。</p><h2 id=变量说明>变量说明</h2><p><code>SHARE_DIR</code> 决定实际共享目录。需要更换共享位置时，只需要修改这一个变量。</p><p><code>PORT</code> 决定 WebDAV 监听端口。局域网访问地址和本机访问地址都会随这个端口变化。</p><p><code>APP_NAME</code> 和 <code>APP_PATH</code> 控制打包后 <code>.app</code> 的显示名称。需要将 <code>PT WebDAV</code> 改为 <code>WebDAV</code> 这类变化时，直接修改这里即可。</p><p><code>APP_SCRIPT</code> 是原始 AppleScript 文件，<code>APP_PATH</code> 是打包产物。后续若只重建桌面启动器，直接重新编译这两个路径即可。</p><p><code>LABEL</code> 是 <code>launchd</code> 服务标识。没有同时维护多个实例的需求时，保持固定最简单。</p><h2 id=脚本做了什么>脚本做了什么</h2><p>脚本首先确保 <code>dufs</code> 已安装，并解析当前系统中的实际二进制路径。这样可以同时兼容 Apple Silicon 和 Intel Mac 上不同的 Homebrew 安装位置。</p><p>随后会生成一个独立的 <code>dufs</code> 启动脚本，并把共享目录、端口等运行参数集中写入其中。真正的后台服务由 <code>launchd</code> 读取这个脚本来启动。</p><p>接着会生成 <code>LaunchAgent plist</code>，把服务注册为当前用户会话中的常驻后台任务，并将日志输出到 <code>~/Library/Logs/dufs-webdav</code>。</p><p>最后会生成一个 AppleScript 启动器，并通过 <code>osacompile</code> 打包成 <code>.app</code>。这个启动器会先尝试拉起后台服务，再自动打开 <code>http://127.0.0.1:$PORT/</code>。当前打包结果仍使用默认 applet 图标，本文仅覆盖功能性封装。</p><h2 id=访问与验证>访问与验证</h2><p>本机访问地址：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>http://127.0.0.1:9999/
+</span></span></code></pre></td></tr></table></div></div><p>局域网其他设备访问地址：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>http://&lt;Mac 的局域网 IP&gt;:9999/
+</span></span></code></pre></td></tr></table></div></div><p>端口监听状态可以直接检查：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>lsof -nP -iTCP:9999 -sTCP:LISTEN
+</span></span><span class=line><span class=cl>curl -I http://127.0.0.1:9999/
+</span></span></code></pre></td></tr></table></div></div><p>Finder 的“连接服务器”也可以直接填写相同地址。</p><h2 id=常见维护>常见维护</h2><p>共享目录、端口或 <code>.app</code> 名称发生变化时，直接修改脚本开头的 <code>SHARE_DIR</code>、<code>PORT</code>、<code>APP_NAME</code>，然后重新执行整段脚本即可。打包后的 <code>.app</code> 不需要单独维护内部配置。</p><p>如果只需要重新加载后台服务，可执行：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>launchctl bootout gui/<span class=k>$(</span>id -u<span class=k>)</span>/com.anthony.dufs.webdav &gt;/dev/null 2&gt;<span class=p>&amp;</span><span class=m>1</span> <span class=o>||</span> <span class=nb>true</span>
+</span></span><span class=line><span class=cl>sleep <span class=m>1</span>
+</span></span><span class=line><span class=cl>launchctl bootstrap gui/<span class=k>$(</span>id -u<span class=k>)</span> <span class=s2>&#34;</span><span class=nv>$HOME</span><span class=s2>/Library/LaunchAgents/com.anthony.dufs.webdav.plist&#34;</span>
+</span></span><span class=line><span class=cl>sleep <span class=m>1</span>
+</span></span><span class=line><span class=cl>launchctl kickstart -k gui/<span class=k>$(</span>id -u<span class=k>)</span>/com.anthony.dufs.webdav
+</span></span></code></pre></td></tr></table></div></div><p>如果只需要重建桌面启动器，可执行：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>APP_NAME</span><span class=o>=</span><span class=s2>&#34;WebDAV&#34;</span>
+</span></span><span class=line><span class=cl>osacompile -o <span class=s2>&#34;/Applications/</span><span class=si>${</span><span class=nv>APP_NAME</span><span class=si>}</span><span class=s2>.app&#34;</span> <span class=s2>&#34;</span><span class=nv>$HOME</span><span class=s2>/Desktop/webdav-launcher.applescript&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>日志位置如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>tail -f <span class=s2>&#34;</span><span class=nv>$HOME</span><span class=s2>/Library/Logs/dufs-webdav/stdout.log&#34;</span>
+</span></span><span class=line><span class=cl>tail -f <span class=s2>&#34;</span><span class=nv>$HOME</span><span class=s2>/Library/Logs/dufs-webdav/stderr.log&#34;</span>
+</span></span></code></pre></td></tr></table></div></div></section><footer class="article-meta article-footer"><section class="article-copyright inline-meta"><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css integrity=sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js integrity=sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8 crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{const e=[".main-article",".widget--toc"];e.forEach(e=>{const t=document.querySelector(e);t&&renderMathInElement(t,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}],ignoredClasses:["gist"]})})})</script></article><script src=https://giscus.app/client.js data-repo=jinggqu/jinggqu.github.io data-repo-id="MDEwOlJlcG9zaXRvcnkxNDkyMTI2MDk=" data-category=Announcements data-category-id=DIC_kwDOCOTNwc4Ca4Al data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=light data-lang=en data-loading=lazy crossorigin=anonymous async></script><script>function setGiscusTheme(e){let t=document.querySelector("iframe.giscus-frame");t&&t.contentWindow.postMessage({giscus:{setConfig:{theme:e}}},"https://giscus.app")}(function(){addEventListener("message",t=>{if(event.origin!=="https://giscus.app")return;e()}),window.addEventListener("onColorSchemeChange",e);function e(){setGiscusTheme(document.documentElement.dataset.scheme==="light"?"light":"dark")}})()</script><footer class=site-footer><section class=copyright>&copy;
+2018 -
+2026 Anthony's blog</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=4.0.3>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><script type=module>
+    import gallery from '\/ts\/gallery.js';
+
+    const articleContent = document.querySelector('.article-content');
+    const shouldLoad = articleContent && (articleContent.querySelectorAll('figure').length > 0 || articleContent.querySelectorAll('img.gallery-image').length > 0);
+    
+    if (shouldLoad) {
+        gallery(articleContent);
+
+        const PhotoSwipeLightbox = (await import("https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js")).default;
+        const styleHref = "https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe.css";
+
+        const styleTag = document.createElement('link');
+        styleTag.rel = 'stylesheet';
+        styleTag.href = styleHref;
+        document.head.appendChild(styleTag);
+
+        const lightbox = new PhotoSwipeLightbox({
+            gallerySelector: '.article-content',
+            childSelector: 'figure a.image-link',
+            pswpModule: () => import("https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe.esm.min.js")
+        });
+        lightbox.init();
+    }
+</script></main></div><script type=text/javascript src=/ts/main.1ff1e5fdc4e178ed422e50aa407526dc552f26342d729343fded19416194382c.js defer></script></body></html>

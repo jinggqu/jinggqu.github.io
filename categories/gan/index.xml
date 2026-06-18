@@ -1,38 +1,38 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GAN on Anthony's blog</title><link>https://jinggqu.github.io/categories/gan/</link><description>Recent content in GAN on Anthony's blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 08 Dec 2020 10:00:00 +0800</lastBuildDate><atom:link href="https://jinggqu.github.io/categories/gan/index.xml" rel="self" type="application/rss+xml"/><item><title>GAN 网络之手写数字生成</title><link>https://jinggqu.github.io/posts/gan-for-hand-written-digits/</link><pubDate>Tue, 08 Dec 2020 10:00:00 +0800</pubDate><guid>https://jinggqu.github.io/posts/gan-for-hand-written-digits/</guid><description>&lt;h1 id="gan-网络之手写数字生成"&gt;GAN 网络之手写数字生成
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GAN on Anthony's blog</title><link>https://jinggqu.github.io/categories/gan/</link><description>Recent content in GAN on Anthony's blog</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Tue, 08 Dec 2020 10:00:00 +0800</lastBuildDate><atom:link href="https://jinggqu.github.io/categories/gan/index.xml" rel="self" type="application/rss+xml"/><item><title>GAN 网络之手写数字生成</title><link>https://jinggqu.github.io/posts/gan-for-hand-written-digits/</link><pubDate>Tue, 08 Dec 2020 10:00:00 +0800</pubDate><guid>https://jinggqu.github.io/posts/gan-for-hand-written-digits/</guid><description>&lt;h1 id="gan-网络之手写数字生成"&gt;GAN 网络之手写数字生成
 &lt;/h1&gt;&lt;h2 id="环境搭建"&gt;环境搭建
 &lt;/h2&gt;&lt;p&gt;本例中，所涉及的系统与软件版本列表如下。&lt;/p&gt;
 &lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;名称&lt;/th&gt;
-&lt;th&gt;版本&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;操作系统&lt;/td&gt;
-&lt;td&gt;Windows 20H2&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Anaconda&lt;/td&gt;
-&lt;td&gt;Anaconda3-2020.11&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;python&lt;/td&gt;
-&lt;td&gt;3.6&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;tensorflow&lt;/td&gt;
-&lt;td&gt;1.8.0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;名称&lt;/th&gt;
+					&lt;th&gt;版本&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;操作系统&lt;/td&gt;
+					&lt;td&gt;Windows 20H2&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;Anaconda&lt;/td&gt;
+					&lt;td&gt;Anaconda3-2020.11&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;python&lt;/td&gt;
+					&lt;td&gt;3.6&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;tensorflow&lt;/td&gt;
+					&lt;td&gt;1.8.0&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;本例代码存放于 &lt;a class="link" href="https://github.com/jinggqu/MachineLearning" target="_blank" rel="noopener"
-&gt;https://github.com/jinggqu/MachineLearning&lt;/a&gt;。&lt;/p&gt;
+ &gt;https://github.com/jinggqu/MachineLearning&lt;/a&gt;。&lt;/p&gt;
 &lt;h3 id="anaconda-安装"&gt;Anaconda 安装
 &lt;/h3&gt;&lt;p&gt;通过清华大学开源软件镜像站，我们可以直接下载最新版本的 Anaconda，本例中使用的 Anaconda 下载链接：
 &lt;a class="link" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-2020.11-Windows-x86_64.exe" target="_blank" rel="noopener"
-&gt;https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-2020.11-Windows-x86_64.exe&lt;/a&gt;&lt;/p&gt;
+ &gt;https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-2020.11-Windows-x86_64.exe&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Anaconda 安装教程网络上已经有很多，故此处不再赘述。&lt;/p&gt;
 &lt;p&gt;安装完成后，我们需要手动配置 Anaconda 的环境变量，在用户变量的 Path 中添加 Anaconda 的安装路径以及其子文件夹，具体内容如下。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
@@ -49,25 +49,33 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;上述配置请根据 Anaconda 实际安装路径进行调整，配置完成的效果如下图所示。&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152533.webp"
-width="1058"
-height="1086"
-srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152533_hu_6866e9b2d64033e7.webp 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152533_hu_4e81301066321ae9.webp 1024w"
-loading="lazy"
-alt="Anaconda 环境变量配置界面"
-class="gallery-image"
-data-flex-grow="97"
-data-flex-basis="233px"
+	width="1058"
+	height="1086"
+	srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152533_hu_6866e9b2d64033e7.webp 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152533_hu_4e81301066321ae9.webp 1024w"
+	loading="lazy"
+	
+		alt="Anaconda 环境变量配置界面"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="97"
+		data-flex-basis="233px"
+	
 &gt;
 &lt;/p&gt;
 &lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152633.webp"
-width="902"
-height="928"
-srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152633_hu_727f4f7de613ad7f.webp 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152633_hu_10447fb36a37cbb4.webp 1024w"
-loading="lazy"
-alt="Anaconda 环境变量配置路径"
-class="gallery-image"
-data-flex-grow="97"
-data-flex-basis="233px"
+	width="902"
+	height="928"
+	srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152633_hu_727f4f7de613ad7f.webp 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152633_hu_10447fb36a37cbb4.webp 1024w"
+	loading="lazy"
+	
+		alt="Anaconda 环境变量配置路径"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="97"
+		data-flex-basis="233px"
+	
 &gt;
 &lt;/p&gt;
 &lt;p&gt;完成后打开 cmd 输入下列命令，如果输出内容与下列内容类似，则表示配置正确，可继续后面的步骤。&lt;/p&gt;
@@ -129,7 +137,7 @@ handwrittendigits C:\Users\xvyn\anaconda3\envs\handwrittendigits
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;如果执行时报错如下，则可以通过 &lt;a class="link" href="https://github.com/conda/conda/issues/7980" target="_blank" rel="noopener"
-&gt;https://github.com/conda/conda/issues/7980&lt;/a&gt; 来解决。&lt;/p&gt;
+ &gt;https://github.com/conda/conda/issues/7980&lt;/a&gt; 来解决。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Can't execute `conda activate` from batch script
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;详细操作为：&lt;/p&gt;
@@ -143,6 +151,7 @@ handwrittendigits C:\Users\xvyn\anaconda3\envs\handwrittendigits
 &lt;pre&gt;&lt;code&gt;实际操作过程
 (base) PS C:\Users\xvyn&amp;gt; conda activate handwrittendigits
 (handwrittendigits) PS C:\Users\xvyn&amp;gt;
+
 再次查看所有虚拟环境
 (handwrittendigits) PS C:\Users\xvyn&amp;gt; conda info --envs
 conda environments:
@@ -199,7 +208,7 @@ default_channels:
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;除了上述命令行操作方式外，也可以直接修改 C:\Users&amp;lt;USER&amp;gt;\.condarc 文件来实现换源。参考 &lt;a class="link" href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/" target="_blank" rel="noopener"
-&gt;Anaconda 镜像使用帮助&lt;/a&gt; 修改后的文件内容如下所示。&lt;/p&gt;
+ &gt;Anaconda 镜像使用帮助&lt;/a&gt; 修改后的文件内容如下所示。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;ssl_verify: false
 show_channel_urls: true
 channels:
@@ -270,14 +279,18 @@ simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
 &lt;/h3&gt;&lt;p&gt;在创建项目时，需要将虚拟环境（图中 Location 项）配置为前文中创建的虚拟环境所在目录，然后点击创建项目。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;由于此前作者已经创建过项目，故创建窗口下方会提示虚拟环境目录不为空，忽略即可。&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208194401.webp"
-width="1401"
-height="856"
-srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208194401_hu_b7f0b24b9f824fc0.webp 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208194401_hu_2cdd68c71302f8a3.webp 1024w"
-loading="lazy"
-alt="PyCharm 创建项目配置界面"
-class="gallery-image"
-data-flex-grow="163"
-data-flex-basis="392px"
+	width="1401"
+	height="856"
+	srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208194401_hu_b7f0b24b9f824fc0.webp 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208194401_hu_2cdd68c71302f8a3.webp 1024w"
+	loading="lazy"
+	
+		alt="PyCharm 创建项目配置界面"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="163"
+		data-flex-basis="392px"
+	
 &gt;
 &lt;/p&gt;
 &lt;h3 id="运行项目"&gt;运行项目
@@ -554,14 +567,18 @@ data-flex-basis="392px"
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;运行时的截图如下，可以看到已经生成了多张手写数字的图片。&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208201913.webp"
-width="3839"
-height="2089"
-srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208201913_hu_cacb3f2e2fce47e5.webp 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208201913_hu_e5b5c8919b743bc8.webp 1024w"
-loading="lazy"
-alt="GAN 生成的手写数字示例"
-class="gallery-image"
-data-flex-grow="183"
-data-flex-basis="441px"
+	width="3839"
+	height="2089"
+	srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208201913_hu_cacb3f2e2fce47e5.webp 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208201913_hu_e5b5c8919b743bc8.webp 1024w"
+	loading="lazy"
+	
+		alt="GAN 生成的手写数字示例"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="183"
+		data-flex-basis="441px"
+	
 &gt;
 &lt;/p&gt;
 &lt;p&gt;至此，GAN 网络手写数字生成环境搭建已经完成，后续将进行更加深入的学习。&lt;/p&gt;
@@ -578,15 +595,15 @@ data-flex-basis="441px"
 &lt;/div&gt;&lt;h2 id="参考文章"&gt;参考文章
 &lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;&lt;a class="link" href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda.html" target="_blank" rel="noopener"
-&gt;Anaconda 源使用帮助&lt;/a&gt;&lt;/li&gt;
+ &gt;Anaconda 源使用帮助&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://github.com/yang1688899/gan_practice/blob/master/gan_mnist/gan_mnist.py" target="_blank" rel="noopener"
-&gt;gan_practice&lt;/a&gt;&lt;/li&gt;
+ &gt;gan_practice&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://github.com/conda/conda/issues/7980#issuecomment-515887073" target="_blank" rel="noopener"
-&gt;Can&amp;rsquo;t execute &lt;code&gt;conda activate&lt;/code&gt; from bash script&lt;/a&gt;&lt;/li&gt;
+ &gt;Can&amp;rsquo;t execute &lt;code&gt;conda activate&lt;/code&gt; from bash script&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://www.jianshu.com/p/c845bfd09582" target="_blank" rel="noopener"
-&gt;python 安装 TensorFlow 吐血整理&lt;/a&gt;&lt;/li&gt;
+ &gt;python 安装 TensorFlow 吐血整理&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://zhuanlan.zhihu.com/p/103134466" target="_blank" rel="noopener"
-&gt;conda 安装指定版本的指定包&lt;/a&gt;&lt;/li&gt;
+ &gt;conda 安装指定版本的指定包&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://luanlengli.github.io/2019/12/19/Python-pip%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%AE%BE%E7%BD%AE%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90.html" target="_blank" rel="noopener"
-&gt;Python pip 命令行设置国内镜像源&lt;/a&gt;&lt;/li&gt;
+ &gt;Python pip 命令行设置国内镜像源&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;</description></item></channel></rss>
