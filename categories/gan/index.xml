@@ -48,36 +48,36 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;上述配置请根据 Anaconda 实际安装路径进行调整，配置完成的效果如下图所示。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152533.webp"
-	width="1058"
-	height="1086"
-	srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152533_hu_6866e9b2d64033e7.webp 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152533_hu_4e81301066321ae9.webp 1024w"
-	loading="lazy"
-	
-		alt="Anaconda 环境变量配置界面"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="97"
-		data-flex-basis="233px"
-	
-&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152633.webp"
-	width="902"
-	height="928"
-	srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152633_hu_727f4f7de613ad7f.webp 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152633_hu_10447fb36a37cbb4.webp 1024w"
-	loading="lazy"
-	
-		alt="Anaconda 环境变量配置路径"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="97"
-		data-flex-basis="233px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/gan-for-hand-written-digits/20201208-152533-df0dbe-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1058"
+			data-pswp-height="1086"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/gan-for-hand-written-digits/20201208-152533-df0dbe-thumb.webp"
+				width="1058"
+				height="1086"
+				loading="lazy"
+				alt="Anaconda 环境变量配置界面"
+				
+				class="gallery-image"
+				data-flex-grow="97.42173112338858"
+				data-flex-basis="233.8121546961326px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/gan-for-hand-written-digits/20201208-152633-d9c3ad-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="902"
+			data-pswp-height="928"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/gan-for-hand-written-digits/20201208-152633-d9c3ad-thumb.webp"
+				width="902"
+				height="928"
+				loading="lazy"
+				alt="Anaconda 环境变量配置路径"
+				
+				class="gallery-image"
+				data-flex-grow="97.19827586206897"
+				data-flex-basis="233.27586206896552px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;完成后打开 cmd 输入下列命令，如果输出内容与下列内容类似，则表示配置正确，可继续后面的步骤。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
@@ -278,21 +278,21 @@ simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
 &lt;/h2&gt;&lt;h3 id="使用-pycharm-创建项目"&gt;使用 PyCharm 创建项目
 &lt;/h3&gt;&lt;p&gt;在创建项目时，需要将虚拟环境（图中 Location 项）配置为前文中创建的虚拟环境所在目录，然后点击创建项目。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;由于此前作者已经创建过项目，故创建窗口下方会提示虚拟环境目录不为空，忽略即可。&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208194401.webp"
-	width="1401"
-	height="856"
-	srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208194401_hu_b7f0b24b9f824fc0.webp 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208194401_hu_2cdd68c71302f8a3.webp 1024w"
-	loading="lazy"
-	
-		alt="PyCharm 创建项目配置界面"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="163"
-		data-flex-basis="392px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/gan-for-hand-written-digits/20201208-194401-eff20b-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1401"
+			data-pswp-height="856"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/gan-for-hand-written-digits/20201208-194401-eff20b-thumb.webp"
+				width="1401"
+				height="856"
+				loading="lazy"
+				alt="PyCharm 创建项目配置界面"
+				
+				class="gallery-image"
+				data-flex-grow="163.66822429906543"
+				data-flex-basis="392.803738317757px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id="运行项目"&gt;运行项目
 &lt;/h3&gt;&lt;p&gt;将以下代码置于项目 &lt;code&gt;main.py&lt;/code&gt; 中，运行。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
@@ -566,21 +566,21 @@ simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;运行时的截图如下，可以看到已经生成了多张手写数字的图片。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208201913.webp"
-	width="3839"
-	height="2089"
-	srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208201913_hu_cacb3f2e2fce47e5.webp 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208201913_hu_e5b5c8919b743bc8.webp 1024w"
-	loading="lazy"
-	
-		alt="GAN 生成的手写数字示例"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="183"
-		data-flex-basis="441px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/gan-for-hand-written-digits/20201208-201913-ad2fd1-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="3839"
+			data-pswp-height="2089"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/gan-for-hand-written-digits/20201208-201913-ad2fd1-thumb.webp"
+				width="3839"
+				height="2089"
+				loading="lazy"
+				alt="GAN 生成的手写数字示例"
+				
+				class="gallery-image"
+				data-flex-grow="183.77213977979895"
+				data-flex-basis="441.05313547151746px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;至此，GAN 网络手写数字生成环境搭建已经完成，后续将进行更加深入的学习。&lt;/p&gt;
 &lt;h2 id="备注"&gt;备注
 &lt;/h2&gt;&lt;p&gt;为 jupyter lab 指定 conda 环境，在 conda 环境中执行以下命令后再启动 jupyter lab 即可&lt;/p&gt;

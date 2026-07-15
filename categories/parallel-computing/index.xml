@@ -21,21 +21,21 @@
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id="14-cpu-与-gpu-区别"&gt;1.4 CPU 与 GPU 区别
-&lt;/h3&gt;&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/parallel-computing-summary/assets/20210111155959.webp"
-	width="2244"
-	height="1070"
-	srcset="https://jinggqu.github.io/posts/parallel-computing-summary/assets/20210111155959_hu_dd79f437e9f48676.webp 480w, https://jinggqu.github.io/posts/parallel-computing-summary/assets/20210111155959_hu_c41d861664a0e9eb.webp 1024w"
-	loading="lazy"
-	
-		alt="CPU 与 GPU 架构对比图"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="209"
-		data-flex-basis="503px"
-	
-&gt;
-&lt;/p&gt;
+&lt;/h3&gt;&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2021/parallel-computing-summary/20210111-155959-16f1a5-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="2244"
+			data-pswp-height="1070"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2021/parallel-computing-summary/20210111-155959-16f1a5-thumb.webp"
+				width="2244"
+				height="1070"
+				loading="lazy"
+				alt="CPU 与 GPU 架构对比图"
+				
+				class="gallery-image"
+				data-flex-grow="209.7196261682243"
+				data-flex-basis="503.32710280373834px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;上图中，绿色的是计算单元，橙红色的是存储单元，橙黄色的是控制单元。其中，各个部件详细释义：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;ALU：算术逻辑单元（&lt;strong&gt;A&lt;/strong&gt;rithmetic &lt;strong&gt;L&lt;/strong&gt;ogic &lt;strong&gt;U&lt;/strong&gt;nit），是一种可对二进制整数执行算术运算或位运算的组合逻辑数字电路；&lt;/li&gt;
@@ -47,21 +47,21 @@
 &lt;h2 id="2-cuda-简介及架构"&gt;2. CUDA 简介及架构
 &lt;/h2&gt;&lt;p&gt;CUDA（&lt;strong&gt;C&lt;/strong&gt;ompute &lt;strong&gt;U&lt;/strong&gt;nified &lt;strong&gt;D&lt;/strong&gt;evice &lt;strong&gt;A&lt;/strong&gt;rchitecture）是 NVIDIA 推出的的通用并行计算架构，该架构使 GPU 能够解决大量重复性的计算问题。&lt;/p&gt;
 &lt;h3 id="21-物理架构"&gt;2.1 物理架构
-&lt;/h3&gt;&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/parallel-computing-summary/assets/20210111162222.webp"
-	width="3014"
-	height="1395"
-	srcset="https://jinggqu.github.io/posts/parallel-computing-summary/assets/20210111162222_hu_f6c841d14387e0fb.webp 480w, https://jinggqu.github.io/posts/parallel-computing-summary/assets/20210111162222_hu_f2eedef9c31b1bfa.webp 1024w"
-	loading="lazy"
-	
-		alt="CUDA 物理架构示意图"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="216"
-		data-flex-basis="518px"
-	
-&gt;
-&lt;/p&gt;
+&lt;/h3&gt;&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2021/parallel-computing-summary/20210111-162222-746029-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="3014"
+			data-pswp-height="1395"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2021/parallel-computing-summary/20210111-162222-746029-thumb.webp"
+				width="3014"
+				height="1395"
+				loading="lazy"
+				alt="CUDA 物理架构示意图"
+				
+				class="gallery-image"
+				data-flex-grow="216.0573476702509"
+				data-flex-basis="518.5376344086021px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id="22-kernel-函数启动参数"&gt;2.2 kernel 函数启动参数
 &lt;/h3&gt;&lt;h4 id="221-blockspergrid"&gt;2.2.1 blocksPerGrid
 &lt;/h4&gt;&lt;p&gt;用于定义 kernel 函数使用的 block 数量，可以定义为一、二与三维结构，示例如下；&lt;/p&gt;
@@ -444,21 +444,21 @@ cudaMemcpyHostToDevice：将内存中的数据拷贝到显存中。&lt;/li&gt;
 &lt;/div&gt;&lt;h2 id="矩阵相加"&gt;矩阵相加
 &lt;/h2&gt;&lt;h3 id="上传文件"&gt;上传文件
 &lt;/h3&gt;&lt;p&gt;在命令行中使用 &lt;code&gt;rz&lt;/code&gt; 命令开始上传文件，选中相应文件之后点击打开即可开始上传。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/parallel-computing/assets/20201124095937.webp"
-	width="1094"
-	height="876"
-	srcset="https://jinggqu.github.io/posts/parallel-computing/assets/20201124095937_hu_bb32194f6f203850.webp 480w, https://jinggqu.github.io/posts/parallel-computing/assets/20201124095937_hu_6ee34f0549a898ab.webp 1024w"
-	loading="lazy"
-	
-		alt="文件上传对话框"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="124"
-		data-flex-basis="299px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/parallel-computing/20201124-095937-e49aa6-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1094"
+			data-pswp-height="876"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/parallel-computing/20201124-095937-e49aa6-thumb.webp"
+				width="1094"
+				height="876"
+				loading="lazy"
+				alt="文件上传对话框"
+				
+				class="gallery-image"
+				data-flex-grow="124.88584474885845"
+				data-flex-basis="299.7260273972603px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id="编译"&gt;编译
 &lt;/h3&gt;&lt;p&gt;执行 &lt;code&gt;nvcc&lt;/code&gt; 命令编译上述文件，生成可执行文件。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;

@@ -4,53 +4,53 @@
 &lt;p&gt;FastDFS 开源地址：https://github.com/happyfish100/fastdfs&lt;/p&gt;
 &lt;p&gt;由于网络上已有很多详细的关于 FastDFS 的介绍，故此处不再赘述。请查看参考文章中的第 1、2 条。&lt;/p&gt;
 &lt;h3 id="fastdfs-架构图"&gt;FastDFS 架构图
-&lt;/h3&gt;&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/getting-to-know-fastdfs/assets/20201103150000.webp"
-	width="872"
-	height="843"
-	srcset="https://jinggqu.github.io/posts/getting-to-know-fastdfs/assets/20201103150000_hu_5ea76bbea856bbff.webp 480w, https://jinggqu.github.io/posts/getting-to-know-fastdfs/assets/20201103150000_hu_e84274b83de6ef1.webp 1024w"
-	loading="lazy"
-	
-		alt="FastDFS 分布式文件系统架构图"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="103"
-		data-flex-basis="248px"
-	
-&gt;
-&lt;/p&gt;
+&lt;/h3&gt;&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-fastdfs/20201103-150000-e89286-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="872"
+			data-pswp-height="843"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-fastdfs/20201103-150000-e89286-thumb.webp"
+				width="872"
+				height="843"
+				loading="lazy"
+				alt="FastDFS 分布式文件系统架构图"
+				
+				class="gallery-image"
+				data-flex-grow="103.44009489916964"
+				data-flex-basis="248.25622775800713px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id="fastdfs-上传流程"&gt;FastDFS 上传流程
-&lt;/h3&gt;&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/getting-to-know-fastdfs/assets/20201104100033.webp"
-	width="1881"
-	height="1299"
-	srcset="https://jinggqu.github.io/posts/getting-to-know-fastdfs/assets/20201104100033_hu_47fb33415c4f03fe.webp 480w, https://jinggqu.github.io/posts/getting-to-know-fastdfs/assets/20201104100033_hu_fbc5c9dd0f2590c5.webp 1024w"
-	loading="lazy"
-	
-		alt="FastDFS 文件上传流程示意图"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="144"
-		data-flex-basis="347px"
-	
-&gt;
-&lt;/p&gt;
+&lt;/h3&gt;&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-fastdfs/20201104-100033-ad05c4-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1881"
+			data-pswp-height="1299"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-fastdfs/20201104-100033-ad05c4-thumb.webp"
+				width="1881"
+				height="1299"
+				loading="lazy"
+				alt="FastDFS 文件上传流程示意图"
+				
+				class="gallery-image"
+				data-flex-grow="144.8036951501155"
+				data-flex-basis="347.52886836027716px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id="fastdfs-下载流程"&gt;FastDFS 下载流程
-&lt;/h3&gt;&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/getting-to-know-fastdfs/assets/20201104100107.webp"
-	width="1753"
-	height="1156"
-	srcset="https://jinggqu.github.io/posts/getting-to-know-fastdfs/assets/20201104100107_hu_fb4053625c1363a0.webp 480w, https://jinggqu.github.io/posts/getting-to-know-fastdfs/assets/20201104100107_hu_f4804281b1ab3863.webp 1024w"
-	loading="lazy"
-	
-		alt="FastDFS 文件下载流程示意图"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="151"
-		data-flex-basis="363px"
-	
-&gt;
-&lt;/p&gt;
+&lt;/h3&gt;&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-fastdfs/20201104-100107-9edd0f-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1753"
+			data-pswp-height="1156"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-fastdfs/20201104-100107-9edd0f-thumb.webp"
+				width="1753"
+				height="1156"
+				loading="lazy"
+				alt="FastDFS 文件下载流程示意图"
+				
+				class="gallery-image"
+				data-flex-grow="151.64359861591694"
+				data-flex-basis="363.9446366782007px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="安装-fastdfs"&gt;安装 FastDFS
 &lt;/h2&gt;&lt;h3 id="配置防火墙"&gt;配置防火墙
 &lt;/h3&gt;&lt;p&gt;本篇文章是基于 CentOS v8.2.2004 版本，以下操作均为单机环境，单机 IP 地址为 192.168.61.128。在安装 FastDFS 之前，需要先进行防火墙的设置。防火墙的相关命令如下：&lt;/p&gt;
@@ -462,21 +462,21 @@ tcp 0 0 0.0.0.0:22122 0.0.0.0:* LISTEN 6220/fdfs_trackerd
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;上传成功后，会输出文件 ID：group1/M00/00/00/wKg9gF-f0aKAUJAlAARra4mLMhc390.jpg&lt;/p&gt;
 &lt;p&gt;返回的文件 ID 由 group、存储目录、两级子目录、fileid、文件后缀名（由客户端指定，主要用于区分文件类型）拼接而成。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/getting-to-know-fastdfs/assets/20201104093640.webp"
-	width="1871"
-	height="370"
-	srcset="https://jinggqu.github.io/posts/getting-to-know-fastdfs/assets/20201104093640_hu_1e49c1248f129127.webp 480w, https://jinggqu.github.io/posts/getting-to-know-fastdfs/assets/20201104093640_hu_4af29016f4dd095f.webp 1024w"
-	loading="lazy"
-	
-		alt="FastDFS 文件 ID 结构示例"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="505"
-		data-flex-basis="1213px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-fastdfs/20201104-093640-8c2be3-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1871"
+			data-pswp-height="370"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-fastdfs/20201104-093640-8c2be3-thumb.webp"
+				width="1871"
+				height="370"
+				loading="lazy"
+				alt="FastDFS 文件 ID 结构示例"
+				
+				class="gallery-image"
+				data-flex-grow="505.6756756756757"
+				data-flex-basis="1213.6216216216217px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="配置-nginx"&gt;配置 Nginx
 &lt;/h2&gt;&lt;p&gt;安装 Nginx 的相关操作请查看文章 &lt;a class="link" href="https://jinggqu.github.io/posts/getting-to-know-nginx/" target="_blank" rel="noopener"
  &gt;初识 Nginx&lt;/a&gt;，此处不再赘述。&lt;/p&gt;
@@ -508,21 +508,21 @@ tcp 0 0 0.0.0.0:22122 0.0.0.0:* LISTEN 6220/fdfs_trackerd
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;然后重启 Nginx，访问服务器 ip/fileid 进行测试，根据上述例子，此处访问 http://192.168.61.128/group1/M00/00/00/wKg9gF-f0aKAUJAlAARra4mLMhc390.jpg&lt;/p&gt;
 &lt;p&gt;测试结果如下图，可以看到已经访问成功，HTTP 状态码返回 200。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/getting-to-know-fastdfs/assets/20201104104028.webp"
-	width="1829"
-	height="1003"
-	srcset="https://jinggqu.github.io/posts/getting-to-know-fastdfs/assets/20201104104028_hu_1ae3a8bcb3752a88.webp 480w, https://jinggqu.github.io/posts/getting-to-know-fastdfs/assets/20201104104028_hu_647512c9f1b35bb0.webp 1024w"
-	loading="lazy"
-	
-		alt="FastDFS 文件访问测试结果"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="182"
-		data-flex-basis="437px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-fastdfs/20201104-104028-d04365-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1829"
+			data-pswp-height="1003"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-fastdfs/20201104-104028-d04365-thumb.webp"
+				width="1829"
+				height="1003"
+				loading="lazy"
+				alt="FastDFS 文件访问测试结果"
+				
+				class="gallery-image"
+				data-flex-grow="182.35294117647058"
+				data-flex-basis="437.6470588235294px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="配置-fastdfs-nginx-module-模块"&gt;配置 fastdfs-nginx-module 模块
 &lt;/h2&gt;&lt;h3 id="模块简介"&gt;模块简介
 &lt;/h3&gt;&lt;p&gt;fastdfs-nginx-module 可以重定向文件链接到源服务器，避免由于 Storage 服务器复制延迟导致文件无法访问而产生的错误。&lt;/p&gt;
@@ -671,21 +671,21 @@ configure arguments: --prefix=/usr/local/nginx/ --add-module=/usr/local/software
 ngx_http_fastdfs_set pid=11648
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;此时我们可以在浏览器中访问前文中上传的文件，能下载文件则表示 fastdfs-nginx-module 模块安装成功。注意和和前文中直接使用 Nginx 路由访问不同的是，这里配置 fastdfs-nginx-module 模块，可以重定向文件链接到源服务器取文件。访问结果如下图所示。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/getting-to-know-fastdfs/assets/20201104104028.webp"
-	width="1829"
-	height="1003"
-	srcset="https://jinggqu.github.io/posts/getting-to-know-fastdfs/assets/20201104104028_hu_1ae3a8bcb3752a88.webp 480w, https://jinggqu.github.io/posts/getting-to-know-fastdfs/assets/20201104104028_hu_647512c9f1b35bb0.webp 1024w"
-	loading="lazy"
-	
-		alt="FastDFS 通过 Nginx 模块访问文件测试"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="182"
-		data-flex-basis="437px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-fastdfs/20201104-104028-d04365-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1829"
+			data-pswp-height="1003"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-fastdfs/20201104-104028-d04365-thumb.webp"
+				width="1829"
+				height="1003"
+				loading="lazy"
+				alt="FastDFS 通过 Nginx 模块访问文件测试"
+				
+				class="gallery-image"
+				data-flex-grow="182.35294117647058"
+				data-flex-basis="437.6470588235294px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;至此，FastDFS 搭建分布式文件管理系统就初步完成了，在下一篇文章中，将介绍如何在客户端上通过 Java 来实现文件的上传和下载。&lt;/p&gt;
 &lt;h2 id="参考文章"&gt;参考文章
 &lt;/h2&gt;&lt;ol&gt;

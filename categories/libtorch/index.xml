@@ -8,21 +8,21 @@
 &lt;h2 id="环境配置"&gt;环境配置
 &lt;/h2&gt;&lt;h3 id="创建项目"&gt;创建项目
 &lt;/h3&gt;&lt;p&gt;首先，在 Visual Studio 中创建一个名为 libtorch-toturial 的控制台项目。创建完成后，将项目设置为 &lt;code&gt;Release&lt;/code&gt; 模式，&lt;code&gt;x64&lt;/code&gt; 平台，如下图。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027154904.webp"
-	width="758"
-	height="406"
-	srcset="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027154904_hu_b53ef0af154232ea.webp 480w, https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027154904_hu_53f7406c6156f23c.webp 1024w"
-	loading="lazy"
-	
-		alt="Visual Studio 项目配置为 Release 和 x64 平台"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="186"
-		data-flex-basis="448px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2021/libtorch-toturial/20211027-154904-a95724-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="758"
+			data-pswp-height="406"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2021/libtorch-toturial/20211027-154904-a95724-thumb.webp"
+				width="758"
+				height="406"
+				loading="lazy"
+				alt="Visual Studio 项目配置为 Release 和 x64 平台"
+				
+				class="gallery-image"
+				data-flex-grow="186.69950738916256"
+				data-flex-basis="448.07881773399015px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id="配置-libtorch-依赖"&gt;配置 LibTorch 依赖
 &lt;/h3&gt;
  &lt;blockquote&gt;
@@ -50,21 +50,21 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;配置结果如下图，注意检查窗口顶栏 &lt;code&gt;配置&lt;/code&gt; 是否为 &lt;code&gt;Release&lt;/code&gt;，&lt;code&gt;平台&lt;/code&gt; 是否为 &lt;code&gt;x64&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027160310.webp"
-	width="1275"
-	height="715"
-	srcset="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027160310_hu_ad30a025b7636614.webp 480w, https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027160310_hu_4b3da6194e95b49e.webp 1024w"
-	loading="lazy"
-	
-		alt="项目属性中 LibTorch 库配置示例"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="178"
-		data-flex-basis="427px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2021/libtorch-toturial/20211027-160310-4e5c6c-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1275"
+			data-pswp-height="715"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2021/libtorch-toturial/20211027-160310-4e5c6c-thumb.webp"
+				width="1275"
+				height="715"
+				loading="lazy"
+				alt="项目属性中 LibTorch 库配置示例"
+				
+				class="gallery-image"
+				data-flex-grow="178.32167832167832"
+				data-flex-basis="427.97202797202794px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;然后找到 &lt;code&gt;链接器 -&amp;gt; 输入 -&amp;gt; 附加依赖项&lt;/code&gt; 选项，在其中填入 LibTorch lib 路径下（即 &lt;code&gt;D:\Software\libtorch-lts\lib&lt;/code&gt;）所有 &lt;code&gt;*.lib&lt;/code&gt; 文件的文件名，详细如下。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
@@ -113,21 +113,21 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;最后，将 &lt;code&gt;D:\Software\libtorch-lts\lib&lt;/code&gt; 路径下所有的 &lt;code&gt;*.dll&lt;/code&gt; 文件拷贝至 &lt;code&gt;项目路径 -&amp;gt; x64 -&amp;gt; Release&lt;/code&gt; 路径下，如下图。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027163802.webp"
-	width="839"
-	height="615"
-	srcset="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027163802_hu_4abc867274874d71.webp 480w, https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027163802_hu_33f0848e885ce54f.webp 1024w"
-	loading="lazy"
-	
-		alt="项目目录下复制的 LibTorch DLL 文件"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="136"
-		data-flex-basis="327px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2021/libtorch-toturial/20211027-163802-b14088-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="839"
+			data-pswp-height="615"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2021/libtorch-toturial/20211027-163802-b14088-thumb.webp"
+				width="839"
+				height="615"
+				loading="lazy"
+				alt="项目目录下复制的 LibTorch DLL 文件"
+				
+				class="gallery-image"
+				data-flex-grow="136.4227642276423"
+				data-flex-basis="327.4146341463415px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id="示例程序"&gt;示例程序
 &lt;/h3&gt;&lt;p&gt;至此，开发环境搭建就已经完成了。我们可以通过运行以下示例程序，来检验上述配置是否正确。若输出如图中所示，则配置无误。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
@@ -150,21 +150,21 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027170451.webp"
-	width="313"
-	height="309"
-	srcset="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027170451_hu_eb6acfe89a73d939.webp 480w, https://jinggqu.github.io/posts/libtorch-toturial/assets/20211027170451_hu_e6d227f0d765b014.webp 1024w"
-	loading="lazy"
-	
-		alt="测试程序生成的随机张量输出"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="101"
-		data-flex-basis="243px"
-	
-&gt;
-&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2021/libtorch-toturial/20211027-170451-e2e02f-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="313"
+			data-pswp-height="309"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2021/libtorch-toturial/20211027-170451-e2e02f-thumb.webp"
+				width="313"
+				height="309"
+				loading="lazy"
+				alt="测试程序生成的随机张量输出"
+				
+				class="gallery-image"
+				data-flex-grow="101.29449838187702"
+				data-flex-basis="243.10679611650485px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="手写数字识别"&gt;手写数字识别
 &lt;/h2&gt;&lt;h3 id="数据准备"&gt;数据准备
 &lt;/h3&gt;&lt;p&gt;本节将以深度学习经典案例——手写数字识别来演示 LibTorch 的使用。首先需要下载 mnist 手写数字数据集，你可以在&lt;a class="link" href="http://yann.lecun.com/exdb/mnist/" target="_blank" rel="noopener"
@@ -198,21 +198,21 @@
  &gt;LibTorch 官方示例&lt;/a&gt; 中找到，请将其拷贝到项目的 &lt;code&gt;libtorch-toturial.cpp&lt;/code&gt; 中。&lt;/p&gt;
 &lt;h3 id="结果"&gt;结果
 &lt;/h3&gt;&lt;p&gt;与 PyTorch 类似，LibTorch 创建深度学习应用同样包含与其相似的步骤：定义网络、初始化网络、加载数据集、训练、验证及保存模型等，详细代码可以参照上述官方示例，此处不再赘述。训练 10 个 epoch 之后，识别准确率已经达到了 98.4%.&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211028114206.webp"
-	width="945"
-	height="639"
-	srcset="https://jinggqu.github.io/posts/libtorch-toturial/assets/20211028114206_hu_eade9b0a4473532f.webp 480w, https://jinggqu.github.io/posts/libtorch-toturial/assets/20211028114206_hu_d793b901d594493.webp 1024w"
-	loading="lazy"
-	
-		alt="MNIST 手写数字识别训练结果"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="147"
-		data-flex-basis="354px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2021/libtorch-toturial/20211028-114206-b67a2e-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="945"
+			data-pswp-height="639"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2021/libtorch-toturial/20211028-114206-b67a2e-thumb.webp"
+				width="945"
+				height="639"
+				loading="lazy"
+				alt="MNIST 手写数字识别训练结果"
+				
+				class="gallery-image"
+				data-flex-grow="147.88732394366198"
+				data-flex-basis="354.92957746478874px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="自定义数据集"&gt;自定义数据集
 &lt;/h2&gt;&lt;p&gt;在本节中，我们将介绍如何将已有的数据集读取到神经网络中，生成 PyTorch 张量。在这之前，需要先介绍 NumCpp 工具，它可以大幅提升数据处理的效率。&lt;/p&gt;
 &lt;h3 id="numcpp-简介与配置"&gt;NumCpp 简介与配置

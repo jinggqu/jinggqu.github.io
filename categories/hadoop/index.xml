@@ -445,39 +445,39 @@ User: davidisbetterthenyou, Number of videos: 16
  &gt;利用开发工具 IntelliJ IDEA 编写 Spark 应用程序（Scala+Maven）&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;</description></item><item><title>MapReduce 分布式编程</title><link>https://jinggqu.github.io/posts/mapreduce-distributed-programming/</link><pubDate>Sat, 17 Oct 2020 20:00:00 +0800</pubDate><guid>https://jinggqu.github.io/posts/mapreduce-distributed-programming/</guid><description>&lt;h1 id="mapreduce-分布式编程"&gt;MapReduce 分布式编程
 &lt;/h1&gt;&lt;h2 id="词频统计程序示例"&gt;词频统计程序示例
-&lt;/h2&gt;&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/mapreduce-distributed-programming/assets/20201014180000.webp"
-	width="1344"
-	height="624"
-	srcset="https://jinggqu.github.io/posts/mapreduce-distributed-programming/assets/20201014180000_hu_bc065edfe1745660.webp 480w, https://jinggqu.github.io/posts/mapreduce-distributed-programming/assets/20201014180000_hu_63d06d442d35aac7.webp 1024w"
-	loading="lazy"
-	
-		alt="MapReduce 词频统计流程示意图"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="215"
-		data-flex-basis="516px"
-	
-&gt;
-&lt;/p&gt;
+&lt;/h2&gt;&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/mapreduce-distributed-programming/20201014-180000-fdd4c7-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1344"
+			data-pswp-height="624"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/mapreduce-distributed-programming/20201014-180000-fdd4c7-thumb.webp"
+				width="1344"
+				height="624"
+				loading="lazy"
+				alt="MapReduce 词频统计流程示意图"
+				
+				class="gallery-image"
+				data-flex-grow="215.3846153846154"
+				data-flex-basis="516.9230769230769px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;假设将一个英文文本大文件作为输入，统计文件中单词出现的频数。最基本的操作是把输入文件的每一行传递给 map 函数完成对单词的拆分并输出中间结果，中间结果为 &amp;lt;word, 1&amp;gt; 的形式， 表示程序对一个单词，都对应一个计数 1。使用 reduce 函数收集 map 函数的结果作为输入值，并生成最终 &amp;lt;word, count&amp;gt; 形式的结果，完成对每个单词的词频统计。它们对应 MapReduce 处理数据流程如上图所示。&lt;/p&gt;
 &lt;h2 id="mapreduce-程序的运行过程"&gt;MapReduce 程序的运行过程
 &lt;/h2&gt;&lt;p&gt;如图所示，MapReduce 运行阶段数据传递经过输入文件、Map 阶段、中间文件、 Reduce 阶段、输出文件五个阶段，用户程序只与 Map 阶段和 Reduce 阶段的 Worker 直接相关，其他事情由 Hadoop 平台根据设置自行完成。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/mapreduce-distributed-programming/assets/20201014190000.webp"
-	width="1784"
-	height="1084"
-	srcset="https://jinggqu.github.io/posts/mapreduce-distributed-programming/assets/20201014190000_hu_82b14957c6e3eb1.webp 480w, https://jinggqu.github.io/posts/mapreduce-distributed-programming/assets/20201014190000_hu_ec284bb1340ea168.webp 1024w"
-	loading="lazy"
-	
-		alt="MapReduce 程序运行流程图"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="164"
-		data-flex-basis="394px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/mapreduce-distributed-programming/20201014-190000-e70736-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1784"
+			data-pswp-height="1084"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/mapreduce-distributed-programming/20201014-190000-e70736-thumb.webp"
+				width="1784"
+				height="1084"
+				loading="lazy"
+				alt="MapReduce 程序运行流程图"
+				
+				class="gallery-image"
+				data-flex-grow="164.57564575645756"
+				data-flex-basis="394.98154981549817px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;从用户程序 User Program 开始，用户程序 User Program 链接了 MapReduce 库，实现了最基本的 map 函数和 reduce 函数。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;MapReduce 库先把 User Program 的输入文件划分为 M 份，如上图左方所示，将数据分成了分片 0&lt;del&gt;4，每一份通常为 16MB&lt;/del&gt;64MB；然后使用 fork 将用户进程复制到集群内其他机器上。&lt;/li&gt;
@@ -497,21 +497,21 @@ User: davidisbetterthenyou, Number of videos: 16
 &lt;/ol&gt;
 &lt;h2 id="经典-mapreduce-任务调度模型"&gt;经典 MapReduce 任务调度模型
 &lt;/h2&gt;&lt;p&gt;经典 MapReduce 任务调度模型采用主从结构（Master/Slave），包含四个组成部分：Client、JobTracker、TaskTracker、Task。支撑 MapReduce 计算框架的是 JobTracker 和 TaskTracker 两类后台进程。框架结构如下图所示。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/mapreduce-distributed-programming/assets/20201014200000.webp"
-	width="1279"
-	height="714"
-	srcset="https://jinggqu.github.io/posts/mapreduce-distributed-programming/assets/20201014200000_hu_d21b8531e37389e1.webp 480w, https://jinggqu.github.io/posts/mapreduce-distributed-programming/assets/20201014200000_hu_eb97e3bac55aceca.webp 1024w"
-	loading="lazy"
-	
-		alt="经典 MapReduce 任务调度模型架构图"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="179"
-		data-flex-basis="429px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/mapreduce-distributed-programming/20201014-200000-fdec63-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1279"
+			data-pswp-height="714"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/mapreduce-distributed-programming/20201014-200000-fdec63-thumb.webp"
+				width="1279"
+				height="714"
+				loading="lazy"
+				alt="经典 MapReduce 任务调度模型架构图"
+				
+				class="gallery-image"
+				data-flex-grow="179.13165266106444"
+				data-flex-basis="429.9159663865546px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Client
 每一个 Job 在 Ciat 端将运行 MapRecdce 程序所需要的所有 Jar 文件和类的集合，打包成一个 Jar 文件存储在 HDFS 中，并把文件路径提交到 JobTracker。&lt;/li&gt;
@@ -539,21 +539,21 @@ ApplicationMaster 负责向调度器申请、释放资源，清求 NodeManager �
 &lt;p&gt;Container 是 YARN 中资源的抽象，它封装了节点上一定量的资源（CPU 和内存等）。一个应用程序所需的 Container 分为两类：一类是运行 ApplicationMaster 的 Container，是由 ResourceManager（向内部的资源调度器）申请和启动的，用户提交应用程序时，可指定唯一的 ApplicationMaster 所需的资源；另一类是运行各类任务的 Container，是由 ApplicationMaster 向 ResourceManager 申请的，并由 ApplicationMaster 与 NodeManager 通信后启动。&lt;/p&gt;
 &lt;p&gt;用户向 YARN 提交一个应用程序后，YARN 将分为两个阶段运行该应用程序：第一个阶段是启动 ApplicationMaster；第二个阶段是由 ApplicationMaster 创建应用程序，为它申请资源，并监控它的整个运行过程，直到运行成功。&lt;/p&gt;
 &lt;p&gt;YARN 任务调度流程如下图所示。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/mapreduce-distributed-programming/assets/20201014205100.webp"
-	width="1236"
-	height="802"
-	srcset="https://jinggqu.github.io/posts/mapreduce-distributed-programming/assets/20201014205100_hu_cb3f1eaa790d0140.webp 480w, https://jinggqu.github.io/posts/mapreduce-distributed-programming/assets/20201014205100_hu_e5957c50681c37be.webp 1024w"
-	loading="lazy"
-	
-		alt="YARN 框架任务调度流程图"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="154"
-		data-flex-basis="369px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/mapreduce-distributed-programming/20201014-205100-f41903-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1236"
+			data-pswp-height="802"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/mapreduce-distributed-programming/20201014-205100-f41903-thumb.webp"
+				width="1236"
+				height="802"
+				loading="lazy"
+				alt="YARN 框架任务调度流程图"
+				
+				class="gallery-image"
+				data-flex-grow="154.1147132169576"
+				data-flex-basis="369.8753117206983px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;用户向 YARN 提交应用程序；&lt;/li&gt;
 &lt;li&gt;ResourceManager 为该应用程序在某个 NodeManagr 分配一个 Container，并要求 NodeManager 启动应用程序的 ApplicationMaster；&lt;/li&gt;
@@ -815,18 +815,18 @@ Travel &amp;amp; Events	113
 &lt;/h3&gt;&lt;p&gt;HDFS 提供了一些命令可以用来修改文件的权限、所属用户以及所属组别，具体格式如下:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;hadoop fs -chmod [-R] &amp;lt;MODE [,MODE]...|OCTALMODE&amp;gt; PATH...&lt;/code&gt;&lt;br&gt;
-改变 HDFS 上路径为 PATH 的文件的权限，R 选项表示递归执行该操作。&lt;br&gt;
+&lt;p&gt;&lt;code&gt;hadoop fs -chmod [-R] &amp;lt;MODE [,MODE]...|OCTALMODE&amp;gt; PATH...&lt;/code&gt;
+改变 HDFS 上路径为 PATH 的文件的权限，R 选项表示递归执行该操作。
 例如: &lt;code&gt;hadoop fs -chmod -R +r /user/test&lt;/code&gt;，表示将 /user/test 目录下的所有文件赋予读的权限&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;hadoop fs -chown [-R][OWNER][:[GROUP]]PATH...&lt;/code&gt;&lt;br&gt;
-改变 HDFS 上路径为 PATH 的文件的所属用户，-R 选项表示递归执行该操作。&lt;br&gt;
+&lt;p&gt;&lt;code&gt;hadoop fs -chown [-R][OWNER][:[GROUP]]PATH...&lt;/code&gt;
+改变 HDFS 上路径为 PATH 的文件的所属用户，-R 选项表示递归执行该操作。
 例如: &lt;code&gt;hadoop fs -chown -R hadoop:hadoop /user/test&lt;/code&gt;，表示将 /user/test 目录下所有文件的所属用户和所属组别改为 hadoop&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;hadoop fs -chgrp ［-R] GROUP PATH...&lt;/code&gt;&lt;br&gt;
-改变 HDFS 上路径为 PATH 的文件的所属组别，-R 选项表示递归执行该操作。&lt;br&gt;
+&lt;p&gt;&lt;code&gt;hadoop fs -chgrp ［-R] GROUP PATH...&lt;/code&gt;
+改变 HDFS 上路径为 PATH 的文件的所属组别，-R 选项表示递归执行该操作。
 例如: &lt;code&gt;hadoop fs -chown -R hadoop /user/test&lt;/code&gt; 表示将 /user/test 目录下所有文件的所属组别改为 hadoop&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
@@ -834,38 +834,38 @@ Travel &amp;amp; Events	113
 &lt;/h3&gt;&lt;p&gt;HDFS 除了提供上述两类操作之外，还提供许多实用性较强的操作，如显示指定路径上的内容，上传本地文件到 HDFS 指定文件夹，以及从 HDFS 上下载文件到本地等命令。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;hadoop fs -tail [-f] &amp;lt;file&amp;gt;&lt;/code&gt;&lt;br&gt;
-显示 HDFS 上路径为 &amp;lt;file&amp;gt; 的文件的最后 1KB 的字节，-f 选项会使显示的内容随着文件内容更新而更新。&lt;br&gt;
+&lt;p&gt;&lt;code&gt;hadoop fs -tail [-f] &amp;lt;file&amp;gt;&lt;/code&gt;
+显示 HDFS 上路径为 &amp;lt;file&amp;gt; 的文件的最后 1KB 的字节，-f 选项会使显示的内容随着文件内容更新而更新。
 例如: &lt;code&gt;hadoop fs -tail -f /user/test.txt&lt;/code&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;hadoop fs -stat [format] &amp;lt;path&amp;gt;&lt;/code&gt;&lt;br&gt;
-显示 HDFS 上路径为 &amp;lt;path&amp;gt; 的文件或目录的统计信息。格式为：%b 文件大小，%n 文件名，%r 复制因子，%y、%Y 修改日期。&lt;br&gt;
+&lt;p&gt;&lt;code&gt;hadoop fs -stat [format] &amp;lt;path&amp;gt;&lt;/code&gt;
+显示 HDFS 上路径为 &amp;lt;path&amp;gt; 的文件或目录的统计信息。格式为：%b 文件大小，%n 文件名，%r 复制因子，%y、%Y 修改日期。
 例如：&lt;code&gt;hadoop fs -stat %b %n %o %r /user/test&lt;/code&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;hadoop fs -put &amp;lt;localsrc&amp;gt;...&amp;lt;dt&amp;gt;&lt;/code&gt;&lt;br&gt;
-将 &amp;lt;localsrc&amp;gt; 本地文件上传到 HDFS 的 &amp;lt;dst&amp;gt; 目录下。&lt;br&gt;
+&lt;p&gt;&lt;code&gt;hadoop fs -put &amp;lt;localsrc&amp;gt;...&amp;lt;dt&amp;gt;&lt;/code&gt;
+将 &amp;lt;localsrc&amp;gt; 本地文件上传到 HDFS 的 &amp;lt;dst&amp;gt; 目录下。
 例如: &lt;code&gt;hadoop fs -put /home/hadoop/test.txt /user/hadoop&lt;/code&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;hadoop fs -count [-q] &amp;lt;path&amp;gt;&lt;/code&gt;&lt;br&gt;
-显示 &amp;lt;path&amp;gt; 下的目录数及文件数，输出格式为“目录数 文件数 大小 文件名”，加上 -q 可以查看文件索引的情况。&lt;br&gt;
+&lt;p&gt;&lt;code&gt;hadoop fs -count [-q] &amp;lt;path&amp;gt;&lt;/code&gt;
+显示 &amp;lt;path&amp;gt; 下的目录数及文件数，输出格式为“目录数 文件数 大小 文件名”，加上 -q 可以查看文件索引的情况。
 例如: &lt;code&gt;hadoop fs -count /&lt;/code&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;hadoop fs -get [-ignoreCrc] [-crc] &amp;lt;src&amp;gt; &amp;lt;localdst&amp;gt;&lt;/code&gt;&lt;br&gt;
-将 HDFS 上 &amp;lt;src&amp;gt; 的文件下载到本地的 &amp;lt;localdst&amp;gt; 目录，可用 -ignorecrc 选项复制 CRC 校验失败的文件，使用 -crc 选项复制文件以及 CRC 信息。&lt;br&gt;
+&lt;p&gt;&lt;code&gt;hadoop fs -get [-ignoreCrc] [-crc] &amp;lt;src&amp;gt; &amp;lt;localdst&amp;gt;&lt;/code&gt;
+将 HDFS 上 &amp;lt;src&amp;gt; 的文件下载到本地的 &amp;lt;localdst&amp;gt; 目录，可用 -ignorecrc 选项复制 CRC 校验失败的文件，使用 -crc 选项复制文件以及 CRC 信息。
 例如: &lt;code&gt;hadoop fs -get /user/hadoop/a.txt /home/hadoop&lt;/code&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;hadoop fs -getmerge &amp;lt;src&amp;gt; &amp;lt;localdst&amp;gt; [addnl]&lt;/code&gt;&lt;br&gt;
-将 HDFS 上 &amp;lt;src&amp;gt; 目录下的所有文件按文件名排序并合并成一个文件输出到本地的 &amp;lt;localdst&amp;gt; 目录，addnl 是可选的，用于指定在每个文件结尾添加一个换行符。&lt;br&gt;
+&lt;p&gt;&lt;code&gt;hadoop fs -getmerge &amp;lt;src&amp;gt; &amp;lt;localdst&amp;gt; [addnl]&lt;/code&gt;
+将 HDFS 上 &amp;lt;src&amp;gt; 目录下的所有文件按文件名排序并合并成一个文件输出到本地的 &amp;lt;localdst&amp;gt; 目录，addnl 是可选的，用于指定在每个文件结尾添加一个换行符。
 例如: &lt;code&gt;hadoop fs -getmerge /user/test /home/hadoop/o&lt;/code&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;hadoop fs -test -[ezd] &amp;lt;path&amp;gt;&lt;/code&gt;&lt;br&gt;
-检查 HDFS 上路径为 &amp;lt;path&amp;gt; 的文件。-e 检查文件是否存在，如果存在则返回 0。-z 检查文件是否为 0 字节，如果是则返回 0。-d 检查路径是否是目录，如果是则返回 1，否则返回 0。&lt;br&gt;
+&lt;p&gt;&lt;code&gt;hadoop fs -test -[ezd] &amp;lt;path&amp;gt;&lt;/code&gt;
+检查 HDFS 上路径为 &amp;lt;path&amp;gt; 的文件。-e 检查文件是否存在，如果存在则返回 0。-z 检查文件是否为 0 字节，如果是则返回 0。-d 检查路径是否是目录，如果是则返回 1，否则返回 0。
 例如：&lt;code&gt;hadoop fs -test -e /user/test.txt&lt;/code&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
@@ -1125,81 +1125,81 @@ Travel &amp;amp; Events	113
 &lt;li&gt;客户端调用 close，关闭输入流 DFS InputStream&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id="hdfs-漫画"&gt;HDFS 漫画
-&lt;/h2&gt;&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/hdfs-file-system/assets/20201023190000.webp"
-	width="2048"
-	height="2266"
-	srcset="https://jinggqu.github.io/posts/hdfs-file-system/assets/20201023190000_hu_3ffe2b54f56d272a.webp 480w, https://jinggqu.github.io/posts/hdfs-file-system/assets/20201023190000_hu_902ed0dd124edc8a.webp 1024w"
-	loading="lazy"
-	
-		alt="HDFS 漫画"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="90"
-		data-flex-basis="216px"
-	
-&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/hdfs-file-system/assets/20201023190100.webp"
-	width="2048"
-	height="2266"
-	srcset="https://jinggqu.github.io/posts/hdfs-file-system/assets/20201023190100_hu_b3342874b241d16c.webp 480w, https://jinggqu.github.io/posts/hdfs-file-system/assets/20201023190100_hu_4d75a727427a2b15.webp 1024w"
-	loading="lazy"
-	
-		alt="HDFS 漫画"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="90"
-		data-flex-basis="216px"
-	
-&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/hdfs-file-system/assets/20201023190200.webp"
-	width="2048"
-	height="2266"
-	srcset="https://jinggqu.github.io/posts/hdfs-file-system/assets/20201023190200_hu_166f4b24f7b186da.webp 480w, https://jinggqu.github.io/posts/hdfs-file-system/assets/20201023190200_hu_bdd6ac1fbc9db903.webp 1024w"
-	loading="lazy"
-	
-		alt="HDFS 漫画"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="90"
-		data-flex-basis="216px"
-	
-&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/hdfs-file-system/assets/20201023190300.webp"
-	width="2048"
-	height="2266"
-	srcset="https://jinggqu.github.io/posts/hdfs-file-system/assets/20201023190300_hu_738ec78ea69c4db4.webp 480w, https://jinggqu.github.io/posts/hdfs-file-system/assets/20201023190300_hu_4236def9aba7a1cc.webp 1024w"
-	loading="lazy"
-	
-		alt="HDFS 漫画"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="90"
-		data-flex-basis="216px"
-	
-&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/hdfs-file-system/assets/20201023190400.webp"
-	width="2048"
-	height="2266"
-	srcset="https://jinggqu.github.io/posts/hdfs-file-system/assets/20201023190400_hu_f942981f4673aa57.webp 480w, https://jinggqu.github.io/posts/hdfs-file-system/assets/20201023190400_hu_7c378709c9a46459.webp 1024w"
-	loading="lazy"
-	
-		alt="HDFS 漫画"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="90"
-		data-flex-basis="216px"
-	
-&gt;
-&lt;/p&gt;
+&lt;/h2&gt;&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/hdfs-file-system/20201023-190000-016536-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="2048"
+			data-pswp-height="2266"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/hdfs-file-system/20201023-190000-016536-thumb.webp"
+				width="2048"
+				height="2266"
+				loading="lazy"
+				alt="HDFS 漫画"
+				
+				class="gallery-image"
+				data-flex-grow="90.37952338923213"
+				data-flex-basis="216.91085613415711px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/hdfs-file-system/20201023-190100-3db793-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="2048"
+			data-pswp-height="2266"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/hdfs-file-system/20201023-190100-3db793-thumb.webp"
+				width="2048"
+				height="2266"
+				loading="lazy"
+				alt="HDFS 漫画"
+				
+				class="gallery-image"
+				data-flex-grow="90.37952338923213"
+				data-flex-basis="216.91085613415711px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/hdfs-file-system/20201023-190200-ed7e74-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="2048"
+			data-pswp-height="2266"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/hdfs-file-system/20201023-190200-ed7e74-thumb.webp"
+				width="2048"
+				height="2266"
+				loading="lazy"
+				alt="HDFS 漫画"
+				
+				class="gallery-image"
+				data-flex-grow="90.37952338923213"
+				data-flex-basis="216.91085613415711px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/hdfs-file-system/20201023-190300-7649e5-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="2048"
+			data-pswp-height="2266"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/hdfs-file-system/20201023-190300-7649e5-thumb.webp"
+				width="2048"
+				height="2266"
+				loading="lazy"
+				alt="HDFS 漫画"
+				
+				class="gallery-image"
+				data-flex-grow="90.37952338923213"
+				data-flex-basis="216.91085613415711px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/hdfs-file-system/20201023-190400-13b2e1-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="2048"
+			data-pswp-height="2266"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/hdfs-file-system/20201023-190400-13b2e1-thumb.webp"
+				width="2048"
+				height="2266"
+				loading="lazy"
+				alt="HDFS 漫画"
+				
+				class="gallery-image"
+				data-flex-grow="90.37952338923213"
+				data-flex-basis="216.91085613415711px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 
  &lt;blockquote&gt;
  &lt;p&gt;以上漫画版权均归原图作者所有&lt;/p&gt;
@@ -1922,38 +1922,38 @@ Travel &amp;amp; Events	113
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;例如本例中 master 节点地址为 192.168.61.128，则访问 192.168.61.128:50070，页面如下图：&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/getting-to-know-hadoop/assets/20200926201409.webp"
-	width="2090"
-	height="1219"
-	srcset="https://jinggqu.github.io/posts/getting-to-know-hadoop/assets/20200926201409_hu_aae761792eec672f.webp 480w, https://jinggqu.github.io/posts/getting-to-know-hadoop/assets/20200926201409_hu_7bfd9155f881d460.webp 1024w"
-	loading="lazy"
-	
-		alt="Hadoop NameNode Web 管理界面"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="171"
-		data-flex-basis="411px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-hadoop/20200926-201409-65e39c-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="2090"
+			data-pswp-height="1219"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-hadoop/20200926-201409-65e39c-thumb.webp"
+				width="2090"
+				height="1219"
+				loading="lazy"
+				alt="Hadoop NameNode Web 管理界面"
+				
+				class="gallery-image"
+				data-flex-grow="171.45200984413452"
+				data-flex-basis="411.4848236259229px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h4 id="yarn-页面"&gt;YARN 页面
 &lt;/h4&gt;&lt;p&gt;如上例，与 Hadoop 管理页面不同的是，YARN Web 页面地址端口是 8088，页面如下图：&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/getting-to-know-hadoop/assets/20200926203912.webp"
-	width="3208"
-	height="1259"
-	srcset="https://jinggqu.github.io/posts/getting-to-know-hadoop/assets/20200926203912_hu_b34370cabdb8101c.webp 480w, https://jinggqu.github.io/posts/getting-to-know-hadoop/assets/20200926203912_hu_eb8ddf5622ee3dd9.webp 1024w"
-	loading="lazy"
-	
-		alt="YARN ResourceManager Web 管理界面"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="254"
-		data-flex-basis="611px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-hadoop/20200926-203912-ac7237-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="3208"
+			data-pswp-height="1259"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-hadoop/20200926-203912-ac7237-thumb.webp"
+				width="3208"
+				height="1259"
+				loading="lazy"
+				alt="YARN ResourceManager Web 管理界面"
+				
+				class="gallery-image"
+				data-flex-grow="254.80540111199363"
+				data-flex-basis="611.5329626687848px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="运行实例"&gt;运行实例
 &lt;/h2&gt;&lt;p&gt;在 Hadoop 自带的 examples 中有一种利用分布式系统计算圆周率的方法，采用的是拟蒙特卡罗（Quasi-Monte Carlo）算法来对 $ \pi $ 的值进行估算。下面通过运行该程序来检验 Hadoop 集群是否安装配置成功。&lt;/p&gt;
 &lt;p&gt;在 master 节点终端中执行下面的命令：&lt;/p&gt;
@@ -1966,36 +1966,36 @@ Travel &amp;amp; Events	113
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Hadoop 的命令类似 Java 命令，通过 jar 指定要运行的程序所在的 jar 包 hadoop-mapreduce-examples-2.10.1.jar。参数 pi 表示需要计算的圆周率 $ \pi $。后面两个参数中，100 是指要运行 100 次 map，100000 表示每个 map 的任务次数，即每个节点要模拟飞镖 100000 次。执行过程及结果如下图：&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/getting-to-know-hadoop/assets/20200926210747.webp"
-	width="3840"
-	height="1295"
-	srcset="https://jinggqu.github.io/posts/getting-to-know-hadoop/assets/20200926210747_hu_d8e6a05f9c3006b8.webp 480w, https://jinggqu.github.io/posts/getting-to-know-hadoop/assets/20200926210747_hu_e62acf3aa2017ff2.webp 1024w"
-	loading="lazy"
-	
-		alt="Pi 计算作业执行过程"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="296"
-		data-flex-basis="711px"
-	
-&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/getting-to-know-hadoop/assets/20200926211331.webp"
-	width="1767"
-	height="840"
-	srcset="https://jinggqu.github.io/posts/getting-to-know-hadoop/assets/20200926211331_hu_d0776c5ecc46b6c8.webp 480w, https://jinggqu.github.io/posts/getting-to-know-hadoop/assets/20200926211331_hu_972c667f62ccb419.webp 1024w"
-	loading="lazy"
-	
-		alt="Pi 计算作业执行结果"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="210"
-		data-flex-basis="504px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-hadoop/20200926-210747-fcc413-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="3840"
+			data-pswp-height="1295"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-hadoop/20200926-210747-fcc413-thumb.webp"
+				width="3840"
+				height="1295"
+				loading="lazy"
+				alt="Pi 计算作业执行过程"
+				
+				class="gallery-image"
+				data-flex-grow="296.5250965250965"
+				data-flex-basis="711.6602316602317px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-hadoop/20200926-211331-99ef52-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1767"
+			data-pswp-height="840"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-hadoop/20200926-211331-99ef52-thumb.webp"
+				width="1767"
+				height="840"
+				loading="lazy"
+				alt="Pi 计算作业执行结果"
+				
+				class="gallery-image"
+				data-flex-grow="210.35714285714286"
+				data-flex-basis="504.85714285714283px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
 &lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1

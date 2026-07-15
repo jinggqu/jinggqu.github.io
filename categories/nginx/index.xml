@@ -57,7 +57,7 @@
 &lt;/div&gt;&lt;p&gt;其中，&lt;code&gt;location&lt;/code&gt; 后的 &lt;code&gt;/&lt;/code&gt; 代表根域名指向括号中的目录配置，&lt;code&gt;alias&lt;/code&gt; 指定一个目录替代默认目录。&lt;/p&gt;
 
  &lt;blockquote&gt;
- &lt;p&gt;更多信息可以查看官方文档&lt;br&gt;
+ &lt;p&gt;更多信息可以查看官方文档
 &lt;a class="link" href="http://nginx.org/en/docs/http/ngx_http_core_module.html#alias" target="_blank" rel="noopener"
  &gt;http://nginx.org/en/docs/http/ngx_http_core_module.html#alias&lt;/a&gt;&lt;/p&gt;
 
@@ -74,40 +74,40 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;h3 id="访问"&gt;访问
 &lt;/h3&gt;&lt;p&gt;执行完以上步骤后，访问 Nginx 的地址，即可看到 dlib 下的静态文件已经被正常加载了。如下图。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/getting-to-know-nginx-2/assets/20200911201740.webp"
-	width="1936"
-	height="1105"
-	srcset="https://jinggqu.github.io/posts/getting-to-know-nginx-2/assets/20200911201740_hu_6deaadff453c89fe.webp 480w, https://jinggqu.github.io/posts/getting-to-know-nginx-2/assets/20200911201740_hu_a841cba5bf50e9fd.webp 1024w"
-	loading="lazy"
-	
-		alt="dlib 文档页面通过 Nginx 访问"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="175"
-		data-flex-basis="420px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-nginx-2/20200911-201740-f65098-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1936"
+			data-pswp-height="1105"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-nginx-2/20200911-201740-f65098-thumb.webp"
+				width="1936"
+				height="1105"
+				loading="lazy"
+				alt="dlib 文档页面通过 Nginx 访问"
+				
+				class="gallery-image"
+				data-flex-grow="175.20361990950227"
+				data-flex-basis="420.4886877828054px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="常用配置"&gt;常用配置
 &lt;/h2&gt;&lt;p&gt;以下内容均在 nginx.conf 文件中进行配置。&lt;/p&gt;
 &lt;h3 id="数据压缩"&gt;数据压缩
 &lt;/h3&gt;&lt;p&gt;根据以上的配置，我们已经可以正常访问部署好的静态网页，但是根据开发者工具我们可以看到，首页的大小是 26.4 kB。我们还可以进一步进行优化，将所需要加载的数据进行压缩，使其所需数据量大大减少。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/getting-to-know-nginx-2/assets/20200911203709.webp"
-	width="1970"
-	height="1125"
-	srcset="https://jinggqu.github.io/posts/getting-to-know-nginx-2/assets/20200911203709_hu_657a24f9a8784d50.webp 480w, https://jinggqu.github.io/posts/getting-to-know-nginx-2/assets/20200911203709_hu_9bb2c7d5c38e3544.webp 1024w"
-	loading="lazy"
-	
-		alt="优化前"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="175"
-		data-flex-basis="420px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-nginx-2/20200911-203709-67cee7-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1970"
+			data-pswp-height="1125"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-nginx-2/20200911-203709-67cee7-thumb.webp"
+				width="1970"
+				height="1125"
+				loading="lazy"
+				alt="优化前"
+				
+				class="gallery-image"
+				data-flex-grow="175.11111111111111"
+				data-flex-basis="420.26666666666665px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;在 http 部分中添加以下配置。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
@@ -152,27 +152,27 @@
 &lt;/table&gt;
 
  &lt;blockquote&gt;
- &lt;p&gt;更多信息可以查看官方文档&lt;br&gt;
+ &lt;p&gt;更多信息可以查看官方文档
 &lt;a class="link" href="http://nginx.org/en/docs/http/ngx_http_gzip_module.html" target="_blank" rel="noopener"
  &gt;http://nginx.org/en/docs/http/ngx_http_gzip_module.html&lt;/a&gt;&lt;/p&gt;
 
  &lt;/blockquote&gt;
 &lt;p&gt;可以看到，开启 gzip 压缩后，加载的数据量大幅减少。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/getting-to-know-nginx-2/assets/20200911203017.webp"
-	width="1972"
-	height="1125"
-	srcset="https://jinggqu.github.io/posts/getting-to-know-nginx-2/assets/20200911203017_hu_a21a5841097bbeb1.webp 480w, https://jinggqu.github.io/posts/getting-to-know-nginx-2/assets/20200911203017_hu_fb85f9ecc41c2749.webp 1024w"
-	loading="lazy"
-	
-		alt="优化后"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="175"
-		data-flex-basis="420px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-nginx-2/20200911-203017-bac6b7-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1972"
+			data-pswp-height="1125"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-nginx-2/20200911-203017-bac6b7-thumb.webp"
+				width="1972"
+				height="1125"
+				loading="lazy"
+				alt="优化后"
+				
+				class="gallery-image"
+				data-flex-grow="175.2888888888889"
+				data-flex-basis="420.6933333333333px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id="加载速度"&gt;加载速度
 &lt;/h3&gt;&lt;p&gt;使用 limit_rate 可以对网页加载速度进行控制，详细如下。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
@@ -194,7 +194,7 @@
 &lt;/div&gt;&lt;p&gt;其中，&lt;code&gt;$limit_rate&lt;/code&gt; 是控制访问速度的变量。后面紧跟的 &lt;code&gt;1k&lt;/code&gt; 是需要限制的速度，此例中的单位为 &lt;code&gt;kB&lt;/code&gt;，也可以设置其他单位，例如 &lt;code&gt;1M&lt;/code&gt;。&lt;/p&gt;
 
  &lt;blockquote&gt;
- &lt;p&gt;更多信息可以查看官方文档&lt;br&gt;
+ &lt;p&gt;更多信息可以查看官方文档
 &lt;a class="link" href="http://nginx.org/en/docs/http/ngx_http_core_module.html#var_limit_rate" target="_blank" rel="noopener"
  &gt;http://nginx.org/en/docs/http/ngx_http_core_module.html#var_limit_rate&lt;/a&gt;&lt;/p&gt;
 
@@ -227,7 +227,7 @@
 &lt;/div&gt;
 &lt;/div&gt;
  &lt;blockquote&gt;
- &lt;p&gt;更多信息可以查看官方文档&lt;br&gt;
+ &lt;p&gt;更多信息可以查看官方文档
 &lt;a class="link" href="http://nginx.org/en/docs/http/ngx_http_log_module.html#access_log" target="_blank" rel="noopener"
  &gt;http://nginx.org/en/docs/http/ngx_http_log_module.html#access_log&lt;/a&gt;&lt;/p&gt;
 
@@ -293,7 +293,7 @@
 &lt;/div&gt;&lt;p&gt;分别在两台机器上重新加载 Nginx 配置文件，并访问 &lt;code&gt;192.168.61.129:80&lt;/code&gt;，此时可以正常打开 &lt;code&gt;192.168.61.128:80&lt;/code&gt; 上所配置的静态文件。&lt;/p&gt;
 
  &lt;blockquote&gt;
- &lt;p&gt;上述配置可以参考官方文档&lt;br&gt;
+ &lt;p&gt;上述配置可以参考官方文档
 &lt;a class="link" href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_set_header" target="_blank" rel="noopener"
  &gt;http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_set_header&lt;/a&gt;&lt;/p&gt;
 
@@ -452,21 +452,21 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;至此，日志可视化已经配置完成，我们可以直接访问 Nginx &lt;code&gt;服务地址/report.html&lt;/code&gt; 查看可视化页面，如下。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/getting-to-know-nginx-2/assets/20200913143610.webp"
-	width="1880"
-	height="1530"
-	srcset="https://jinggqu.github.io/posts/getting-to-know-nginx-2/assets/20200913143610_hu_8e1ee5580a41fb90.webp 480w, https://jinggqu.github.io/posts/getting-to-know-nginx-2/assets/20200913143610_hu_bcb298867a0977ea.webp 1024w"
-	loading="lazy"
-	
-		alt="GoAccess 日志可视化界面"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="122"
-		data-flex-basis="294px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-nginx-2/20200913-143610-2fc074-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1880"
+			data-pswp-height="1530"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-nginx-2/20200913-143610-2fc074-thumb.webp"
+				width="1880"
+				height="1530"
+				loading="lazy"
+				alt="GoAccess 日志可视化界面"
+				
+				class="gallery-image"
+				data-flex-grow="122.87581699346406"
+				data-flex-basis="294.9019607843137px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="附录"&gt;附录
 &lt;/h2&gt;&lt;p&gt;Linux 查看端口占用状态&lt;/p&gt;
 &lt;h3 id="查看占用"&gt;查看占用
@@ -527,7 +527,7 @@
  &lt;p&gt;简介内容来自 Nginx 官网 &lt;a class="link" href="http://nginx.org/en" target="_blank" rel="noopener"
  &gt;http://nginx.org/en&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;nginx [engine x] is an HTTP and reverse proxy server, a mail proxy server, and a generic TCP/UDP proxy server, originally written by Igor Sysoev. For a long time, it has been running on many heavily loaded Russian sites including Yandex, Mail.Ru, VK, and Rambler. According to Netcraft, nginx served or proxied 25.75% busiest sites in August 2020. Here are some of the success stories: Dropbox, Netflix, Wordpress.com, FastMail.FM.&lt;/p&gt;
-&lt;p&gt;The sources and documentation are distributed under the 2-clause BSD-like license.&lt;br&gt;
+&lt;p&gt;The sources and documentation are distributed under the 2-clause BSD-like license.
 Commercial support is available from Nginx, Inc.&lt;/p&gt;
 
  &lt;/blockquote&gt;
@@ -660,7 +660,7 @@ Commercial support is available from Nginx, Inc.&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nginx
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;其中 &lt;code&gt;--prefix&lt;/code&gt; 的作用是指定编译后的文件存放位置，可以根据实际情况自由确定。&lt;br&gt;
+&lt;/div&gt;&lt;p&gt;其中 &lt;code&gt;--prefix&lt;/code&gt; 的作用是指定编译后的文件存放位置，可以根据实际情况自由确定。
 编译过程中可能会遇到一些报错，详细信息和解决方案如下。&lt;/p&gt;
 
  &lt;blockquote&gt;
@@ -670,18 +670,18 @@ Commercial support is available from Nginx, Inc.&lt;/p&gt;
  &lt;/blockquote&gt;
 &lt;ol&gt;
 &lt;li&gt;
-&lt;p&gt;./configure: error: C compiler cc is not found&lt;br&gt;
-错误原因：缺少编译环境，安装编译源码所需要的工具和库：&lt;br&gt;
+&lt;p&gt;./configure: error: C compiler cc is not found
+错误原因：缺少编译环境，安装编译源码所需要的工具和库：
 执行命令：sudo yum install gcc gcc-c++ ncurses-devel perl&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;./configure: error: the HTTP rewrite module requires the PCRE library&lt;br&gt;
-错误原因：缺少 HTTP rewrite module 模块&lt;br&gt;
+&lt;p&gt;./configure: error: the HTTP rewrite module requires the PCRE library
+错误原因：缺少 HTTP rewrite module 模块
 执行命令：sudo yum install pcre pcre-devel&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;./configure: error: the HTTP gzip module requires the zlib library&lt;br&gt;
-错误原因：缺少 HTTP zlib 类库，我们选择安装模块：&lt;br&gt;
+&lt;p&gt;./configure: error: the HTTP gzip module requires the zlib library
+错误原因：缺少 HTTP zlib 类库，我们选择安装模块：
 执行命令：sudo yum install zlib gzip zlib-devel&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
@@ -927,21 +927,21 @@ Commercial support is available from Nginx, Inc.&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;在浏览器中访问 &lt;code&gt;虚拟机ip:8090&lt;/code&gt;，即可看到 Nginx 的欢迎页面。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/getting-to-know-nginx/assets/20200906154034.webp"
-	width="1283"
-	height="398"
-	srcset="https://jinggqu.github.io/posts/getting-to-know-nginx/assets/20200906154034_hu_122b663dc44a2d7c.webp 480w, https://jinggqu.github.io/posts/getting-to-know-nginx/assets/20200906154034_hu_3778798975de7ca5.webp 1024w"
-	loading="lazy"
-	
-		alt="在线安装 Nginx 后的 404 页面"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="322"
-		data-flex-basis="773px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-nginx/20200906-154034-c72bca-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1283"
+			data-pswp-height="398"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-nginx/20200906-154034-c72bca-thumb.webp"
+				width="1283"
+				height="398"
+				loading="lazy"
+				alt="在线安装 Nginx 后的 404 页面"
+				
+				class="gallery-image"
+				data-flex-grow="322.36180904522615"
+				data-flex-basis="773.6683417085427px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 
  &lt;blockquote&gt;
  &lt;p&gt;此时返回 404 是因为 Nginx 目录中并没有欢迎页面的 html 文件，但依然可以说明已经 Nginx 服务已经配置正确并启动成功。&lt;/p&gt;
@@ -959,25 +959,25 @@ Commercial support is available from Nginx, Inc.&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo ./nginx
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;同样的，我们可以按照上一节中介绍的方法，来验证 Nginx 是否启动成功，以及端口是否开放。&lt;br&gt;
+&lt;/div&gt;&lt;p&gt;同样的，我们可以按照上一节中介绍的方法，来验证 Nginx 是否启动成功，以及端口是否开放。
 Nginx 服务默认的端口是 &lt;code&gt;80&lt;/code&gt;，如果需要修改端口，也可以参照上一节中的内容进行手动修改，略有不同的是，通过手动编译安装的 Nginx，配置文件地址在 &lt;code&gt;/usr/local/nginx/conf/nginx.conf&lt;/code&gt;，也就是编译时我们手动指定的路径下。
 其余内容此处皆不再赘述。&lt;/p&gt;
 &lt;p&gt;打开宿主机浏览器，访问 &lt;code&gt;虚拟机ip:80&lt;/code&gt;，就可以看到 Nginx 的欢迎页面。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/getting-to-know-nginx/assets/20200906153613.webp"
-	width="1635"
-	height="570"
-	srcset="https://jinggqu.github.io/posts/getting-to-know-nginx/assets/20200906153613_hu_d7ae95bcbdead442.webp 480w, https://jinggqu.github.io/posts/getting-to-know-nginx/assets/20200906153613_hu_1b515412861e1ff4.webp 1024w"
-	loading="lazy"
-	
-		alt="离线安装 Nginx 的欢迎页面"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="286"
-		data-flex-basis="688px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-nginx/20200906-153613-f0ba17-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1635"
+			data-pswp-height="570"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/getting-to-know-nginx/20200906-153613-f0ba17-thumb.webp"
+				width="1635"
+				height="570"
+				loading="lazy"
+				alt="离线安装 Nginx 的欢迎页面"
+				
+				class="gallery-image"
+				data-flex-grow="286.8421052631579"
+				data-flex-basis="688.421052631579px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="修改-nginxconf"&gt;修改 nginx.conf
 &lt;/h2&gt;&lt;p&gt;如果后续需要修改 &lt;code&gt;nginx.conf&lt;/code&gt; 中的内容，例如更改 Nginx 服务端口号，请务必在修改完成后重启服务。常用的 Nginx 命令如下。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;

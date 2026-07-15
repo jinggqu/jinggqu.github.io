@@ -9,21 +9,21 @@
 &lt;/h3&gt;&lt;p&gt;需要一个 C++ 14 编译器，例如 gcc 4.9+，clang 3.6+ 或者 VS 2015+。本文中使用 &lt;strong&gt;Visual Studio 2019&lt;/strong&gt; 为例进行配置。&lt;/p&gt;
 &lt;h3 id="创建项目"&gt;创建项目
 &lt;/h3&gt;&lt;p&gt;打开 VS，创建一个名为 testTinyDNN 的&lt;strong&gt;控制台应用&lt;/strong&gt;。将 tiny_dnn 下载解压之后，放置到如下图所示的位置，与 &lt;code&gt;testTinyDNN.cpp&lt;/code&gt; 属于同一层级。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/sae-2/assets/20210129112851.webp"
-	width="827"
-	height="267"
-	srcset="https://jinggqu.github.io/posts/sae-2/assets/20210129112851_hu_94ec61166c7b3dd5.webp 480w, https://jinggqu.github.io/posts/sae-2/assets/20210129112851_hu_d6bfb2854bd504f7.webp 1024w"
-	loading="lazy"
-	
-		alt="项目文件结构示意图"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="309"
-		data-flex-basis="743px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2021/sae-2/20210129-112851-bfce68-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="827"
+			data-pswp-height="267"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2021/sae-2/20210129-112851-bfce68-thumb.webp"
+				width="827"
+				height="267"
+				loading="lazy"
+				alt="项目文件结构示意图"
+				
+				class="gallery-image"
+				data-flex-grow="309.7378277153558"
+				data-flex-basis="743.370786516854px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id="编辑配置"&gt;编辑配置
 &lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;编辑 &lt;code&gt;config.h&lt;/code&gt; 文件第 61 行，将其取消注释；这样我们才可以将栈式自编码器预测的图片保存到本地。涉及内容如下：&lt;/li&gt;
@@ -254,54 +254,54 @@
 &lt;/div&gt;&lt;p&gt;在代码中，我们定义了每批次训练数据量为 256 条，总共训练 50 个批次。&lt;/p&gt;
 &lt;p&gt;网络结构为 3 个编码层 + 3 个解码层。编码层将数据从 784（28 * 28） 维分别编码（降维）到 128、64、32 维，解码器再将 32 维的编码结果解码（升维）到 64、128、784 维，完成手写数字重建。各层之间的激活函数选用 &lt;code&gt;relu()&lt;/code&gt; 与 &lt;code&gt;sigmoid()&lt;/code&gt;。&lt;/p&gt;
 &lt;h2 id="结果展示"&gt;结果展示
-&lt;/h2&gt;&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/sae-2/assets/20210129163100.webp"
-	width="2011"
-	height="389"
-	srcset="https://jinggqu.github.io/posts/sae-2/assets/20210129163100_hu_87566522907ea9b2.webp 480w, https://jinggqu.github.io/posts/sae-2/assets/20210129163100_hu_d524d451c02bfb7f.webp 1024w"
-	loading="lazy"
-	
-		alt="手写数字重建效果对比图"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="516"
-		data-flex-basis="1240px"
-	
-&gt;
-&lt;/p&gt;
+&lt;/h2&gt;&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2021/sae-2/20210129-163100-43c32b-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="2011"
+			data-pswp-height="389"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2021/sae-2/20210129-163100-43c32b-thumb.webp"
+				width="2011"
+				height="389"
+				loading="lazy"
+				alt="手写数字重建效果对比图"
+				
+				class="gallery-image"
+				data-flex-grow="516.9665809768637"
+				data-flex-basis="1240.719794344473px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;从上到下，第一行为测试图像，第二行为 keras 搭建的 SAE 网络重建图像，第三行为 tiny_dnn 搭建的 SAE 网络重建图像。下面展示数字 2 和 5 重建的详细效果，左侧为 Python 平台重建结果，右侧为 C++ 平台重建结果。&lt;/p&gt;
 &lt;p&gt;数字 2&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/sae-2/assets/20210129182201.webp"
-	width="1498"
-	height="767"
-	srcset="https://jinggqu.github.io/posts/sae-2/assets/20210129182201_hu_968e3db06a118374.webp 480w, https://jinggqu.github.io/posts/sae-2/assets/20210129182201_hu_d70b93806d58a885.webp 1024w"
-	loading="lazy"
-	
-		alt="数字 2 的重建效果对比"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="195"
-		data-flex-basis="468px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2021/sae-2/20210129-182201-3d9d5a-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1498"
+			data-pswp-height="767"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2021/sae-2/20210129-182201-3d9d5a-thumb.webp"
+				width="1498"
+				height="767"
+				loading="lazy"
+				alt="数字 2 的重建效果对比"
+				
+				class="gallery-image"
+				data-flex-grow="195.30638852672752"
+				data-flex-basis="468.73533246414604px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;数字 5&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/sae-2/assets/20210129181931.webp"
-	width="1503"
-	height="780"
-	srcset="https://jinggqu.github.io/posts/sae-2/assets/20210129181931_hu_6cbbd7cfdac2d4f8.webp 480w, https://jinggqu.github.io/posts/sae-2/assets/20210129181931_hu_1e14d543b4c42334.webp 1024w"
-	loading="lazy"
-	
-		alt="数字 5 的重建效果对比"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="192"
-		data-flex-basis="462px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2021/sae-2/20210129-181931-8c9c93-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1503"
+			data-pswp-height="780"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2021/sae-2/20210129-181931-8c9c93-thumb.webp"
+				width="1503"
+				height="780"
+				loading="lazy"
+				alt="数字 5 的重建效果对比"
+				
+				class="gallery-image"
+				data-flex-grow="192.69230769230768"
+				data-flex-basis="462.46153846153845px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="性能对比"&gt;性能对比
 &lt;/h2&gt;&lt;p&gt;测试使用的 CPU 型号为 Intel i5-4200H，基准频率为 2.80GHz。&lt;/p&gt;
 &lt;p&gt;基于 tiny_dnn 的 C++ 平台训练时长为 2624.95 秒，基于 keras 的 Python 平台训练时长为 135.70 秒。在 50 个 epoch 测试中，Python 平台比 C++ 平台快了大约 19 倍，Python 平台 loss 大约为 0.08。由重建图片结果不难看出，Python 平台效果明显优于 C++ 平台。&lt;/p&gt;
@@ -321,43 +321,43 @@
 &lt;/ol&gt;</description></item><item><title>SAE 入门（一）</title><link>https://jinggqu.github.io/posts/sae-1/</link><pubDate>Wed, 20 Jan 2021 18:00:00 +0800</pubDate><guid>https://jinggqu.github.io/posts/sae-1/</guid><description>&lt;h1 id="sae-入门一"&gt;SAE 入门（一）
 &lt;/h1&gt;&lt;h2 id="autoencoder-简介"&gt;Autoencoder 简介
 &lt;/h2&gt;&lt;p&gt;自编码器（Autoencoder，AE），是一种利用反向传播（backpropagation，BP）算法&lt;strong&gt;使得输出值等于输入值&lt;/strong&gt;的神经网络，它先将输入压缩成潜在空间表征，然后通过这种表征来重构输出。其中，空间表征可以看作是输入数据的高级抽象，通常是将高维度的数据抽象为低维度的数据。&lt;/p&gt;
-&lt;p&gt;自编码器由两部分组成：&lt;br&gt;
-编码器：这部分能将输入压缩成潜在空间表征，可以用编码函数 $h=f(x)$ 表示;&lt;br&gt;
+&lt;p&gt;自编码器由两部分组成：
+编码器：这部分能将输入压缩成潜在空间表征，可以用编码函数 $h=f(x)$ 表示;
 解码器：这部分能重构来自潜在空间表征的输入，可以用解码函数 $r=g(h)$ 表示。&lt;/p&gt;
 &lt;p&gt;因此，整个自编码器可以用函数 $g(f(x)) = r$ 来描述，其中输出 $r$ 与原始输入 $x$ 相近。&lt;/p&gt;
 &lt;p&gt;自动编码器的目标是最大程度地减少输入和输出之间的重构误差。这有助于自动编码器学习数据中存在的重要功能。当表征很好地重建其输入时，则表示这个表征很好地保留了输入中存在的许多信息。整个过程如下图。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/sae-1/assets/20210122142001.webp"
-	width="1669"
-	height="507"
-	srcset="https://jinggqu.github.io/posts/sae-1/assets/20210122142001_hu_c1155aa9802c5451.webp 480w, https://jinggqu.github.io/posts/sae-1/assets/20210122142001_hu_e68dedf601233d5.webp 1024w"
-	loading="lazy"
-	
-		alt="自编码器网络结构示意图"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="329"
-		data-flex-basis="790px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2021/sae-1/20210122-142001-74280c-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1669"
+			data-pswp-height="507"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2021/sae-1/20210122-142001-74280c-thumb.webp"
+				width="1669"
+				height="507"
+				loading="lazy"
+				alt="自编码器网络结构示意图"
+				
+				class="gallery-image"
+				data-flex-grow="329.1913214990138"
+				data-flex-basis="790.0591715976332px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="stacked-autoencoder-简介"&gt;Stacked Autoencoder 简介
 &lt;/h2&gt;&lt;p&gt;Stacked Autoencoder 简写作 SAE。SAE 与 AE 的主要区别在于编码器与解码器的层数，栈式自编码器包含多层隐藏层。具体网络结构如下图所示，图中有两层编码层，两层解码层。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/sae-1/assets/20210122154135.webp"
-	width="1505"
-	height="811"
-	srcset="https://jinggqu.github.io/posts/sae-1/assets/20210122154135_hu_dfdf893f0a524ca8.webp 480w, https://jinggqu.github.io/posts/sae-1/assets/20210122154135_hu_ea2ce8cb4eddae43.webp 1024w"
-	loading="lazy"
-	
-		alt="栈式自编码器网络结构示意图"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="185"
-		data-flex-basis="445px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2021/sae-1/20210122-154135-c5cc6d-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1505"
+			data-pswp-height="811"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2021/sae-1/20210122-154135-c5cc6d-thumb.webp"
+				width="1505"
+				height="811"
+				loading="lazy"
+				alt="栈式自编码器网络结构示意图"
+				
+				class="gallery-image"
+				data-flex-grow="185.57336621454994"
+				data-flex-basis="445.37607891491984px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="代码实现"&gt;代码实现
 &lt;/h2&gt;
  &lt;blockquote&gt;
@@ -665,21 +665,21 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;235/235 [==============================] - 3s 12ms/step - loss: 0.0845 - accuracy: 0.0139 - val_loss: 0.0840 - val_accuracy: 0.0165
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/sae-1/assets/20210122160643.webp"
-	width="1920"
-	height="455"
-	srcset="https://jinggqu.github.io/posts/sae-1/assets/20210122160643_hu_2ca605d5b0b181e8.webp 480w, https://jinggqu.github.io/posts/sae-1/assets/20210122160643_hu_6cb88226e8fe9c25.webp 1024w"
-	loading="lazy"
-	
-		alt="MNIST 手写数字自编码结果对比图"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="421"
-		data-flex-basis="1012px"
-	
-&gt;
-&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2021/sae-1/20210122-160643-c4031f-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1920"
+			data-pswp-height="455"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2021/sae-1/20210122-160643-c4031f-thumb.webp"
+				width="1920"
+				height="455"
+				loading="lazy"
+				alt="MNIST 手写数字自编码结果对比图"
+				
+				class="gallery-image"
+				data-flex-grow="421.97802197802196"
+				data-flex-basis="1012.7472527472528px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="参考文献"&gt;参考文献
 &lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;&lt;a class="link" href="https://medium.com/@venkatakrishna.jonnalagadda/sparse-stacked-and-variational-autoencoder-efe5bfe73b64" target="_blank" rel="noopener"
@@ -744,36 +744,36 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;上述配置请根据 Anaconda 实际安装路径进行调整，配置完成的效果如下图所示。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152533.webp"
-	width="1058"
-	height="1086"
-	srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152533_hu_6866e9b2d64033e7.webp 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152533_hu_4e81301066321ae9.webp 1024w"
-	loading="lazy"
-	
-		alt="Anaconda 环境变量配置界面"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="97"
-		data-flex-basis="233px"
-	
-&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152633.webp"
-	width="902"
-	height="928"
-	srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152633_hu_727f4f7de613ad7f.webp 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208152633_hu_10447fb36a37cbb4.webp 1024w"
-	loading="lazy"
-	
-		alt="Anaconda 环境变量配置路径"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="97"
-		data-flex-basis="233px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/gan-for-hand-written-digits/20201208-152533-df0dbe-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1058"
+			data-pswp-height="1086"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/gan-for-hand-written-digits/20201208-152533-df0dbe-thumb.webp"
+				width="1058"
+				height="1086"
+				loading="lazy"
+				alt="Anaconda 环境变量配置界面"
+				
+				class="gallery-image"
+				data-flex-grow="97.42173112338858"
+				data-flex-basis="233.8121546961326px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/gan-for-hand-written-digits/20201208-152633-d9c3ad-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="902"
+			data-pswp-height="928"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/gan-for-hand-written-digits/20201208-152633-d9c3ad-thumb.webp"
+				width="902"
+				height="928"
+				loading="lazy"
+				alt="Anaconda 环境变量配置路径"
+				
+				class="gallery-image"
+				data-flex-grow="97.19827586206897"
+				data-flex-basis="233.27586206896552px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;完成后打开 cmd 输入下列命令，如果输出内容与下列内容类似，则表示配置正确，可继续后面的步骤。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
 &lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
@@ -974,21 +974,21 @@ simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
 &lt;/h2&gt;&lt;h3 id="使用-pycharm-创建项目"&gt;使用 PyCharm 创建项目
 &lt;/h3&gt;&lt;p&gt;在创建项目时，需要将虚拟环境（图中 Location 项）配置为前文中创建的虚拟环境所在目录，然后点击创建项目。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;由于此前作者已经创建过项目，故创建窗口下方会提示虚拟环境目录不为空，忽略即可。&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208194401.webp"
-	width="1401"
-	height="856"
-	srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208194401_hu_b7f0b24b9f824fc0.webp 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208194401_hu_2cdd68c71302f8a3.webp 1024w"
-	loading="lazy"
-	
-		alt="PyCharm 创建项目配置界面"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="163"
-		data-flex-basis="392px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/gan-for-hand-written-digits/20201208-194401-eff20b-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="1401"
+			data-pswp-height="856"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/gan-for-hand-written-digits/20201208-194401-eff20b-thumb.webp"
+				width="1401"
+				height="856"
+				loading="lazy"
+				alt="PyCharm 创建项目配置界面"
+				
+				class="gallery-image"
+				data-flex-grow="163.66822429906543"
+				data-flex-basis="392.803738317757px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id="运行项目"&gt;运行项目
 &lt;/h3&gt;&lt;p&gt;将以下代码置于项目 &lt;code&gt;main.py&lt;/code&gt; 中，运行。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
@@ -1262,21 +1262,21 @@ simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;运行时的截图如下，可以看到已经生成了多张手写数字的图片。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208201913.webp"
-	width="3839"
-	height="2089"
-	srcset="https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208201913_hu_cacb3f2e2fce47e5.webp 480w, https://jinggqu.github.io/posts/gan-for-hand-written-digits/assets/20201208201913_hu_e5b5c8919b743bc8.webp 1024w"
-	loading="lazy"
-	
-		alt="GAN 生成的手写数字示例"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="183"
-		data-flex-basis="441px"
-	
-&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://jinggqu.github.io/blog-media-01/media/2020/gan-for-hand-written-digits/20201208-201913-ad2fd1-full.webp"
+			class="image-link"
+			target="_blank"
+			data-pswp-width="3839"
+			data-pswp-height="2089"&gt;
+			&lt;img src="https://jinggqu.github.io/blog-media-01/media/2020/gan-for-hand-written-digits/20201208-201913-ad2fd1-thumb.webp"
+				width="3839"
+				height="2089"
+				loading="lazy"
+				alt="GAN 生成的手写数字示例"
+				
+				class="gallery-image"
+				data-flex-grow="183.77213977979895"
+				data-flex-basis="441.05313547151746px"&gt;
+		&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;至此，GAN 网络手写数字生成环境搭建已经完成，后续将进行更加深入的学习。&lt;/p&gt;
 &lt;h2 id="备注"&gt;备注
 &lt;/h2&gt;&lt;p&gt;为 jupyter lab 指定 conda 环境，在 conda 环境中执行以下命令后再启动 jupyter lab 即可&lt;/p&gt;
