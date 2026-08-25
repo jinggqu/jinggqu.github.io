@@ -1,0 +1,180 @@
+<!doctype html><html lang=en-US dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="跨地区访问内网服务器时，Tailscale、RustDesk 等工具通常会先尝试 UDP 打洞。打洞失败后，流量会转发到公共中继节点，连接虽然仍然可用，但路径不可控，延迟也可能明显增加。本文使用一台网络质量较好的 VPS，通过反向 SSH 隧道建立一条固定的 TCP 链路，使 SSH 和远程桌面流量都按照“本地设备 → VPS → 内网服务器”的路径传输。\n"><title>使用反向 SSH 隧道实现低延迟远程访问</title><link rel=canonical href=https://jinggqu.github.io/posts/reverse-ssh-tunnel/><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=preload as=style href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"><link rel=stylesheet href=/scss/style.min.b24a4fcac21094e3eff82f2760505d92e035984ad7fd57be21758e036de35881.css><meta property='og:title' content="使用反向 SSH 隧道实现低延迟远程访问"><meta property='og:description' content="跨地区访问内网服务器时，Tailscale、RustDesk 等工具通常会先尝试 UDP 打洞。打洞失败后，流量会转发到公共中继节点，连接虽然仍然可用，但路径不可控，延迟也可能明显增加。本文使用一台网络质量较好的 VPS，通过反向 SSH 隧道建立一条固定的 TCP 链路，使 SSH 和远程桌面流量都按照“本地设备 → VPS → 内网服务器”的路径传输。\n"><meta property='og:url' content='https://jinggqu.github.io/posts/reverse-ssh-tunnel/'><meta property='og:site_name' content="Anthony's blog"><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:published_time' content='2026-08-25T23:30:00+08:00'><meta property='article:modified_time' content='2026-08-25T23:30:00+08:00'><meta name=twitter:title content="使用反向 SSH 隧道实现低延迟远程访问"><meta name=twitter:description content="跨地区访问内网服务器时，Tailscale、RustDesk 等工具通常会先尝试 UDP 打洞。打洞失败后，流量会转发到公共中继节点，连接虽然仍然可用，但路径不可控，延迟也可能明显增加。本文使用一台网络质量较好的 VPS，通过反向 SSH 隧道建立一条固定的 TCP 链路，使 SSH 和远程桌面流量都按照“本地设备 → VPS → 内网服务器”的路径传输。\n"></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar.webp width=256 height=256 class=site-logo loading=lazy alt=Avatar></a></figure><div class=site-meta><h1 class=site-name><a href=/>Anthony's blog</a></h1><h2 class=site-description></h2></div></header><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/archives><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=https://github.com/jinggqu target=_blank><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+<span>GitHub</span></a></li><li><a href=https://unsplash.com/@xvyn target=_blank><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Unsplash</span></a></li><li><a href=/index.xml target=_blank><svg class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="5" cy="19" r="1"/><path d="M4 4a16 16 0 0116 16"/><path d="M4 11a9 9 0 019 9"/></svg>
+<span>RSS</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav class=toc-nav id=TableOfContents><ol><li><a href=#实现原理>实现原理</a></li><li><a href=#配置专用用户>配置专用用户</a></li><li><a href=#保持隧道在线>保持隧道在线</a></li><li><a href=#验证隧道>验证隧道</a></li><li><a href=#使用-ssh>使用 SSH</a></li><li><a href=#使用远程桌面>使用远程桌面</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/remote-tunnel/ style=background-color:#e9efbe;color:#383d0f>Remote Tunnel
+</a><a href=/categories/ssh/ style=background-color:#d0efbe;color:#213d0f>SSH</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/posts/reverse-ssh-tunnel/>使用反向 SSH 隧道实现低延迟远程访问</a></h2></div><footer class=article-meta><div class=inline-meta><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published datetime=2026-08-25T23:30:00+08:00>Aug 25, 2026</time></div></footer></div></header><aside class=article-toc><details><summary><div class=article-toc-title><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6-6 6"/></svg>
+<span>Table of contents</span></div></summary><nav class=toc-nav><ol><li><a href=#实现原理>实现原理</a></li><li><a href=#配置专用用户>配置专用用户</a></li><li><a href=#保持隧道在线>保持隧道在线</a></li><li><a href=#验证隧道>验证隧道</a></li><li><a href=#使用-ssh>使用 SSH</a></li><li><a href=#使用远程桌面>使用远程桌面</a></li></ol></nav></details></aside><section class=article-content><p>跨地区访问内网服务器时，Tailscale、RustDesk 等工具通常会先尝试 UDP 打洞。打洞失败后，流量会转发到公共中继节点，连接虽然仍然可用，但路径不可控，延迟也可能明显增加。本文使用一台网络质量较好的 VPS，通过反向 SSH 隧道建立一条固定的 TCP 链路，使 SSH 和远程桌面流量都按照“本地设备 → VPS → 内网服务器”的路径传输。</p><pre class=mermaid style=visibility:hidden>graph LR
+    A[本地 Mac] -->|SSH| B[中转 VPS]
+    C[内网服务器] -->|持久反向 SSH 隧道| B
+    B -->|22022 → SSH 22| C
+    B -->|23389 → RDP 3389| C</pre><h2 id=实现原理>实现原理</h2><p>内网服务器通常不能接受公网入站连接，但可以主动访问互联网。我们让内网服务器主动连接 VPS，并通过 SSH 的 <code>-R</code> 参数在 VPS 上创建两个反向端口：<code>127.0.0.1:22022</code> 对应内网服务器的 SSH 端口 <code>22</code>，<code>127.0.0.1:23389</code> 对应 RDP 端口 <code>3389</code>。SSH 连接建立后，VPS 收到的本地端口流量会通过已经存在的加密连接送回内网服务器。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>ssh -NT <span class=se>\
+</span></span></span><span class=line><span class=cl>  -R 127.0.0.1:22022:127.0.0.1:22 <span class=se>\
+</span></span></span><span class=line><span class=cl>  -R 127.0.0.1:23389:127.0.0.1:3389 <span class=se>\
+</span></span></span><span class=line><span class=cl>  tunnel@&lt;VPS_IP&gt;
+</span></span></code></pre></td></tr></table></div></div><p>其中，<code>-N</code> 表示不执行远程命令，<code>-T</code> 表示不分配终端，<code>-R</code> 用于建立反向端口转发。两个端口都绑定到 VPS 的 <code>127.0.0.1</code>，因此只能由 VPS 本机访问，不会直接暴露到公网。</p><h2 id=配置专用用户>配置专用用户</h2><p>首先在 VPS 上创建一个只用于维持隧道的用户，并锁定其密码登录：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo useradd --create-home --shell /bin/bash tunnel
+</span></span><span class=line><span class=cl>sudo passwd -l tunnel
+</span></span><span class=line><span class=cl>sudo install -d -o tunnel -g tunnel -m <span class=m>700</span> /home/tunnel/.ssh
+</span></span></code></pre></td></tr></table></div></div><p>然后在内网服务器生成一对专用 SSH 密钥：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo mkdir -p /root/.ssh
+</span></span><span class=line><span class=cl>sudo chmod <span class=m>700</span> /root/.ssh
+</span></span><span class=line><span class=cl>sudo ssh-keygen -t ed25519 <span class=se>\
+</span></span></span><span class=line><span class=cl>  -f /root/.ssh/id_ed25519_hk_tunnel <span class=se>\
+</span></span></span><span class=line><span class=cl>  -N <span class=s1>&#39;&#39;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>  -C <span class=s1>&#39;lab-to-vps-tunnel&#39;</span>
+</span></span></code></pre></td></tr></table></div></div><p>将公钥写入 VPS 的 <code>/home/tunnel/.ssh/authorized_keys</code>。为了避免该密钥被用于其他操作，可以限制它只能建立指定的反向端口：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>restrict,port-forwarding,permitlisten=&#34;127.0.0.1:22022&#34;,permitlisten=&#34;127.0.0.1:23389&#34; ssh-ed25519 &lt;PUBLIC_KEY&gt;
+</span></span></code></pre></td></tr></table></div></div><p>最后修正文件权限：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo chown tunnel:tunnel /home/tunnel/.ssh/authorized_keys
+</span></span><span class=line><span class=cl>sudo chmod <span class=m>600</span> /home/tunnel/.ssh/authorized_keys
+</span></span></code></pre></td></tr></table></div></div><h2 id=保持隧道在线>保持隧道在线</h2><p>手动运行 SSH 只适合测试，长期使用可以把它交给 systemd 管理。在内网服务器创建 <code>/etc/systemd/system/vps-tunnel.service</code>：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-ini data-lang=ini><span class=line><span class=cl><span class=k>[Unit]</span>
+</span></span><span class=line><span class=cl><span class=na>Description</span><span class=o>=</span><span class=s>Persistent reverse SSH tunnel to VPS</span>
+</span></span><span class=line><span class=cl><span class=na>After</span><span class=o>=</span><span class=s>network-online.target</span>
+</span></span><span class=line><span class=cl><span class=na>Wants</span><span class=o>=</span><span class=s>network-online.target</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>[Service]</span>
+</span></span><span class=line><span class=cl><span class=na>Type</span><span class=o>=</span><span class=s>simple</span>
+</span></span><span class=line><span class=cl><span class=na>User</span><span class=o>=</span><span class=s>root</span>
+</span></span><span class=line><span class=cl><span class=na>ExecStart</span><span class=o>=</span><span class=s>/usr/bin/ssh -NT -i /root/.ssh/id_ed25519_hk_tunnel -o BatchMode=yes -o ExitOnForwardFailure=yes -o ServerAliveInterval=20 -o ServerAliveCountMax=3 -R 127.0.0.1:22022:127.0.0.1:22 -R 127.0.0.1:23389:127.0.0.1:3389 tunnel@&lt;VPS_IP&gt;</span>
+</span></span><span class=line><span class=cl><span class=na>Restart</span><span class=o>=</span><span class=s>always</span>
+</span></span><span class=line><span class=cl><span class=na>RestartSec</span><span class=o>=</span><span class=s>5</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>[Install]</span>
+</span></span><span class=line><span class=cl><span class=na>WantedBy</span><span class=o>=</span><span class=s>multi-user.target</span>
+</span></span></code></pre></td></tr></table></div></div><p>启用服务后，隧道会随系统启动，并在网络中断后自动重连：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo systemctl daemon-reload
+</span></span><span class=line><span class=cl>sudo systemctl <span class=nb>enable</span> --now vps-tunnel.service
+</span></span><span class=line><span class=cl>sudo systemctl status vps-tunnel.service
+</span></span></code></pre></td></tr></table></div></div><h2 id=验证隧道>验证隧道</h2><p>在 VPS 上检查监听端口：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>ss -lnt <span class=p>|</span> grep -E <span class=s1>&#39;22022|23389&#39;</span>
+</span></span><span class=line><span class=cl>nc -vz 127.0.0.1 <span class=m>22022</span>
+</span></span><span class=line><span class=cl>nc -vz 127.0.0.1 <span class=m>23389</span>
+</span></span></code></pre></td></tr></table></div></div><p>如果两个端口均显示为开放，说明 VPS 已经能够通过反向隧道访问内网服务器的 SSH 和 RDP 服务。</p><h2 id=使用-ssh>使用 SSH</h2><p>本地设备可以使用 <code>ProxyJump</code> 登录 VPS，再从 VPS 的回环端口进入内网服务器：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>ssh -J &lt;VPS_USER&gt;@&lt;VPS_IP&gt; -p <span class=m>22022</span> &lt;SERVER_USER&gt;@127.0.0.1
+</span></span></code></pre></td></tr></table></div></div><p>为了方便日常使用，可以将下面的内容写入本地 <code>~/.ssh/config</code>：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Host hk-vps
+</span></span><span class=line><span class=cl>    HostName &lt;VPS_IP&gt;
+</span></span><span class=line><span class=cl>    User &lt;VPS_USER&gt;
+</span></span><span class=line><span class=cl>    IdentityFile ~/.ssh/id_rsa
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Host lab-server
+</span></span><span class=line><span class=cl>    HostName 127.0.0.1
+</span></span><span class=line><span class=cl>    Port 22022
+</span></span><span class=line><span class=cl>    User &lt;SERVER_USER&gt;
+</span></span><span class=line><span class=cl>    ProxyJump hk-vps
+</span></span><span class=line><span class=cl>    HostKeyAlias lab-server-through-vps
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Host lab-rdp
+</span></span><span class=line><span class=cl>    HostName &lt;VPS_IP&gt;
+</span></span><span class=line><span class=cl>    User &lt;VPS_USER&gt;
+</span></span><span class=line><span class=cl>    IdentityFile ~/.ssh/id_rsa
+</span></span><span class=line><span class=cl>    LocalForward 13389 127.0.0.1:23389
+</span></span><span class=line><span class=cl>    ExitOnForwardFailure yes
+</span></span><span class=line><span class=cl>    ServerAliveInterval 20
+</span></span><span class=line><span class=cl>    ServerAliveCountMax 3
+</span></span></code></pre></td></tr></table></div></div><p><code>IdentityFile</code> 指向本地设备上用于登录 VPS 的 SSH 私钥，而不是以 <code>.pub</code> 结尾的公钥。如果 <code>~/.ssh</code> 中已有 <code>id_rsa</code> 和 <code>id_rsa.pub</code>，这里应填写 <code>~/.ssh/id_rsa</code>；如果使用 Ed25519 密钥，则填写 <code>~/.ssh/id_ed25519</code>。首次使用前，需要把对应的公钥复制到 VPS：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>ssh-copy-id -i ~/.ssh/id_rsa.pub &lt;VPS_USER&gt;@&lt;VPS_IP&gt;
+</span></span></code></pre></td></tr></table></div></div><p>如果 macOS 没有安装 <code>ssh-copy-id</code>，也可以执行：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat ~/.ssh/id_rsa.pub <span class=p>|</span> ssh &lt;VPS_USER&gt;@&lt;VPS_IP&gt; <span class=s1>&#39;umask 077; mkdir -p ~/.ssh; cat &gt;&gt; ~/.ssh/authorized_keys&#39;</span>
+</span></span></code></pre></td></tr></table></div></div><p>完成后测试密钥登录：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>ssh -i ~/.ssh/id_rsa &lt;VPS_USER&gt;@&lt;VPS_IP&gt;
+</span></span></code></pre></td></tr></table></div></div><p>如果不再要求输入 VPS 账号密码，说明密钥已经配置成功。私钥 <code>id_rsa</code> 只保存在本地，不能上传或发送给其他人；复制到 VPS 的只能是 <code>id_rsa.pub</code>。</p><p>之后只需执行 <code>ssh lab-server</code>。这等价于 <code>ssh -J &lt;VPS_USER>@&lt;VPS_IP> -p 22022 &lt;SERVER_USER>@127.0.0.1</code>，VS Code Remote-SSH、Cursor 和 SFTP 也可以直接使用 <code>lab-server</code>。</p><h2 id=使用远程桌面>使用远程桌面</h2><p>RDP 端口没有暴露到公网，因此需要先在本地建立一层 SSH 本地转发。如果已经添加了上面的 <code>lab-rdp</code> 配置，执行：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>ssh -NT lab-rdp
+</span></span></code></pre></td></tr></table></div></div><p>该命令会读取 <code>LocalForward 13389 127.0.0.1:23389</code>，等价于下面的完整命令：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>ssh -NT <span class=se>\
+</span></span></span><span class=line><span class=cl>  -o <span class=nv>ServerAliveInterval</span><span class=o>=</span><span class=m>20</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>  -L 13389:127.0.0.1:23389 <span class=se>\
+</span></span></span><span class=line><span class=cl>  &lt;VPS_USER&gt;@&lt;VPS_IP&gt;
+</span></span></code></pre></td></tr></table></div></div><p>保持终端运行，然后使用 RDP 客户端连接 <code>127.0.0.1:13389</code>。此时流量依次经过本地端口 <code>13389</code>、VPS 端口 <code>23389</code> 和内网服务器端口 <code>3389</code>，整个过程都位于 SSH 加密通道内。</p></section><footer class="article-meta article-footer"><section class="article-copyright inline-meta"><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css integrity=sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js integrity=sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8 crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{const e=[".main-article",".widget--toc"];e.forEach(e=>{const t=document.querySelector(e);t&&renderMathInElement(t,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}],ignoredClasses:["gist"]})})})</script></article><aside><h2 class=section-title>Related content</h2><div class=subsection-list><div class=article-list--tile><article><a href=/posts/remote-tunnel/><div class=article-details><h2 class=article-title>使用 VS Code Remote Tunnel 进行远程开发</h2></div></a></article><article><a href=/posts/rustdesk/><div class=article-details><h2 class=article-title>使用 RustDesk 实现内网穿透</h2></div></a></article></div></div></aside><script src=https://giscus.app/client.js data-repo=jinggqu/jinggqu.github.io data-repo-id="MDEwOlJlcG9zaXRvcnkxNDkyMTI2MDk=" data-category=Announcements data-category-id=DIC_kwDOCOTNwc4Ca4Al data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=light data-lang=en data-loading=lazy crossorigin=anonymous async></script><script>function setGiscusTheme(e){let t=document.querySelector("iframe.giscus-frame");t&&t.contentWindow.postMessage({giscus:{setConfig:{theme:e}}},"https://giscus.app")}(function(){addEventListener("message",t=>{if(event.origin!=="https://giscus.app")return;e()}),window.addEventListener("onColorSchemeChange",e);function e(){setGiscusTheme(document.documentElement.dataset.scheme==="light"?"light":"dark")}})()</script><footer class=site-footer><section class=copyright>&copy;
+2018 -
+2026 Anthony's blog</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=4.0.3>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><script type=module>
+    import gallery from '\/ts\/gallery.js';
+
+    const articleContent = document.querySelector('.article-content');
+    const shouldLoad = articleContent && (articleContent.querySelectorAll('figure').length > 0 || articleContent.querySelectorAll('img.gallery-image').length > 0);
+    
+    if (shouldLoad) {
+        gallery(articleContent);
+
+        const PhotoSwipeLightbox = (await import("https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js")).default;
+        const styleHref = "https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe.css";
+
+        const styleTag = document.createElement('link');
+        styleTag.rel = 'stylesheet';
+        styleTag.href = styleHref;
+        document.head.appendChild(styleTag);
+
+        const lightbox = new PhotoSwipeLightbox({
+            gallerySelector: '.article-content',
+            childSelector: 'figure a.image-link',
+            pswpModule: () => import("https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe.esm.min.js")
+        });
+        lightbox.init();
+    }
+</script><div class=mermaid-modal id=mermaid-modal><div class=mermaid-modal-header><div class=mermaid-modal-controls><button data-zoom=-1>− Zoom Out</button>
+<button data-zoom=0>Reset (100%)</button>
+<button data-zoom=1>+ Zoom In</button>
+<button data-zoom=fit>Fit to Screen</button></div><button class=mermaid-modal-close id=mermaid-modal-close>✕ Close (Esc)</button></div><div class=mermaid-modal-body id=mermaid-modal-body><div class=mermaid-modal-content id=mermaid-modal-content></div></div></div><script src=https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js></script><script type=module>
+import { initMermaidPage } from '\/ts\/mermaid.js';
+initMermaidPage({"darkTheme":"dark","darkThemeVariables":{},"htmlLabels":true,"lightTheme":"default","lightThemeVariables":{},"look":"classic","securityLevel":"strict","transparentBackground":false});
+</script></main></div><script type=text/javascript src=/ts/main.1ff1e5fdc4e178ed422e50aa407526dc552f26342d729343fded19416194382c.js defer></script></body></html>
