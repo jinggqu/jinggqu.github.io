@@ -106,12 +106,9 @@
 </span><span class=lnt>16
 </span><span class=lnt>17
 </span><span class=lnt>18
-</span><span class=lnt>19
-</span><span class=lnt>20
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Host hk-vps
 </span></span><span class=line><span class=cl>    HostName &lt;VPS_IP&gt;
 </span></span><span class=line><span class=cl>    User &lt;VPS_USER&gt;
-</span></span><span class=line><span class=cl>    IdentityFile ~/.ssh/id_rsa
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>Host lab-server
 </span></span><span class=line><span class=cl>    HostName 127.0.0.1
@@ -123,12 +120,11 @@
 </span></span><span class=line><span class=cl>Host lab-rdp
 </span></span><span class=line><span class=cl>    HostName &lt;VPS_IP&gt;
 </span></span><span class=line><span class=cl>    User &lt;VPS_USER&gt;
-</span></span><span class=line><span class=cl>    IdentityFile ~/.ssh/id_rsa
 </span></span><span class=line><span class=cl>    LocalForward 13389 127.0.0.1:23389
 </span></span><span class=line><span class=cl>    ExitOnForwardFailure yes
 </span></span><span class=line><span class=cl>    ServerAliveInterval 20
 </span></span><span class=line><span class=cl>    ServerAliveCountMax 3
-</span></span></code></pre></td></tr></table></div></div><p><code>IdentityFile</code> 指向本地设备上用于登录 VPS 的 SSH 私钥，而不是以 <code>.pub</code> 结尾的公钥。如果 <code>~/.ssh</code> 中已有 <code>id_rsa</code> 和 <code>id_rsa.pub</code>，这里应填写 <code>~/.ssh/id_rsa</code>；如果使用 Ed25519 密钥，则填写 <code>~/.ssh/id_ed25519</code>。首次使用前，需要把对应的公钥复制到 VPS：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><p>首次使用前，需要把对应的公钥复制到 VPS：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>ssh-copy-id -i ~/.ssh/id_rsa.pub &lt;VPS_USER&gt;@&lt;VPS_IP&gt;
 </span></span></code></pre></td></tr></table></div></div><p>如果 macOS 没有安装 <code>ssh-copy-id</code>，也可以执行：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat ~/.ssh/id_rsa.pub <span class=p>|</span> ssh &lt;VPS_USER&gt;@&lt;VPS_IP&gt; <span class=s1>&#39;umask 077; mkdir -p ~/.ssh; cat &gt;&gt; ~/.ssh/authorized_keys&#39;</span>
