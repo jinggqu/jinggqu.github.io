@@ -1,0 +1,264 @@
+<!doctype html><html lang=en-US dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="实验室服务器位于严格 NAT 后，不能接受公网入站连接；深圳 Mac 与它之间也无法稳定完成 UDP 打洞。本文选择一台到深圳和实验室网络延迟都较低的 VPS，分别部署反向 SSH 隧道、Tailscale Peer Relay 和 RustDesk Relay。三套方案不互相依赖，可以同时运行。\n"><title>通过 VPS 实现低延迟远程访问：SSH、Tailscale 与 RustDesk</title><link rel=canonical href=https://jinggqu.github.io/posts/vps-low-latency-remote-access/><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=preload as=style href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"><link rel=stylesheet href=/scss/style.min.b24a4fcac21094e3eff82f2760505d92e035984ad7fd57be21758e036de35881.css><meta property='og:title' content="通过 VPS 实现低延迟远程访问：SSH、Tailscale 与 RustDesk"><meta property='og:description' content="实验室服务器位于严格 NAT 后，不能接受公网入站连接；深圳 Mac 与它之间也无法稳定完成 UDP 打洞。本文选择一台到深圳和实验室网络延迟都较低的 VPS，分别部署反向 SSH 隧道、Tailscale Peer Relay 和 RustDesk Relay。三套方案不互相依赖，可以同时运行。\n"><meta property='og:url' content='https://jinggqu.github.io/posts/vps-low-latency-remote-access/'><meta property='og:site_name' content="Anthony's blog"><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:published_time' content='2026-08-28T13:00:00+08:00'><meta property='article:modified_time' content='2026-08-28T13:00:00+08:00'><meta name=twitter:title content="通过 VPS 实现低延迟远程访问：SSH、Tailscale 与 RustDesk"><meta name=twitter:description content="实验室服务器位于严格 NAT 后，不能接受公网入站连接；深圳 Mac 与它之间也无法稳定完成 UDP 打洞。本文选择一台到深圳和实验室网络延迟都较低的 VPS，分别部署反向 SSH 隧道、Tailscale Peer Relay 和 RustDesk Relay。三套方案不互相依赖，可以同时运行。\n"></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar.webp width=256 height=256 class=site-logo loading=lazy alt=Avatar></a></figure><div class=site-meta><h1 class=site-name><a href=/>Anthony's blog</a></h1><h2 class=site-description></h2></div></header><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/archives><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=https://github.com/jinggqu target=_blank><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+<span>GitHub</span></a></li><li><a href=https://unsplash.com/@xvyn target=_blank><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Unsplash</span></a></li><li><a href=/index.xml target=_blank><svg class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="5" cy="19" r="1"/><path d="M4 4a16 16 0 0116 16"/><path d="M4 11a9 9 0 019 9"/></svg>
+<span>RSS</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav class=toc-nav id=TableOfContents><ol><li><a href=#命名>命名</a></li><li><a href=#方案一反向-ssh-隧道>方案一：反向 SSH 隧道</a></li><li><a href=#方案二tailscale-peer-relay>方案二：Tailscale Peer Relay</a></li><li><a href=#方案三rustdesk-relay>方案三：RustDesk Relay</a></li><li><a href=#选择>选择</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/remote-access/ style=background-color:#efbed2;color:#3d0f22>Remote Access
+</a><a href=/categories/ssh/ style=background-color:#d0efbe;color:#213d0f>SSH
+</a><a href=/categories/tailscale/ style=background-color:#bed5ef;color:#0f253d>Tailscale
+</a><a href=/categories/rustdesk/ style=background-color:#d6efbe;color:#263d0f>RustDesk</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/posts/vps-low-latency-remote-access/>通过 VPS 实现低延迟远程访问：SSH、Tailscale 与 RustDesk</a></h2></div><footer class=article-meta><div class=inline-meta><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published datetime=2026-08-28T13:00:00+08:00>Aug 28, 2026</time></div></footer></div></header><aside class=article-toc><details><summary><div class=article-toc-title><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6-6 6"/></svg>
+<span>Table of contents</span></div></summary><nav class=toc-nav><ol><li><a href=#命名>命名</a></li><li><a href=#方案一反向-ssh-隧道>方案一：反向 SSH 隧道</a></li><li><a href=#方案二tailscale-peer-relay>方案二：Tailscale Peer Relay</a></li><li><a href=#方案三rustdesk-relay>方案三：RustDesk Relay</a></li><li><a href=#选择>选择</a></li></ol></nav></details></aside><section class=article-content><p>实验室服务器位于严格 NAT 后，不能接受公网入站连接；深圳 Mac 与它之间也无法稳定完成 UDP 打洞。本文选择一台到深圳和实验室网络延迟都较低的 VPS，分别部署反向 SSH 隧道、Tailscale Peer Relay 和 RustDesk Relay。三套方案不互相依赖，可以同时运行。</p><h2 id=命名>命名</h2><p>为避免混淆，全文固定使用以下名称：</p><div class=table-wrapper><table><thead><tr><th>名称</th><th>设备</th><th>作用</th></tr></thead><tbody><tr><td><code>mac-client</code></td><td>深圳 Mac；Tailscale 名称为 <code>MBA</code></td><td>发起 SSH 或远程桌面连接</td></tr><tr><td><code>relay-vps</code></td><td>公网 VPS；Tailscale 名称为 <code>hk-relay</code></td><td>提供固定公网入口和中转</td></tr><tr><td><code>lab-server</code></td><td>实验室服务器；Tailscale 名称为 <code>lab-server</code></td><td>最终访问目标</td></tr></tbody></table></div><p>文中的占位符含义如下：</p><div class=table-wrapper><table><thead><tr><th>占位符</th><th>含义</th><th>获取方法</th></tr></thead><tbody><tr><td><code>&lt;RELAY_IP></code></td><td><code>relay-vps</code> 的公网 IPv4 地址</td><td>在 VPS 服务商控制台查看</td></tr><tr><td><code>&lt;RELAY_USER></code></td><td><code>mac-client</code> 登录 VPS 使用的 SSH 用户</td><td>可以是 <code>root</code> 或普通管理用户；不等于专用隧道用户 <code>tunnel</code></td></tr><tr><td><code>&lt;LAB_USER></code></td><td>登录 <code>lab-server</code> 使用的 Linux 用户</td><td>在目标端执行 <code>whoami</code></td></tr><tr><td><code>&lt;LAB_TS_IP></code></td><td><code>lab-server</code> 的 Tailscale IPv4 地址</td><td>在目标端执行 <code>tailscale ip -4</code></td></tr><tr><td><code>&lt;TUNNEL_PUBLIC_KEY></code></td><td><code>lab-server</code> 为反向隧道生成的 SSH 公钥</td><td>执行 <code>sudo cat /root/.ssh/id_ed25519_vps_tunnel.pub</code></td></tr><tr><td><code>&lt;RUSTDESK_KEY></code></td><td>RustDesk 服务端的公钥</td><td>在 VPS 执行 <code>sudo cat /opt/rustdesk/data/id_ed25519.pub</code>；不要复制私钥 <code>id_ed25519</code></td></tr><tr><td><code>&lt;VNI_ID></code></td><td>Tailscale 为一次 Peer Relay 连接分配的标识</td><td>自动生成，只用于识别输出，不需要手工填写</td></tr></tbody></table></div><p>RustDesk 的“服务端”专指 VPS 上的 <code>hbbs</code> 和 <code>hbbr</code>，不是 <code>lab-server</code>。</p><h2 id=方案一反向-ssh-隧道>方案一：反向 SSH 隧道</h2><p>这套方案只依赖 TCP。首先由 <code>lab-server</code> 主动连接 <code>relay-vps</code>，在 VPS 回环地址上建立两个反向端口：<code>22022 → lab-server:22</code> 和 <code>23389 → lab-server:3389</code>。之后 <code>mac-client</code> 再通过 VPS 进入这条隧道。开始配置前，必须确认 <code>lab-server</code> 的 SSH 服务监听 <code>22/tcp</code>，RDP 服务监听 <code>3389/tcp</code>；不使用 RDP 时删除所有包含 <code>23389</code> 或 <code>3389</code> 的配置。</p><p>在 <code>relay-vps</code> 创建专用隧道用户：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo useradd --create-home --shell /bin/bash tunnel
+</span></span><span class=line><span class=cl>sudo passwd -l tunnel
+</span></span><span class=line><span class=cl>sudo install -d -o tunnel -g tunnel -m <span class=m>700</span> /home/tunnel/.ssh
+</span></span></code></pre></td></tr></table></div></div><p>在 <code>lab-server</code> 生成专用密钥并显示公钥：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo install -d -m <span class=m>700</span> /root/.ssh
+</span></span><span class=line><span class=cl>sudo ssh-keygen -t ed25519 -f /root/.ssh/id_ed25519_vps_tunnel -N <span class=s1>&#39;&#39;</span>
+</span></span><span class=line><span class=cl>sudo cat /root/.ssh/id_ed25519_vps_tunnel.pub
+</span></span></code></pre></td></tr></table></div></div><p>以管理员身份把公钥写入 <code>relay-vps</code> 的 <code>/home/tunnel/.ssh/authorized_keys</code>。下面的选项拒绝 shell 和远程命令，并把 <code>-R</code> 允许创建的监听地址限定为两个回环端口：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>command=&#34;/bin/false&#34;,restrict,port-forwarding,permitlisten=&#34;127.0.0.1:22022&#34;,permitlisten=&#34;127.0.0.1:23389&#34; ssh-ed25519 &lt;TUNNEL_PUBLIC_KEY&gt;
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo chown tunnel:tunnel /home/tunnel/.ssh/authorized_keys
+</span></span><span class=line><span class=cl>sudo chmod <span class=m>600</span> /home/tunnel/.ssh/authorized_keys
+</span></span></code></pre></td></tr></table></div></div><p>在启动 systemd 服务前，先比较 <code>relay-vps</code> 本机显示的 Ed25519 指纹与 <code>lab-server</code> 扫描到的指纹。两者完全一致后，才把主机密钥写入 root 的 <code>known_hosts</code>：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># relay-vps</span>
+</span></span><span class=line><span class=cl>sudo ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># lab-server：先比较指纹，再写入 known_hosts</span>
+</span></span><span class=line><span class=cl>ssh-keyscan -t ed25519 &lt;RELAY_IP&gt; <span class=p>|</span> ssh-keygen -lf -
+</span></span><span class=line><span class=cl>sudo touch /root/.ssh/known_hosts
+</span></span><span class=line><span class=cl>sudo ssh-keygen -f /root/.ssh/known_hosts -R &lt;RELAY_IP&gt;
+</span></span><span class=line><span class=cl>sudo ssh-keyscan -H -t ed25519 &lt;RELAY_IP&gt; <span class=p>|</span> sudo tee -a /root/.ssh/known_hosts
+</span></span><span class=line><span class=cl>sudo chmod <span class=m>600</span> /root/.ssh/known_hosts
+</span></span></code></pre></td></tr></table></div></div><p>在 <code>lab-server</code> 创建 <code>/etc/systemd/system/relay-vps-tunnel.service</code>：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-ini data-lang=ini><span class=line><span class=cl><span class=k>[Unit]</span>
+</span></span><span class=line><span class=cl><span class=na>Description</span><span class=o>=</span><span class=s>Persistent reverse SSH tunnel to relay-vps</span>
+</span></span><span class=line><span class=cl><span class=na>After</span><span class=o>=</span><span class=s>network-online.target</span>
+</span></span><span class=line><span class=cl><span class=na>Wants</span><span class=o>=</span><span class=s>network-online.target</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>[Service]</span>
+</span></span><span class=line><span class=cl><span class=na>Type</span><span class=o>=</span><span class=s>simple</span>
+</span></span><span class=line><span class=cl><span class=na>User</span><span class=o>=</span><span class=s>root</span>
+</span></span><span class=line><span class=cl><span class=na>ExecStart</span><span class=o>=</span><span class=s>/usr/bin/ssh -NT -i /root/.ssh/id_ed25519_vps_tunnel -o BatchMode=yes -o StrictHostKeyChecking=yes -o ExitOnForwardFailure=yes -o ServerAliveInterval=20 -o ServerAliveCountMax=3 -R 127.0.0.1:22022:127.0.0.1:22 -R 127.0.0.1:23389:127.0.0.1:3389 tunnel@&lt;RELAY_IP&gt;</span>
+</span></span><span class=line><span class=cl><span class=na>Restart</span><span class=o>=</span><span class=s>always</span>
+</span></span><span class=line><span class=cl><span class=na>RestartSec</span><span class=o>=</span><span class=s>5</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>[Install]</span>
+</span></span><span class=line><span class=cl><span class=na>WantedBy</span><span class=o>=</span><span class=s>multi-user.target</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo systemctl daemon-reload
+</span></span><span class=line><span class=cl>sudo systemctl <span class=nb>enable</span> --now relay-vps-tunnel.service
+</span></span></code></pre></td></tr></table></div></div><p>在 <code>relay-vps</code> 验证端口。两者必须监听在 <code>127.0.0.1</code>，不需要在防火墙中开放 <code>22022</code> 或 <code>23389</code>：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>ss -lnt <span class=p>|</span> grep -E <span class=s1>&#39;22022|23389&#39;</span>
+</span></span></code></pre></td></tr></table></div></div><p>在 <code>mac-client</code> 的 <code>~/.ssh/config</code> 中写入：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Host relay-vps
+</span></span><span class=line><span class=cl>    HostName &lt;RELAY_IP&gt;
+</span></span><span class=line><span class=cl>    User &lt;RELAY_USER&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Host lab-server-via-ssh
+</span></span><span class=line><span class=cl>    HostName 127.0.0.1
+</span></span><span class=line><span class=cl>    Port 22022
+</span></span><span class=line><span class=cl>    User &lt;LAB_USER&gt;
+</span></span><span class=line><span class=cl>    ProxyJump relay-vps
+</span></span><span class=line><span class=cl>    HostKeyAlias lab-server-through-relay-vps
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Host lab-rdp-via-ssh
+</span></span><span class=line><span class=cl>    HostName &lt;RELAY_IP&gt;
+</span></span><span class=line><span class=cl>    User &lt;RELAY_USER&gt;
+</span></span><span class=line><span class=cl>    LocalForward 13389 127.0.0.1:23389
+</span></span><span class=line><span class=cl>    ExitOnForwardFailure yes
+</span></span><span class=line><span class=cl>    ServerAliveInterval 20
+</span></span></code></pre></td></tr></table></div></div><p><code>mac-client</code> 需要分别通过 <code>&lt;RELAY_USER></code> 和 <code>&lt;LAB_USER></code> 完成两次 SSH 认证。如果需要免密码登录，在反向隧道已经运行后，把 Mac 公钥分别加入两个账户。下面以 <code>id_rsa.pub</code> 为例；使用 Ed25519 密钥时改为 <code>id_ed25519.pub</code>。只能复制 <code>.pub</code> 公钥，私钥始终留在 Mac：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat ~/.ssh/id_rsa.pub <span class=p>|</span> ssh relay-vps <span class=s1>&#39;umask 077; mkdir -p ~/.ssh; cat &gt;&gt; ~/.ssh/authorized_keys&#39;</span>
+</span></span><span class=line><span class=cl>cat ~/.ssh/id_rsa.pub <span class=p>|</span> ssh lab-server-via-ssh <span class=s1>&#39;umask 077; mkdir -p ~/.ssh; cat &gt;&gt; ~/.ssh/authorized_keys&#39;</span>
+</span></span></code></pre></td></tr></table></div></div><p><code>~/.ssh/id_rsa</code> 和 <code>~/.ssh/id_ed25519</code> 都是 OpenSSH 默认尝试的私钥文件，因此不需要 <code>IdentityFile</code>；只有非默认路径的私钥才需要显式指定。SSH 登录执行 <code>ssh lab-server-via-ssh</code>。切换目标端用户可执行 <code>ssh 其他用户名@lab-server-via-ssh</code>，但该用户必须已在 <code>lab-server</code> 上创建，并已配置密码或 Mac 公钥。远程桌面先运行 <code>ssh -NT lab-rdp-via-ssh</code>，再让 RDP 客户端连接 <code>127.0.0.1:13389</code>。</p><h2 id=方案二tailscale-peer-relay>方案二：Tailscale Peer Relay</h2><p><code>mac-client</code>、<code>relay-vps</code> 和 <code>lab-server</code> 都安装 Tailscale，并登录同一个 tailnet。参与 Peer Relay 的版本必须不低于 1.86。本次 tailnet 中三个节点分别显示为 <code>MBA</code>、<code>hk-relay</code> 和 <code>lab-server</code>，可用 <code>tailscale status</code> 确认。</p><p>在 <code>relay-vps</code> 配置 Peer Relay，并确保配置端口与防火墙端口完全一致：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo tailscale <span class=nb>set</span> --relay-server-port<span class=o>=</span><span class=m>3478</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>  --relay-server-static-endpoints<span class=o>=</span>&lt;RELAY_IP&gt;:3478
+</span></span><span class=line><span class=cl>sudo ufw allow 3478/udp comment <span class=s1>&#39;Tailscale Peer Relay&#39;</span>
+</span></span></code></pre></td></tr></table></div></div><p>在 Tailscale 管理后台的 Access controls 中，把下面的规则合并到现有 <code>grants</code> 数组：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;src&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;lab-server&#34;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;dst&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;hk-relay&#34;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;app&#34;</span><span class=p>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;tailscale.com/cap/relay&#34;</span><span class=p>:</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>这里的 <code>src</code> 是位于严格 NAT 后、需要通过中转访问的 <code>lab-server</code>，<code>dst</code> 才是提供中转的 <code>relay-vps</code>，即 tailnet 中的 <code>hk-relay</code>。在 <code>mac-client</code> 验证连接：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>tailscale ping &lt;LAB_TS_IP&gt;
+</span></span><span class=line><span class=cl>tailscale status <span class=p>|</span> grep &lt;LAB_TS_IP&gt;
+</span></span></code></pre></td></tr></table></div></div><p>成功时会看到：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>peer-relay &lt;RELAY_IP&gt;:3478:vni:&lt;VNI_ID&gt;
+</span></span></code></pre></td></tr></table></div></div><p><code>tailscale ping</code> 的首个响应可以显示 DERP，因为客户端仍在协商路径；后续响应和 <code>tailscale status</code> 必须显示 <code>peer-relay</code>，否则 VPS 中转没有生效。<code>direct connection not established</code> 只表示点对点打洞失败。Peer Relay 只转发端到端加密的 Tailscale 流量，不能读取 SSH 或 RDP 内容。本文使用系统 OpenSSH，因此 SSH 命令是 <code>ssh &lt;LAB_USER>@&lt;LAB_TS_IP></code>；切换 Linux 用户只需更改 <code>&lt;LAB_USER></code>。RDP 连接地址是 <code>&lt;LAB_TS_IP>:3389</code>。</p><h2 id=方案三rustdesk-relay>方案三：RustDesk Relay</h2><p>这套方案不依赖 Tailscale。VPS 上的 <code>hbbs</code> 负责 ID、注册和信令，<code>hbbr</code> 负责中转桌面流量；<code>mac-client</code> 和 <code>lab-server</code> 都是 RustDesk 客户端。</p><p>在 <code>relay-vps</code> 创建 <code>/opt/rustdesk/compose.yml</code>：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>services</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>hbbs</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class=l>hbbs</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>rustdesk/rustdesk-server:latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class=l>hbbs</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>environment</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>ALWAYS_USE_RELAY=Y</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>./data:/root</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>network_mode</span><span class=p>:</span><span class=w> </span><span class=l>host</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>restart</span><span class=p>:</span><span class=w> </span><span class=l>unless-stopped</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>hbbr</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class=l>hbbr</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>rustdesk/rustdesk-server:latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class=l>hbbr -k _</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>./data:/root</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>network_mode</span><span class=p>:</span><span class=w> </span><span class=l>host</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>restart</span><span class=p>:</span><span class=w> </span><span class=l>unless-stopped</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p><code>ALWAYS_USE_RELAY=Y</code> 强制会话经过 VPS，<code>hbbr -k _</code> 使用同一密钥校验客户端，避免 VPS 成为开放中转。启动服务并放行原生客户端所需的最小端口：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo mkdir -p /opt/rustdesk/data
+</span></span><span class=line><span class=cl><span class=nb>cd</span> /opt/rustdesk
+</span></span><span class=line><span class=cl>sudo docker compose up -d
+</span></span><span class=line><span class=cl>sudo ufw allow 21115/tcp
+</span></span><span class=line><span class=cl>sudo ufw allow 21116/tcp
+</span></span><span class=line><span class=cl>sudo ufw allow 21116/udp
+</span></span><span class=line><span class=cl>sudo ufw allow 21117/tcp
+</span></span><span class=line><span class=cl>sudo cat data/id_ed25519.pub
+</span></span></code></pre></td></tr></table></div></div><p><code>21115/tcp</code> 用于 NAT 测试，<code>21116/tcp</code> 和 <code>21116/udp</code> 用于注册与信令，<code>21117/tcp</code> 承载中转流量。原生 RustDesk 客户端不需要 WebSocket 端口 <code>21118</code> 和 <code>21119</code>。最后一条命令输出的内容就是 <code>&lt;RUSTDESK_KEY></code>。在 <code>mac-client</code> 的 RustDesk <code>Settings → Network</code> 中填写：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>ID Server:    &lt;RELAY_IP&gt;
+</span></span><span class=line><span class=cl>Relay Server: &lt;RELAY_IP&gt;
+</span></span><span class=line><span class=cl>API Server:   留空
+</span></span><span class=line><span class=cl>Key:          &lt;RUSTDESK_KEY&gt;
+</span></span></code></pre></td></tr></table></div></div><p><code>lab-server</code> 的普通桌面安装可以填写同样的图形界面选项，并在 <code>Settings → Security</code> 中设置永久密码；未设置永久密码时，每次连接都需要目标端人工确认。本次部署使用 systemd 和 GDM 提供无人值守访问，有效配置源是 <code>/root/.config/rustdesk/RustDesk2.toml</code>，不能只修改普通用户目录。先停止服务并编辑该文件；只修改下面列出的字段，其余内容保持不变：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo systemctl stop rustdesk
+</span></span><span class=line><span class=cl>sudoedit /root/.config/rustdesk/RustDesk2.toml
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=line><span class=cl><span class=nx>rendezvous_server</span> <span class=p>=</span> <span class=s1>&#39;&lt;RELAY_IP&gt;:21116&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>[</span><span class=nx>options</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=nx>custom-rendezvous-server</span> <span class=p>=</span> <span class=s1>&#39;&lt;RELAY_IP&gt;&#39;</span>
+</span></span><span class=line><span class=cl><span class=nx>relay-server</span> <span class=p>=</span> <span class=s1>&#39;&lt;RELAY_IP&gt;&#39;</span>
+</span></span><span class=line><span class=cl><span class=nx>key</span> <span class=p>=</span> <span class=s1>&#39;&lt;RUSTDESK_KEY&gt;&#39;</span>
+</span></span><span class=line><span class=cl><span class=nx>allow-linux-headless</span> <span class=p>=</span> <span class=s1>&#39;Y&#39;</span>
+</span></span></code></pre></td></tr></table></div></div><p>通过界面确认服务器公钥时，RustDesk 会自动记录确认状态。若完全手动配置，还要在 <code>/root/.config/rustdesk/RustDesk.toml</code> 和 <code>/var/lib/gdm3/.config/rustdesk/RustDesk.toml</code> 已有的 <code>[keys_confirmed]</code> 段中都加入：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=line><span class=cl><span class=s2>&#34;&lt;RELAY_IP&gt;:21116&#34;</span> <span class=p>=</span> <span class=kc>true</span>
+</span></span></code></pre></td></tr></table></div></div><p>然后重新启动目标端服务：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo systemctl <span class=nb>enable</span> --now rustdesk
+</span></span><span class=line><span class=cl>sudo rustdesk --get-id
+</span></span></code></pre></td></tr></table></div></div><p><code>RustDesk2.toml</code> 会从 root 配置同步给 GDM，但密钥确认记录应单独检查。启动后确认 <code>/var/lib/gdm3/.config/rustdesk/RustDesk2.toml</code> 中的 ID Server、Relay Server 和 Key 仍与 root 配置一致。在 <code>mac-client</code> 输入上一步得到的 RustDesk ID 发起连接，同时在 <code>relay-vps</code> 执行 <code>docker logs -f hbbr</code>；出现 <code>got paired</code> 表示桌面流量正在经过 VPS。ID Server 和 Relay Server 必须填写 VPS 公网地址，不能填写 VPS 的 Tailscale 地址，否则会变成 RustDesk over Tailscale。</p><h2 id=选择>选择</h2><p>只需要 SSH、VS Code Remote-SSH 或 RDP，且 <code>tailscale status</code> 能稳定显示 <code>peer-relay</code> 时，使用 Tailscale。Tailscale 无法建立 Peer Relay，或者网络只能稳定传输 TCP 时，使用反向 SSH 隧道。需要完整桌面、文件传输或无人值守控制时，使用 RustDesk。保留反向 SSH 隧道，可在 Tailscale 或 RustDesk 故障时继续登录 <code>lab-server</code>。</p><p>参考：<a class=link href=https://tailscale.com/docs/features/peer-relay target=_blank rel=noopener>Tailscale Peer Relay</a>、<a class=link href=https://rustdesk.com/docs/en/self-host/ target=_blank rel=noopener>RustDesk 自建服务器</a>。</p></section><footer class="article-meta article-footer"><section class="article-copyright inline-meta"><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css integrity=sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js integrity=sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8 crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{const e=[".main-article",".widget--toc"];e.forEach(e=>{const t=document.querySelector(e);t&&renderMathInElement(t,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}],ignoredClasses:["gist"]})})})</script></article><aside><h2 class=section-title>Related content</h2><div class=subsection-list><div class=article-list--tile><article><a href=/posts/rustdesk/><div class=article-details><h2 class=article-title>使用 RustDesk 实现内网穿透</h2></div></a></article><article><a href=/posts/remote-tunnel/><div class=article-details><h2 class=article-title>使用 VS Code Remote Tunnel 进行远程开发</h2></div></a></article></div></div></aside><script src=https://giscus.app/client.js data-repo=jinggqu/jinggqu.github.io data-repo-id="MDEwOlJlcG9zaXRvcnkxNDkyMTI2MDk=" data-category=Announcements data-category-id=DIC_kwDOCOTNwc4Ca4Al data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=light data-lang=en data-loading=lazy crossorigin=anonymous async></script><script>function setGiscusTheme(e){let t=document.querySelector("iframe.giscus-frame");t&&t.contentWindow.postMessage({giscus:{setConfig:{theme:e}}},"https://giscus.app")}(function(){addEventListener("message",t=>{if(event.origin!=="https://giscus.app")return;e()}),window.addEventListener("onColorSchemeChange",e);function e(){setGiscusTheme(document.documentElement.dataset.scheme==="light"?"light":"dark")}})()</script><footer class=site-footer><section class=copyright>&copy;
+2018 -
+2026 Anthony's blog</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=4.0.3>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><script type=module>
+    import gallery from '\/ts\/gallery.js';
+
+    const articleContent = document.querySelector('.article-content');
+    const shouldLoad = articleContent && (articleContent.querySelectorAll('figure').length > 0 || articleContent.querySelectorAll('img.gallery-image').length > 0);
+    
+    if (shouldLoad) {
+        gallery(articleContent);
+
+        const PhotoSwipeLightbox = (await import("https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js")).default;
+        const styleHref = "https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe.css";
+
+        const styleTag = document.createElement('link');
+        styleTag.rel = 'stylesheet';
+        styleTag.href = styleHref;
+        document.head.appendChild(styleTag);
+
+        const lightbox = new PhotoSwipeLightbox({
+            gallerySelector: '.article-content',
+            childSelector: 'figure a.image-link',
+            pswpModule: () => import("https:\/\/cdn.jsdelivr.net\/npm\/photoswipe@5.4.4\/dist\/photoswipe.esm.min.js")
+        });
+        lightbox.init();
+    }
+</script></main></div><script type=text/javascript src=/ts/main.1ff1e5fdc4e178ed422e50aa407526dc552f26342d729343fded19416194382c.js defer></script></body></html>
